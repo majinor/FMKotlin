@@ -1,0 +1,1504 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ui.main.HomeFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/nv_home"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:minHeight="?attr/actionBarSize">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/icon_fleetifyfull" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clipToPadding="false"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        android:paddingRight="10dp">
+
+                        <ImageButton
+                            android:id="@+id/ibtn_uh_notification"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/bg_circle_lightgrey"
+                            android:src="@drawable/ic_notifications_active_black_24dp" />
+
+                        <TextView
+                            android:id="@+id/tv_uh_notificationbadge"
+                            android:layout_width="wrap_content"
+                            android:layout_height="16dp"
+                            android:layout_marginTop="-35dp"
+                            android:layout_marginRight="-15dp"
+                            android:background="@drawable/red_rounded_button"
+                            android:elevation="2dp"
+                            android:gravity="center"
+                            android:minWidth="16dp"
+                            android:text="10"
+                            android:textColor="@color/white"
+                            android:textSize="9sp"
+                            android:visibility="gone" />
+                    </LinearLayout>
+
+                    <ImageButton
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_centerHorizontal="true"
+                        android:src="@drawable/ic_person_black_24dp"
+                        android:background="@drawable/bg_circle_lightgrey"/>
+
+                    <TextView
+                        android:id="@+id/tv_uh_titlename"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/sr_home"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <!--                    <com.example.moeidbannerlibrary.banner.BannerLayout-->
+                        <!--                        android:id="@+id/Banner"-->
+                        <!--                        android:layout_width="match_parent"-->
+                        <!--                        android:layout_height="220dp"-->
+                        <!--                        app:autoPlaying="true"-->
+                        <!--                        app:centerScale="1.6"-->
+                        <!--                        app:itemSpace="0"-->
+                        <!--                        app:moveSpeed="0.5"-->
+                        <!--                        app:showIndicator="true"/>-->
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="15dp">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_margin="15dp"
+                                android:id="@+id/cv_ib_banner"
+                                android:visibility="visible"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:elevation="3dp"
+                                app:cardBackgroundColor="@color/lightgrey"
+                                app:cardCornerRadius="20dp">
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+                                    <com.google.android.material.imageview.ShapeableImageView
+                                        android:id="@+id/image"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:adjustViewBounds="true"
+                                        android:src="@drawable/bannera1compresss"
+                                        android:visibility="visible" />
+
+
+                                </RelativeLayout>
+
+
+                            </androidx.cardview.widget.CardView>
+
+                            <!--                            <com.daffamuhtar.fmkotlin.util.HeightWrappingViewPager-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"/>-->
+
+<!--                            <com.daffamuhtar.fmkotlin.util.HeightWrappingViewPager-->
+<!--                                android:id="@+id/viewPagerLoad"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_centerInParent="true"-->
+<!--                                android:layout_marginTop="20dp"-->
+<!--                                android:background="@color/white"-->
+<!--                                android:clipToPadding="false"-->
+<!--                                android:overScrollMode="never"-->
+<!--                                android:visibility="visible" />-->
+
+<!--                            <com.daffamuhtar.fmkotlin.util.HeightWrappingViewPager-->
+<!--                                android:id="@+id/viewPager"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_centerInParent="true"-->
+<!--                                android:layout_marginTop="20dp"-->
+<!--                                android:background="@color/white"-->
+<!--                                android:clipToPadding="false"-->
+<!--                                android:overScrollMode="never"-->
+<!--                                android:visibility="gone" />-->
+
+<!--                            <androidx.viewpager.widget.PagerTabStrip-->
+<!--                                android:id="@+id/pageIndicatorView"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_alignParentBottom="true"-->
+<!--                                android:layout_centerHorizontal="true"-->
+<!--                                android:layout_gravity="center"-->
+<!--                                android:layout_marginBottom="10dp"-->
+<!--                                android:visibility="visible"-->
+<!--                                app:piv_dynamicCount="true"-->
+<!--                                app:piv_interactiveAnimation="true"-->
+<!--                                app:piv_selectedColor="@color/yellow"-->
+<!--                                app:piv_unselectedColor="@color/grey"-->
+<!--                                app:piv_viewPager="@id/viewPager" />-->
+
+
+                        </RelativeLayout>
+
+                        <me.relex.circleindicator.CircleIndicator
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="20dp"
+                            android:background="@drawable/bg_rounded_textview"
+                            android:backgroundTint="@color/redsoft"
+                            android:gravity="center_vertical"
+                            android:padding="10dp"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="30dp"
+                                android:background="@drawable/bg_rounded_textview"
+                                android:fontFamily="@font/messinasans_bold"
+                                android:gravity="center"
+                                android:minWidth="30dp"
+                                android:paddingLeft="5dp"
+                                android:paddingRight="5dp"
+                                android:text="5"
+                                android:textColor="@color/reddark"
+                                android:textSize="20dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:layout_weight="1"
+                                android:drawablePadding="10dp"
+                                android:drawableTint="@color/reddark"
+                                android:text="Perbaikan Storing yang berjalan"
+                                android:textColor="@color/reddark"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+<!--                        grid layout here-->
+
+                        <LinearLayout
+                            android:id="@+id/ly_uh_menu_flowab"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:id="@+id/ly_uh_reportproblem"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                    <androidx.cardview.widget.CardView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="8dp"
+                                        android:layout_marginRight="8dp"
+                                        app:cardCornerRadius="8dp"
+                                        app:cardElevation="3dp"
+                                        app:cardUseCompatPadding="true">
+
+                                        <LinearLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="10dp"
+                                            android:background="@drawable/bg_rounded_textview"
+                                            android:gravity="center"
+                                            android:orientation="vertical"
+                                            android:padding="5dp">
+
+                                            <LinearLayout
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center_horizontal"
+                                                android:orientation="vertical">
+
+                                                <Button
+                                                    android:id="@+id/btn_uh_reportproblem"
+                                                    android:layout_width="50dp"
+                                                    android:layout_height="50dp"
+                                                    android:layout_marginTop="0dp"
+                                                    android:background="@drawable/icon_laporkan_masalah"
+                                                    android:stateListAnimator="@null" />
+
+                                                <TextView
+                                                    android:id="@+id/tv_uh_reportproblem"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="16dp"
+                                                    android:layout_marginTop="-50dp"
+                                                    android:layout_marginRight="-17dp"
+                                                    android:background="@drawable/red_rounded_button"
+                                                    android:elevation="2dp"
+                                                    android:gravity="center"
+                                                    android:minWidth="16dp"
+                                                    android:text="10"
+                                                    android:textColor="@color/white"
+                                                    android:textSize="9sp"
+                                                    android:visibility="gone" />
+                                            </LinearLayout>
+
+                                            <TextView
+                                                android:layout_width="100dp"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginTop="5dp"
+                                                android:gravity="center"
+                                                android:text="Lapor\nMasalah"
+                                                android:textSize="10sp" />
+                                        </LinearLayout>
+
+                                    </androidx.cardview.widget.CardView>
+
+                                </LinearLayout>
+
+
+                                <LinearLayout
+                                    android:id="@+id/ly_uh_repairschedule"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                    <androidx.cardview.widget.CardView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="8dp"
+                                        android:layout_marginRight="8dp"
+                                        app:cardCornerRadius="8dp"
+                                        app:cardElevation="3dp"
+                                        app:cardUseCompatPadding="true">
+
+                                        <LinearLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="10dp"
+                                            android:background="@drawable/bg_rounded_textview"
+                                            android:gravity="center"
+                                            android:orientation="vertical"
+                                            android:padding="5dp">
+
+
+                                            <LinearLayout
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center_horizontal"
+                                                android:orientation="vertical">
+
+                                                <Button
+                                                    android:id="@+id/btn_uh_schedule"
+                                                    android:layout_width="50dp"
+                                                    android:layout_height="50dp"
+                                                    android:layout_marginTop="0dp"
+                                                    android:background="@drawable/icon_jadwal_perbaikan"
+                                                    android:stateListAnimator="@null" />
+
+                                                <TextView
+                                                    android:id="@+id/tv_uh_schedulebadge"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="16dp"
+                                                    android:layout_marginTop="-50dp"
+                                                    android:layout_marginRight="-17dp"
+                                                    android:background="@drawable/red_rounded_button"
+                                                    android:elevation="2dp"
+                                                    android:gravity="center"
+                                                    android:minWidth="16dp"
+                                                    android:text="10"
+                                                    android:textColor="@color/white"
+                                                    android:textSize="9sp"
+                                                    android:visibility="gone" />
+                                            </LinearLayout>
+
+
+                                            <TextView
+                                                android:layout_width="100dp"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginTop="5dp"
+                                                android:gravity="center"
+                                                android:text="Jadwal\nPerbaikan"
+                                                android:textSize="10sp" />
+                                        </LinearLayout>
+
+
+                                    </androidx.cardview.widget.CardView>
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/ly_uh_verifyrepair"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                    <androidx.cardview.widget.CardView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="8dp"
+                                        android:layout_marginRight="8dp"
+                                        app:cardCornerRadius="8dp"
+                                        app:cardElevation="3dp"
+                                        app:cardUseCompatPadding="true">
+
+                                        <LinearLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="10dp"
+                                            android:background="@drawable/bg_rounded_textview"
+                                            android:gravity="center"
+                                            android:orientation="vertical"
+                                            android:padding="5dp">
+
+                                            <LinearLayout
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center_horizontal"
+                                                android:orientation="vertical">
+
+                                                <Button
+                                                    android:id="@+id/btn_uh_confirmrepair"
+                                                    android:layout_width="50dp"
+                                                    android:layout_height="50dp"
+                                                    android:layout_marginTop="0dp"
+                                                    android:background="@drawable/icon_verify_repair"
+                                                    android:stateListAnimator="@null" />
+
+                                                <TextView
+                                                    android:id="@+id/tv_uh_confirmrepairbadge"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="16dp"
+                                                    android:layout_marginTop="-50dp"
+                                                    android:layout_marginRight="-17dp"
+                                                    android:background="@drawable/red_rounded_button"
+                                                    android:elevation="2dp"
+                                                    android:gravity="center"
+                                                    android:minWidth="16dp"
+                                                    android:text="10"
+                                                    android:textColor="@color/white"
+                                                    android:textSize="9sp"
+                                                    android:visibility="gone" />
+                                            </LinearLayout>
+
+                                            <TextView
+                                                android:layout_width="100dp"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginTop="5dp"
+                                                android:gravity="center"
+                                                android:text="Verifikasi\nPerbaikan"
+                                                android:textSize="10sp" />
+
+                                        </LinearLayout>
+
+                                    </androidx.cardview.widget.CardView>
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp">
+
+                                <LinearLayout
+                                    android:id="@+id/ly_uh_reporttire"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical">
+
+                                        <androidx.cardview.widget.CardView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="8dp"
+                                            android:layout_marginRight="8dp"
+                                            app:cardCornerRadius="8dp"
+                                            app:cardElevation="3dp"
+                                            app:cardUseCompatPadding="true">
+
+                                            <RelativeLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent">
+
+                                            </RelativeLayout>
+
+                                            <LinearLayout
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginTop="10dp"
+                                                android:background="@drawable/bg_rounded_textview"
+                                                android:gravity="center"
+                                                android:orientation="vertical"
+                                                android:padding="5dp">
+
+                                                <LinearLayout
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:gravity="center_horizontal"
+                                                    android:orientation="vertical">
+
+                                                    <Button
+                                                        android:id="@+id/btn_uh_tire"
+                                                        android:layout_width="50dp"
+                                                        android:layout_height="50dp"
+                                                        android:layout_marginTop="0dp"
+                                                        android:background="@drawable/icon_report_tire"
+                                                        android:stateListAnimator="@null" />
+
+                                                    <TextView
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_marginTop="-17dp"
+                                                        android:background="@drawable/bg_rounded_textview"
+                                                        android:backgroundTint="@color/redsoft"
+                                                        android:gravity="center"
+                                                        android:paddingLeft="5dp"
+                                                        android:paddingRight="5dp"
+                                                        android:text="Beta"
+                                                        android:textColor="@color/red"
+                                                        android:textSize="9sp"
+                                                        android:visibility="gone" />
+                                                </LinearLayout>
+
+                                                <TextView
+                                                    android:layout_width="100sp"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_marginTop="5dp"
+                                                    android:gravity="center"
+                                                    android:text="Lapor Ban\n"
+                                                    android:textSize="10sp" />
+                                            </LinearLayout>
+
+                                            <LinearLayout
+                                                android:id="@+id/ly_uh_reporttire_soon"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent"
+                                                android:background="@color/transgrey"
+                                                android:gravity="center"
+                                                android:orientation="vertical"
+                                                android:visibility="gone">
+
+                                                <TextView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:background="@drawable/bg_rounded_textview_yellowsoft"
+                                                    android:gravity="center_vertical"
+                                                    android:paddingHorizontal="5dp"
+                                                    android:text="Segera"
+                                                    android:textColor="@color/yellowdark" />
+
+
+                                            </LinearLayout>
+
+                                        </androidx.cardview.widget.CardView>
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/ly_uh_tirereposition"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical">
+
+                                        <androidx.cardview.widget.CardView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="8dp"
+                                            android:layout_marginRight="8dp"
+                                            app:cardCornerRadius="8dp"
+                                            app:cardElevation="3dp"
+                                            app:cardUseCompatPadding="true">
+
+                                            <RelativeLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent"
+                                                android:visibility="gone">
+
+                                            </RelativeLayout>
+
+                                            <LinearLayout
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginTop="10dp"
+                                                android:background="@drawable/bg_rounded_textview"
+                                                android:gravity="center"
+                                                android:orientation="vertical"
+                                                android:padding="5dp">
+
+                                                <LinearLayout
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:gravity="center_horizontal"
+                                                    android:orientation="vertical">
+
+                                                    <Button
+                                                        android:id="@+id/btn_uh_tire_reposition"
+                                                        android:layout_width="50dp"
+                                                        android:layout_height="50dp"
+                                                        android:layout_marginTop="0dp"
+                                                        android:background="@drawable/icon_tire_reposition"
+                                                        android:stateListAnimator="@null" />
+
+                                                    <TextView
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_marginTop="-17dp"
+                                                        android:background="@drawable/bg_rounded_textview"
+                                                        android:backgroundTint="@color/redsoft"
+                                                        android:gravity="center"
+                                                        android:paddingLeft="5dp"
+                                                        android:paddingRight="5dp"
+                                                        android:text="Beta"
+                                                        android:textColor="@color/red"
+                                                        android:textSize="9sp"
+                                                        android:visibility="gone" />
+                                                </LinearLayout>
+
+                                                <TextView
+                                                    android:layout_width="100sp"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_marginTop="5dp"
+                                                    android:gravity="center"
+                                                    android:text="Reposisi Ban\n"
+                                                    android:textSize="10sp" />
+                                            </LinearLayout>
+
+                                            <LinearLayout
+                                                android:id="@+id/ly_uh_tirereposition_soon"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent"
+                                                android:background="@color/transgrey"
+                                                android:gravity="center"
+                                                android:orientation="vertical"
+                                                android:visibility="gone">
+
+                                                <TextView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:background="@drawable/bg_rounded_textview_yellowsoft"
+                                                    android:gravity="center_vertical"
+                                                    android:paddingHorizontal="5dp"
+                                                    android:text="Segera"
+                                                    android:textColor="@color/yellowdark" />
+
+
+                                            </LinearLayout>
+
+                                        </androidx.cardview.widget.CardView>
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/ly_uh_reporthistory"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical">
+
+                                        <androidx.cardview.widget.CardView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="8dp"
+                                            android:layout_marginRight="8dp"
+                                            app:cardCornerRadius="8dp"
+                                            app:cardElevation="3dp"
+                                            app:cardUseCompatPadding="true">
+
+                                            <LinearLayout
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginTop="10dp"
+                                                android:background="@drawable/bg_rounded_textview"
+                                                android:gravity="center"
+                                                android:orientation="vertical"
+                                                android:padding="5dp">
+
+
+                                                <LinearLayout
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:gravity="center_horizontal"
+                                                    android:orientation="vertical">
+
+                                                    <Button
+                                                        android:id="@+id/btn_uh_problemhistory"
+                                                        android:layout_width="50dp"
+                                                        android:layout_height="50dp"
+                                                        android:layout_marginTop="0dp"
+                                                        android:background="@drawable/icon_report_history"
+                                                        android:stateListAnimator="@null" />
+
+                                                    <TextView
+                                                        android:id="@+id/tv_uh_problemhistorybadge"
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="16dp"
+                                                        android:layout_marginTop="-50dp"
+                                                        android:layout_marginRight="-17dp"
+                                                        android:background="@drawable/red_rounded_button"
+                                                        android:elevation="2dp"
+                                                        android:gravity="center"
+                                                        android:minWidth="16dp"
+                                                        android:text="10"
+                                                        android:textColor="@color/white"
+                                                        android:textSize="9sp"
+                                                        android:visibility="gone" />
+                                                </LinearLayout>
+
+                                                <TextView
+                                                    android:layout_width="100sp"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_marginTop="5dp"
+                                                    android:gravity="center"
+                                                    android:text="Laporan\n"
+                                                    android:textSize="10sp" />
+                                            </LinearLayout>
+
+                                        </androidx.cardview.widget.CardView>
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/ly_um_space1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical"
+                                    android:visibility="gone">
+
+                                    <androidx.cardview.widget.CardView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="8dp"
+                                        android:layout_marginRight="8dp"
+                                        app:cardCornerRadius="8dp"
+                                        app:cardElevation="3dp"
+                                        app:cardUseCompatPadding="true">
+
+                                        <LinearLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="10dp"
+                                            android:background="@drawable/bg_rounded_textview"
+                                            android:gravity="center"
+                                            android:orientation="vertical"
+                                            android:padding="5dp">
+
+
+                                            <LinearLayout
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center_horizontal"
+                                                android:orientation="vertical">
+
+                                                <Button
+                                                    android:layout_width="50dp"
+                                                    android:layout_height="50dp"
+                                                    android:layout_marginTop="0dp"
+                                                    android:background="@drawable/icon_report_history"
+                                                    android:stateListAnimator="@null" />
+
+                                                <TextView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="16dp"
+                                                    android:layout_marginTop="-50dp"
+                                                    android:layout_marginRight="-17dp"
+                                                    android:background="@drawable/red_rounded_button"
+                                                    android:elevation="2dp"
+                                                    android:gravity="center"
+                                                    android:minWidth="16dp"
+                                                    android:text="10"
+                                                    android:textColor="@color/white"
+                                                    android:textSize="9sp"
+                                                    android:visibility="gone" />
+                                            </LinearLayout>
+
+                                            <TextView
+                                                android:layout_width="100sp"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginTop="5dp"
+                                                android:gravity="center"
+                                                android:text="Riwayat"
+                                                android:textSize="10sp" />
+                                        </LinearLayout>
+
+                                    </androidx.cardview.widget.CardView>
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/ly_um_space2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical"
+                                    android:visibility="gone">
+
+                                    <androidx.cardview.widget.CardView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="8dp"
+                                        android:layout_marginRight="8dp"
+                                        app:cardCornerRadius="8dp"
+                                        app:cardElevation="3dp"
+                                        app:cardUseCompatPadding="true">
+
+                                        <LinearLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="10dp"
+                                            android:background="@drawable/bg_rounded_textview"
+                                            android:gravity="center"
+                                            android:orientation="vertical"
+                                            android:padding="5dp">
+
+
+                                            <LinearLayout
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center_horizontal"
+                                                android:orientation="vertical">
+
+                                                <Button
+                                                    android:layout_width="50dp"
+                                                    android:layout_height="50dp"
+                                                    android:layout_marginTop="0dp"
+                                                    android:background="@drawable/icon_report_history"
+                                                    android:stateListAnimator="@null" />
+
+                                                <TextView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="16dp"
+                                                    android:layout_marginTop="-50dp"
+                                                    android:layout_marginRight="-17dp"
+                                                    android:background="@drawable/red_rounded_button"
+                                                    android:elevation="2dp"
+                                                    android:gravity="center"
+                                                    android:minWidth="16dp"
+                                                    android:text="10"
+                                                    android:textColor="@color/white"
+                                                    android:textSize="9sp"
+                                                    android:visibility="gone" />
+                                            </LinearLayout>
+
+                                            <TextView
+                                                android:layout_width="100sp"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginTop="5dp"
+                                                android:gravity="center"
+                                                android:text="Riwayat"
+                                                android:textSize="10sp" />
+                                        </LinearLayout>
+
+                                    </androidx.cardview.widget.CardView>
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp">
+
+                                <LinearLayout
+                                    android:id="@+id/ly_uh_custom_order"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical">
+
+                                        <androidx.cardview.widget.CardView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="8dp"
+                                            android:layout_marginRight="8dp"
+                                            app:cardCornerRadius="8dp"
+                                            app:cardElevation="3dp"
+                                            app:cardUseCompatPadding="true">
+
+                                            <RelativeLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent">
+
+                                            </RelativeLayout>
+
+                                            <LinearLayout
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginTop="10dp"
+                                                android:background="@drawable/bg_rounded_textview"
+                                                android:gravity="center"
+                                                android:orientation="vertical"
+                                                android:padding="5dp">
+
+                                                <LinearLayout
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:gravity="center_horizontal"
+                                                    android:orientation="vertical">
+
+                                                    <Button
+                                                        android:id="@+id/btn_uh_custom_order"
+                                                        android:layout_width="50dp"
+                                                        android:layout_height="50dp"
+                                                        android:layout_marginTop="0dp"
+                                                        android:background="@drawable/icon_custom_order"
+                                                        android:stateListAnimator="@null" />
+
+
+                                                    <TextView
+                                                        android:id="@+id/tv_uh_custom_order_badge"
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="16dp"
+                                                        android:layout_marginTop="-50dp"
+                                                        android:layout_marginRight="-17dp"
+                                                        android:background="@drawable/red_rounded_button"
+                                                        android:elevation="2dp"
+                                                        android:gravity="center"
+                                                        android:minWidth="16dp"
+                                                        android:text="10"
+                                                        android:textColor="@color/white"
+                                                        android:textSize="9sp"
+                                                        android:visibility="gone" />
+
+                                                    <TextView
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_marginTop="-17dp"
+                                                        android:background="@drawable/bg_rounded_textview"
+                                                        android:backgroundTint="@color/redsoft"
+                                                        android:gravity="center"
+                                                        android:paddingLeft="5dp"
+                                                        android:paddingRight="5dp"
+                                                        android:text="Beta"
+                                                        android:textColor="@color/red"
+                                                        android:textSize="9sp"
+                                                        android:visibility="gone" />
+                                                </LinearLayout>
+
+                                                <TextView
+                                                    android:layout_width="100sp"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_marginTop="5dp"
+                                                    android:gravity="center"
+                                                    android:text="Custom Order\n"
+                                                    android:textSize="10sp" />
+                                            </LinearLayout>
+
+                                            <LinearLayout
+                                                android:id="@+id/ly_uh_customorder_soon"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent"
+                                                android:background="@color/transgrey"
+                                                android:gravity="center"
+                                                android:orientation="vertical"
+                                                android:visibility="gone">
+
+                                                <TextView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:background="@drawable/bg_rounded_textview_yellowsoft"
+                                                    android:gravity="center_vertical"
+                                                    android:paddingHorizontal="5dp"
+                                                    android:text="Segera"
+                                                    android:textColor="@color/yellowdark" />
+
+
+                                            </LinearLayout>
+
+                                        </androidx.cardview.widget.CardView>
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="vertical"
+                                    android:visibility="invisible">
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical">
+
+                                        <androidx.cardview.widget.CardView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="8dp"
+                                            android:layout_marginRight="8dp"
+                                            app:cardCornerRadius="8dp"
+                                            app:cardElevation="3dp"
+                                            app:cardUseCompatPadding="true">
+
+                                            <RelativeLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent"
+                                                android:visibility="gone">
+
+                                            </RelativeLayout>
+
+                                            <LinearLayout
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginTop="10dp"
+                                                android:background="@drawable/bg_rounded_textview"
+                                                android:gravity="center"
+                                                android:orientation="vertical"
+                                                android:padding="5dp">
+
+                                                <LinearLayout
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:gravity="center_horizontal"
+                                                    android:orientation="vertical">
+
+                                                    <Button
+                                                        android:layout_width="50dp"
+                                                        android:layout_height="50dp"
+                                                        android:layout_marginTop="0dp"
+                                                        android:background="@drawable/icon_tire_reposition"
+                                                        android:stateListAnimator="@null" />
+
+                                                    <TextView
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_marginTop="-17dp"
+                                                        android:background="@drawable/bg_rounded_textview"
+                                                        android:backgroundTint="@color/redsoft"
+                                                        android:gravity="center"
+                                                        android:paddingLeft="5dp"
+                                                        android:paddingRight="5dp"
+                                                        android:text="Beta"
+                                                        android:textColor="@color/red"
+                                                        android:textSize="9sp"
+                                                        android:visibility="gone" />
+                                                </LinearLayout>
+
+                                                <TextView
+                                                    android:layout_width="100sp"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_marginTop="5dp"
+                                                    android:gravity="center"
+                                                    android:text="Reposisi Ban\n"
+                                                    android:textSize="10sp" />
+                                            </LinearLayout>
+
+                                            <LinearLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent"
+                                                android:background="@color/transgrey"
+                                                android:gravity="center"
+                                                android:orientation="vertical"
+                                                android:visibility="gone">
+
+                                                <TextView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:background="@drawable/bg_rounded_textview_yellowsoft"
+                                                    android:gravity="center_vertical"
+                                                    android:paddingHorizontal="5dp"
+                                                    android:text="Segera"
+                                                    android:textColor="@color/yellowdark" />
+
+
+                                            </LinearLayout>
+
+                                        </androidx.cardview.widget.CardView>
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="vertical"
+                                    android:visibility="invisible">
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical">
+
+                                        <androidx.cardview.widget.CardView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="8dp"
+                                            android:layout_marginRight="8dp"
+                                            app:cardCornerRadius="8dp"
+                                            app:cardElevation="3dp"
+                                            app:cardUseCompatPadding="true">
+
+                                            <LinearLayout
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginTop="10dp"
+                                                android:background="@drawable/bg_rounded_textview"
+                                                android:gravity="center"
+                                                android:orientation="vertical"
+                                                android:padding="5dp">
+
+
+                                                <LinearLayout
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:gravity="center_horizontal"
+                                                    android:orientation="vertical">
+
+                                                    <Button
+                                                        android:layout_width="50dp"
+                                                        android:layout_height="50dp"
+                                                        android:layout_marginTop="0dp"
+                                                        android:background="@drawable/icon_report_history"
+                                                        android:stateListAnimator="@null" />
+
+                                                    <TextView
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="16dp"
+                                                        android:layout_marginTop="-50dp"
+                                                        android:layout_marginRight="-17dp"
+                                                        android:background="@drawable/red_rounded_button"
+                                                        android:elevation="2dp"
+                                                        android:gravity="center"
+                                                        android:minWidth="16dp"
+                                                        android:text="10"
+                                                        android:textColor="@color/white"
+                                                        android:textSize="9sp"
+                                                        android:visibility="gone" />
+                                                </LinearLayout>
+
+                                                <TextView
+                                                    android:layout_width="100sp"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_marginTop="5dp"
+                                                    android:gravity="center"
+                                                    android:text="Laporan\n"
+                                                    android:textSize="10sp" />
+                                            </LinearLayout>
+
+                                        </androidx.cardview.widget.CardView>
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical">
+
+                                        <androidx.cardview.widget.CardView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="8dp"
+                                            android:layout_marginRight="8dp"
+                                            app:cardCornerRadius="8dp"
+                                            app:cardElevation="3dp"
+                                            app:cardUseCompatPadding="true">
+
+                                            <RelativeLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent">
+
+                                            </RelativeLayout>
+
+                                            <LinearLayout
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginTop="10dp"
+                                                android:background="@drawable/bg_rounded_textview"
+                                                android:gravity="center"
+                                                android:orientation="vertical"
+                                                android:padding="5dp">
+
+                                                <LinearLayout
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:gravity="center_horizontal"
+                                                    android:orientation="vertical">
+
+                                                    <Button
+                                                        android:layout_width="50dp"
+                                                        android:layout_height="50dp"
+                                                        android:layout_marginTop="0dp"
+                                                        android:background="@drawable/icon_custom_order"
+                                                        android:stateListAnimator="@null" />
+
+
+                                                    <TextView
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="16dp"
+                                                        android:layout_marginTop="-50dp"
+                                                        android:layout_marginRight="-17dp"
+                                                        android:background="@drawable/red_rounded_button"
+                                                        android:elevation="2dp"
+                                                        android:gravity="center"
+                                                        android:minWidth="16dp"
+                                                        android:text="10"
+                                                        android:textColor="@color/white"
+                                                        android:textSize="9sp"
+                                                        android:visibility="gone" />
+
+                                                    <TextView
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_marginTop="-17dp"
+                                                        android:background="@drawable/bg_rounded_textview"
+                                                        android:backgroundTint="@color/redsoft"
+                                                        android:gravity="center"
+                                                        android:paddingLeft="5dp"
+                                                        android:paddingRight="5dp"
+                                                        android:text="Beta"
+                                                        android:textColor="@color/red"
+                                                        android:textSize="9sp"
+                                                        android:visibility="gone" />
+                                                </LinearLayout>
+
+                                                <TextView
+                                                    android:layout_width="100sp"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_marginTop="5dp"
+                                                    android:gravity="center"
+                                                    android:text="Custom Order\n"
+                                                    android:textSize="10sp" />
+                                            </LinearLayout>
+
+                                            <LinearLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent"
+                                                android:background="@color/transgrey"
+                                                android:gravity="center"
+                                                android:orientation="vertical"
+                                                android:visibility="gone">
+
+                                                <TextView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:background="@drawable/bg_rounded_textview_yellowsoft"
+                                                    android:gravity="center_vertical"
+                                                    android:paddingHorizontal="5dp"
+                                                    android:text="Segera"
+                                                    android:textColor="@color/yellowdark" />
+
+
+                                            </LinearLayout>
+
+                                        </androidx.cardview.widget.CardView>
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="vertical"
+                                    android:visibility="invisible">
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical">
+
+                                        <androidx.cardview.widget.CardView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="8dp"
+                                            android:layout_marginRight="8dp"
+                                            app:cardCornerRadius="8dp"
+                                            app:cardElevation="3dp"
+                                            app:cardUseCompatPadding="true">
+
+                                            <RelativeLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent"
+                                                android:visibility="gone">
+
+                                            </RelativeLayout>
+
+                                            <LinearLayout
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginTop="10dp"
+                                                android:background="@drawable/bg_rounded_textview"
+                                                android:gravity="center"
+                                                android:orientation="vertical"
+                                                android:padding="5dp">
+
+                                                <LinearLayout
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:gravity="center_horizontal"
+                                                    android:orientation="vertical">
+
+                                                    <Button
+                                                        android:layout_width="50dp"
+                                                        android:layout_height="50dp"
+                                                        android:layout_marginTop="0dp"
+                                                        android:background="@drawable/icon_tire_reposition"
+                                                        android:stateListAnimator="@null" />
+
+                                                    <TextView
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_marginTop="-17dp"
+                                                        android:background="@drawable/bg_rounded_textview"
+                                                        android:backgroundTint="@color/redsoft"
+                                                        android:gravity="center"
+                                                        android:paddingLeft="5dp"
+                                                        android:paddingRight="5dp"
+                                                        android:text="Beta"
+                                                        android:textColor="@color/red"
+                                                        android:textSize="9sp"
+                                                        android:visibility="gone" />
+                                                </LinearLayout>
+
+                                                <TextView
+                                                    android:layout_width="100sp"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_marginTop="5dp"
+                                                    android:gravity="center"
+                                                    android:text="Reposisi Ban\n"
+                                                    android:textSize="10sp" />
+                                            </LinearLayout>
+
+                                            <LinearLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent"
+                                                android:background="@color/transgrey"
+                                                android:gravity="center"
+                                                android:orientation="vertical"
+                                                android:visibility="gone">
+
+                                                <TextView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:background="@drawable/bg_rounded_textview_yellowsoft"
+                                                    android:gravity="center_vertical"
+                                                    android:paddingHorizontal="5dp"
+                                                    android:text="Segera"
+                                                    android:textColor="@color/yellowdark" />
+
+
+                                            </LinearLayout>
+
+                                        </androidx.cardview.widget.CardView>
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="vertical"
+                                    android:visibility="invisible">
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical">
+
+                                        <androidx.cardview.widget.CardView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="8dp"
+                                            android:layout_marginRight="8dp"
+                                            app:cardCornerRadius="8dp"
+                                            app:cardElevation="3dp"
+                                            app:cardUseCompatPadding="true">
+
+                                            <LinearLayout
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginTop="10dp"
+                                                android:background="@drawable/bg_rounded_textview"
+                                                android:gravity="center"
+                                                android:orientation="vertical"
+                                                android:padding="5dp">
+
+
+                                                <LinearLayout
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:gravity="center_horizontal"
+                                                    android:orientation="vertical">
+
+                                                    <Button
+                                                        android:layout_width="50dp"
+                                                        android:layout_height="50dp"
+                                                        android:layout_marginTop="0dp"
+                                                        android:background="@drawable/icon_report_history"
+                                                        android:stateListAnimator="@null" />
+
+                                                    <TextView
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="16dp"
+                                                        android:layout_marginTop="-50dp"
+                                                        android:layout_marginRight="-17dp"
+                                                        android:background="@drawable/red_rounded_button"
+                                                        android:elevation="2dp"
+                                                        android:gravity="center"
+                                                        android:minWidth="16dp"
+                                                        android:text="10"
+                                                        android:textColor="@color/white"
+                                                        android:textSize="9sp"
+                                                        android:visibility="gone" />
+                                                </LinearLayout>
+
+                                                <TextView
+                                                    android:layout_width="100sp"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_marginTop="5dp"
+                                                    android:gravity="center"
+                                                    android:text="Laporan\n"
+                                                    android:textSize="10sp" />
+                                            </LinearLayout>
+
+                                        </androidx.cardview.widget.CardView>
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+
+
+                    </LinearLayout>
+
+                </FrameLayout>
+
+            </ScrollView>
+
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    </LinearLayout>
+
+
+</FrameLayout>

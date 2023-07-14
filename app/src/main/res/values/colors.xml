@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+
+    // Primary
+    <color name="colorPrimary">#FFDB0F</color>
+    <color name="colorPrimaryDark">#816D00</color>
+    <color name="colorAccent">#FFDB0F</color>
+
+    //Yellow
+    <color name="yellow">#FFDB0F</color>
+    <color name="yellowsoft">#FFEE9C</color>
+    <color name="yellowdark">#816D00</color>
+    <color name="yellowshadow">#CFB046</color>
+    <color name="yellowClicked">#E4C200</color>
+    <color name="yellowDisable">#FFEE9C</color>
+
+    //BnW
+    <color name="white">#FFFFFF</color>
+    <color name="background">#F4F4F4</color>
+    <color name="black">#000000</color>
+    <color name="transblack">#83000000</color>
+    <color name="transparant">#00FFFFFF</color>
+
+    //Grey
+    <color name="greymark">#838383</color>
+    <color name="grey">#A3A3A3</color>
+    <color name="grey3">#838383</color>
+    <color name="grey2">#CDCDCD</color>
+    <color name="grey1">#F4F4F4</color>
+    <color name="grey0">#F6F6F6</color>
+    <color name="grey_text_disabled">#838383</color>
+    <color name="lightgrey">#DDDDDD</color>
+    <color name="greysoft">#EDEDED</color>
+    <color name="transgrey">#3C696969</color>
+    <color name="greydark">#292929</color>
+    <color name="greyClicked">#CCCCCC</color>
+    <color name="greyDisable">#EEEEEE</color>
+
+    //Red
+    <color name="reddark">#A80505</color>
+    <color name="red">#E84034</color>
+    <color name="redClicked">#E11B0D</color>
+    <color name="redDisable">#FBB8B3</color>
+
+    <color name="redsoft">#FFE6E6</color>
+    <color name="redSoftClicked">#FFCFCF</color>
+    <color name="redSoftDisable">#FFF4F4</color>
+
+    //Green
+    <color name="greendark">#18641A</color>
+    <color name="green">#3EA542</color>
+    <color name="greensoft">#D8FFD8</color>
+    <color name="green1">#4CAF50</color>
+    <!--<color name="greens">#0A750A</color>-->
+
+    //Blue
+    <color name="blue">#4B6F9E</color>
+    <color name="bluedark">#25303F</color>
+    <color name="blueCliked">#3E67AC</color>
+    <color name="blueDisable">#A2B8D5</color>
+
+    <color name="bluesoft">#E6F6FF</color>
+    <color name="bluesoftClicked">#C8E9FD</color>
+    <color name="bluesoftDisable">#F2F7FA</color>
+
+    <color name="blueRounded">#E8F2FF</color>
+
+
+    //Orange
+    <color name="orange">#FF9800</color>
+    <color name="orangesoft">#FFF1DE</color>
+    <color name="purple">#673AB7</color>
+
+    //Repair
+    <color name="storing">#A80505</color>
+    <color name="adhoc">#5D78FF</color>
+    <color name="pb">#FF5722</color>
+    <color name="pnb">#00BCD4</color>
+    <color name="tire">#41924B</color>
+
+    // Tab Calender
+    <color name="c_black">#424242</color>
+    <color name="c_yellow">#FFDB0F</color>
+
+    <color name="bluetoyellow">
+        <item name="android:startColor">#FF9800</item>
+        <item name="android:endColor">#FAD511</item>
+        <item name="android:angle">45</item>
+    </color>
+
+</resources>
