@@ -28,7 +28,7 @@ class ApiConfig {
                 val newRequest = chain.request().newBuilder()
                     .addHeader(
                         "Authorization",
-                        "Bearer " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjIiLCJ1c2VybmFtZSI6InVtLXRlc3RpbmctOTk5OSIsImlhdCI6MTY4OTMyNjMyMSwiZXhwIjoxNjg5NDEyNzIxfQ.qSTeZc5UrILUsYYZMASFzmAZcXMmCNnPKOT-08lntGM"
+                        "Bearer " + Server.token
                     )
                     .build()
                 chain.proceed(newRequest)

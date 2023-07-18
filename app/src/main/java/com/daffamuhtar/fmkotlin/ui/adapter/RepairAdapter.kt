@@ -1,16 +1,19 @@
 package com.daffamuhtar.fmkotlin.ui.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.daffamuhtar.fmkotlin.R
 import com.daffamuhtar.fmkotlin.databinding.ItemRepairBinding
 import com.daffamuhtar.fmkotlin.model.Repair
 import com.daffamuhtar.fmkotlin.util.RepairHelper.Companion.getRepairDate
 import com.daffamuhtar.fmkotlin.util.RepairHelper.Companion.getRepairIcon
 import com.daffamuhtar.fmkotlin.util.RepairHelper.Companion.getRepairId
 import com.daffamuhtar.fmkotlin.util.RepairHelper.Companion.getRepairTitle
+import com.daffamuhtar.fmkotlin.util.RepairHelper.Companion.setRepairStage
 import com.daffamuhtar.fmkotlin.util.VehicleHelper.Companion.getVehicleName
+import java.text.SimpleDateFormat
+import java.util.*
 
 class RepairAdapter() : RecyclerView.Adapter<RepairAdapter.LaporanViewHolder>() {
 
@@ -38,11 +41,24 @@ class RepairAdapter() : RecyclerView.Adapter<RepairAdapter.LaporanViewHolder>() 
         RecyclerView.ViewHolder(view.root) {
         fun bind(repair: Repair) {
             with(view) {
+
+                lyWorkshop.visibility = View.GONE
+                lyAssignmentNote.visibility = View.GONE
+                val locale = Locale("id")
+
+
                 tvRepairTitle.text = getRepairTitle(repair.orderId, repair.isStoring)
                 ivRepairIcon.setBackgroundResource(getRepairIcon(repair.orderId, repair.isStoring))
                 tvRepairId.text = getRepairId(repair.orderId, repair.spkId)
                 tvRepairDate.text = getRepairDate(repair.startAssignment)
-                tvRepairStage.text = repair.stageName
+                setRepairStage(
+                    view.root.context,
+                    repair.stageId,
+                    repair.stageName,
+                    tvRepairStage,
+                    ivRepairStageIcon,
+                    lyRepairStage
+                )
                 tvVehicleName.text = getVehicleName(
                     repair.vehicleId,
                     repair.vehicleBrand,
@@ -51,9 +67,17 @@ class RepairAdapter() : RecyclerView.Adapter<RepairAdapter.LaporanViewHolder>() 
                     repair.vehicleYear,
                     repair.vehicleLicenseNumber
                 )
-                tvWorkshopName.text = repair.workshopName
-                tvWowkshopAddress.text = repair.workshopLocation
 
+                repair.workshopName?.let {
+                    lyWorkshop.visibility = View.VISIBLE
+                    tvWorkshopName.text = repair.workshopName
+                    tvWowkshopAddress.text = repair.workshopLocation
+                }
+
+                repair.noteSA?.let {
+                    lyAssignmentNote.visibility = View.VISIBLE
+                    tvAssignmentNote.text = repair.noteSA
+                }
             }
         }
     }
@@ -70,7 +94,7 @@ class RepairAdapter() : RecyclerView.Adapter<RepairAdapter.LaporanViewHolder>() 
 
     override fun onBindViewHolder(holder: LaporanViewHolder, position: Int) {
         holder.bind(allRepair[position])
-        holder.itemView.setOnClickListener{
+        holder.itemView.setOnClickListener {
             onItemClickCallback.onItemClicked(allRepair[holder.adapterPosition])
         }
     }

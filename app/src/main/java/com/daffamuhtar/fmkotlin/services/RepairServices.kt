@@ -1,6 +1,7 @@
 package com.daffamuhtar.fmkotlin.services
 
 import com.daffamuhtar.fmkotlin.model.Repair
+import com.daffamuhtar.fmkotlin.model.response.CheckRepairResponse
 import com.daffamuhtar.fmkotlin.model.response.RefreshTokenResponse
 import retrofit2.Call
 import retrofit2.http.Field
@@ -15,5 +16,7 @@ interface RepairServices {
     fun getCheckRepair(
         @Query("loggedMechanicId") loggedMechanicId: String,
         @Query("stageId") stageId: Int
-    ): Call<List<Repair>>
+    ): Call<List<CheckRepairResponse>>
+
+
 }

@@ -120,7 +120,7 @@ object Constanta {
 
     //Workshop
     const val EXTRA_WORKSHOPID = "workshopid"
-    const val EXTRA_LOCOPTION = "locoption"
+    const val EXTRA_LOCOPTION = "locationOption"
     const val EXTRA_RATING = "rating"
 
     //Part

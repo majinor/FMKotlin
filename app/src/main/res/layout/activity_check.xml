@@ -118,7 +118,7 @@
         </LinearLayout>
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/sr_c_check"
+            android:id="@+id/sr_check"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 

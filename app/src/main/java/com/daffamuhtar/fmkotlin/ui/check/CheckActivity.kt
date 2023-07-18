@@ -1,7 +1,6 @@
 package com.daffamuhtar.fmkotlin.ui.check
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
@@ -16,10 +15,12 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.android.volley.RequestQueue
 import com.daffamuhtar.fmkotlin.constants.ConstantaApp
 import com.daffamuhtar.fmkotlin.databinding.ActivityCheckBinding
+import com.daffamuhtar.fmkotlin.model.Filter
 import com.daffamuhtar.fmkotlin.model.Repair
+import com.daffamuhtar.fmkotlin.model.response.CheckRepairResponse
 import com.daffamuhtar.fmkotlin.ui.adapter.CheckAdapter
+import com.daffamuhtar.fmkotlin.ui.adapter.FilterAdapter
 import com.daffamuhtar.fmkotlin.ui.adapter.RepairAdapter
-import com.daffamuhtar.fmkotlin.ui.splash.SplashViewModel
 
 class CheckActivity : AppCompatActivity() {
 
@@ -38,14 +39,11 @@ class CheckActivity : AppCompatActivity() {
     private var token: String? = null
     private val isGetCheckWo = false
 
-    private val etSearch: EditText? = null
-    private val progressBar: ProgressBar? = null
-    private val lynull: LinearLayout? = null
-    private val mSwipeRefreshLayout: SwipeRefreshLayout? = null
-
-    private val listReports = ArrayList<Repair>()
+    private val repairList = ArrayList<Repair>()
+    private val filterList = ArrayList<Filter>()
 
     private val repairAdapter: RepairAdapter = RepairAdapter()
+    private val filterAdapter: FilterAdapter = FilterAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,24 +66,29 @@ class CheckActivity : AppCompatActivity() {
             loading(it)
         }
 
+        binding.srCheck.setOnRefreshListener {
+            checkViewModel.getAllCheckRepair(this, ConstantaApp.BASE_URL_V2_0, "MEC-MBA-99")
 
+        }
+
+        prepareFilter()
     }
 
     private fun loading(value: Boolean) {
-        binding.srCCheck.isRefreshing = value
+        binding.srCheck.isRefreshing = value
     }
 
-    private fun setReportResults(repairs: List<Repair>) {
-        listReports.clear()
-        val listReport = java.util.ArrayList<Repair>()
+    private fun setReportResults(repairs: List<CheckRepairResponse>) {
+        repairList.clear()
+        val listReport = ArrayList<Repair>()
 
         for (repair in repairs) {
             repair.apply {
                 val getResult = Repair(
                     orderId,
-                    spkId,
+                    null,
                     stageId,
-                    stageName,
+                    null,
                     vehicleId,
                     vehicleBrand,
                     vehicleType,
@@ -94,20 +97,20 @@ class CheckActivity : AppCompatActivity() {
                     vehicleLicenseNumber,
                     vehicleLambungId,
                     vehicleDistrict,
-                    noteSA,
-                    workshopName,
-                    workshopLocation,
+                    noteFromSA,
+                    null,
+                    null,
                     startAssignment,
-                    locoption,
+                    locationOption,
                     isStoring
 
                 )
                 listReport.add(getResult)
             }
         }
-        listReports.addAll(listReport)
+        repairList.addAll(listReport)
 
-        if (listReports.isEmpty()) {
+        if (repairList.isEmpty()) {
             binding.lyNotFound.visibility = View.VISIBLE
         } else {
             binding.lyNotFound.visibility = View.GONE
@@ -116,15 +119,61 @@ class CheckActivity : AppCompatActivity() {
         setRecycler()
     }
 
+    private fun prepareFilter() {
+        filterList.add(
+            Filter(
+                true,
+                0,
+                "Semua"
+            )
+        )
+        filterList.add(
+            Filter(
+                false,
+                12,
+                "Menunggu"
+            )
+        )
+        filterList.add(
+            Filter(
+                false,
+                13,
+                "Diperiksa"
+            )
+        )
+        filterList.add(
+            Filter(
+                false,
+                14,
+                "Approval"
+            )
+        )
+
+        filterAdapter.setAllFilter(filterList)
+
+        binding.rvCoFilter.layoutManager = LinearLayoutManager(this@CheckActivity,LinearLayoutManager.HORIZONTAL,false)
+        binding.rvCoFilter.adapter = filterAdapter
+        filterAdapter.setOnItemClickCallback(object : FilterAdapter.OnItemClickCallback {
+            override fun onItemClicked(data: Filter, position: Int) {
+
+                for (i in filterList.indices) {
+                    val filter = filterList[i]
+                    filter.isActive = i == position
+                }
+                filterAdapter.notifyDataSetChanged()
+            }
+        })
+    }
+
     private fun setRecycler() {
-        repairAdapter.setAllLaporan(listReports)
+        repairAdapter.setAllLaporan(repairList)
 
         binding.rvCheck.layoutManager = LinearLayoutManager(this@CheckActivity)
         binding.rvCheck.adapter = repairAdapter
 
         repairAdapter.setOnItemClickCallback(object : RepairAdapter.OnItemClickCallback {
             override fun onItemClicked(data: Repair) {
-                Toast.makeText(context,data.orderId , Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, data.orderId, Toast.LENGTH_SHORT).show()
             }
         })
     }

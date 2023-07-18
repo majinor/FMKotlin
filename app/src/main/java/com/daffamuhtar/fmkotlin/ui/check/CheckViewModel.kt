@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel
 import com.android.volley.VolleyLog
 import com.daffamuhtar.fmkotlin.app.ApiConfig
 import com.daffamuhtar.fmkotlin.model.Repair
+import com.daffamuhtar.fmkotlin.model.response.CheckRepairResponse
 import com.daffamuhtar.fmkotlin.model.response.ErrorResponse
 import com.daffamuhtar.fmkotlin.services.RepairServices
 import com.google.gson.GsonBuilder
@@ -32,8 +33,8 @@ class CheckViewModel : ViewModel() {
     private val _messageGetAllCheckRepair = MutableLiveData<String>()
     val messageGetAllCheckRepair: LiveData<String> = _messageGetAllCheckRepair
 
-    private val _repairList = MutableLiveData<List<Repair>>()
-    val repairList: LiveData<List<Repair>> = _repairList
+    private val _repairList = MutableLiveData<List<CheckRepairResponse>>()
+    val repairList: LiveData<List<CheckRepairResponse>> = _repairList
 
     fun getAllCheckRepair(
         context: Context,
@@ -46,10 +47,10 @@ class CheckViewModel : ViewModel() {
         val services = retrofit?.create(RepairServices::class.java)
         val client = services?.getCheckRepair(userId, 0)
 
-        client?.enqueue(object : Callback<List<Repair>> {
+        client?.enqueue(object : Callback<List<CheckRepairResponse>> {
             override fun onResponse(
-                call: Call<List<Repair>>,
-                response: Response<List<Repair>>
+                call: Call<List<CheckRepairResponse>>,
+                response: Response<List<CheckRepairResponse>>
             ) {
                 _isLoadingGetAllCheckRepair.value = false
 
@@ -60,7 +61,7 @@ class CheckViewModel : ViewModel() {
                         GsonBuilder().setPrettyPrinting().create().toJson(response.body())
                     )
 
-                    val repair: List<Repair>? = response.body()
+                    val repair: List<CheckRepairResponse>? = response.body()
                     if (responseBody != null) {
                         _repairList.value = repair!!
                     }
@@ -99,7 +100,7 @@ class CheckViewModel : ViewModel() {
 
             }
 
-            override fun onFailure(call: Call<List<Repair>>, t: Throwable) {
+            override fun onFailure(call: Call<List<CheckRepairResponse>>, t: Throwable) {
                 _isLoadingGetAllCheckRepair.value = false
                 Log.e(ContentValues.TAG, "onFailure: ${t.message}")
                 _messageGetAllCheckRepair.value =

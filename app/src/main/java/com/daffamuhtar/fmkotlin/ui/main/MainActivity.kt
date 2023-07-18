@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var vdis: String
     private lateinit var vlid: String
     private lateinit var notesa: String
-    private lateinit var locoption: String
+    private lateinit var locationOption: String
     private lateinit var date: String
 
     lateinit var mainActivity: MainActivity

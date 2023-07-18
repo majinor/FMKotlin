@@ -53,7 +53,7 @@ class CheckAdapter(
         val vdis = currentItem.vehicleDistrict
         val nsa = currentItem.noteSA
         val sass = currentItem.startAssignment
-        val locoption = currentItem.locoption
+        val locationOption = currentItem.locationOption
         val isstoring = currentItem.isStoring
 
         if (isstoring == "1") {
@@ -79,7 +79,7 @@ class CheckAdapter(
         val timeonly = sass.substring(11, 16)
         holder.tvdate.text = "$date - $timeonly"
         holder.tvspkid.text = sid
-        holder.tvlocoption.text = locoption
+        holder.tvlocoption.text = locationOption
         holder.tvvlid.text = vlid
         holder.tvvdis.text = vdis
         holder.tvvehicle.text = "$vbrand $vtype $vvar $vyear\n$vlicen"

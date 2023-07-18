@@ -64,7 +64,7 @@ class SplashActivity : AppCompatActivity() {
     private var vdis: String? = null
     private var vlid: String? = null
     private var notesa: String? = null
-    private var locoption: String? = null
+    private var locationOption: String? = null
     private var date: String? = null
 
     private var waktu_loading: Int = 0
