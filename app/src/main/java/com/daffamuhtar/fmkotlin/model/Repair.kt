@@ -18,6 +18,8 @@ data class Repair(
     val workshopLocation: String?,
     val startAssignment: String,
     val locationOption: String?,
-    val isStoring: String
+    val isStoring: String,
+    val orderType: String?,
+    val colorCode: String?,
 
-)
+    )

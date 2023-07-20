@@ -23,7 +23,6 @@ import java.io.IOException
 
 class CheckViewModel : ViewModel() {
 
-
     private val _isLoadingGetAllCheckRepair = MutableLiveData<Boolean>()
     val isLoadingGetAllCheckRepair: LiveData<Boolean> = _isLoadingGetAllCheckRepair
 

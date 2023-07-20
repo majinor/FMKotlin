@@ -137,6 +137,7 @@ object Constanta {
     const val EXTRA_PART_QUANTITY_LEFT = "EXTRA_PART_QUANTITY_LEFT"
     const val EXTRA_REQCODE = "reqcode"
     const val EXTRA_REQTYPE = "reqtype"
+    const val EXTRA_ACTION_TYPE = "EXTRA_ACTION_TYPE"
     const val TAG_CHANGEPASS = "p2"
     const val TAG_EDITPROFILE = "p1"
     const val TAG_OPS = "aa"

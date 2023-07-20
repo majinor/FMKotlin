@@ -1,18 +1,16 @@
 package com.daffamuhtar.fmkotlin.ui.check
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.android.volley.RequestQueue
+import com.daffamuhtar.fmkotlin.constants.Constanta
 import com.daffamuhtar.fmkotlin.constants.ConstantaApp
 import com.daffamuhtar.fmkotlin.databinding.ActivityCheckBinding
 import com.daffamuhtar.fmkotlin.model.Filter
@@ -21,6 +19,7 @@ import com.daffamuhtar.fmkotlin.model.response.CheckRepairResponse
 import com.daffamuhtar.fmkotlin.ui.adapter.CheckAdapter
 import com.daffamuhtar.fmkotlin.ui.adapter.FilterAdapter
 import com.daffamuhtar.fmkotlin.ui.adapter.RepairAdapter
+import com.daffamuhtar.fmkotlin.ui.repair_detail.RepairDetailActivity
 
 class CheckActivity : AppCompatActivity() {
 
@@ -102,7 +101,9 @@ class CheckActivity : AppCompatActivity() {
                     null,
                     startAssignment,
                     locationOption,
-                    isStoring
+                    isStoring,
+                    null,
+                    null
 
                 )
                 listReport.add(getResult)
@@ -174,6 +175,24 @@ class CheckActivity : AppCompatActivity() {
         repairAdapter.setOnItemClickCallback(object : RepairAdapter.OnItemClickCallback {
             override fun onItemClicked(data: Repair) {
                 Toast.makeText(context, data.orderId, Toast.LENGTH_SHORT).show()
+                val intent = Intent(context, RepairDetailActivity::class.java)
+                intent.putExtra(Constanta.EXTRA_SPKID, data.spkId)
+                intent.putExtra(Constanta.EXTRA_ORDERID, data.orderId)
+                intent.putExtra(Constanta.EXTRA_VID, data.vehicleId)
+                intent.putExtra(Constanta.EXTRA_VBRAND, data.vehicleBrand)
+                intent.putExtra(Constanta.EXTRA_VTYPE, data.vehicleType)
+                intent.putExtra(Constanta.EXTRA_VVAR, data.vehicleVarian)
+                intent.putExtra(Constanta.EXTRA_VYEAR, data.vehicleYear)
+                intent.putExtra(Constanta.EXTRA_VLICEN, data.vehicleLicenseNumber)
+                intent.putExtra(Constanta.EXTRA_VDIS, data.vehicleDistrict)
+                intent.putExtra(Constanta.EXTRA_VLID, data.vehicleLambungId)
+                intent.putExtra(Constanta.EXTRA_STAGEID, data.stageId)
+                intent.putExtra(Constanta.EXTRA_STAGENAME, data.stageName)
+                intent.putExtra(Constanta.EXTRA_LOCOPTION, data.locationOption)
+                intent.putExtra(Constanta.EXTRA_SASSIGN, data.startAssignment)
+                intent.putExtra(Constanta.EXTRA_ISSTORING, data.isStoring)
+                intent.putExtra(Constanta.EXTRA_NOTESA, data.noteSA)
+                startActivity(intent)
             }
         })
     }
