@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.daffamuhtar.fmkotlin.databinding.FragmentHomeBinding
 import com.daffamuhtar.fmkotlin.ui.check.CheckActivity
+import com.daffamuhtar.fmkotlin.ui.repair_ongoing.RepairOngoingActivity
 
 class HomeFragment : Fragment() {
 
@@ -26,9 +27,13 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         binding.btnUhReportproblem.setOnClickListener {
             val intent = Intent(requireContext(), CheckActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.btnUhSchedule.setOnClickListener {
+            val intent = Intent(requireContext(), RepairOngoingActivity::class.java)
             startActivity(intent)
         }
     }

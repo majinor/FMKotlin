@@ -4,15 +4,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.daffamuhtar.fmkotlin.databinding.ItemRepairProblemBinding
-import com.daffamuhtar.fmkotlin.model.ProblemRepair
+import com.daffamuhtar.fmkotlin.databinding.ItemRepairDetailPartBinding
+import com.daffamuhtar.fmkotlin.model.RepairDetailPart
 
-class RepairProblemAdapter() : RecyclerView.Adapter<RepairProblemAdapter.ItemViewHolder>() {
+class RepairDetailPartAdapter() : RecyclerView.Adapter<RepairDetailPartAdapter.ItemViewHolder>() {
 
-    private var items = listOf<ProblemRepair>()
+    private var items = listOf<RepairDetailPart>()
     private lateinit var onItemClickCallback: OnItemClickCallback
 
-    fun setItems(items: List<ProblemRepair>) {
+    fun setItems(items: List<RepairDetailPart>) {
         items.let {
             this.items = it
             notifyDataSetChanged()
@@ -21,7 +21,7 @@ class RepairProblemAdapter() : RecyclerView.Adapter<RepairProblemAdapter.ItemVie
 
 
     interface OnItemClickCallback {
-        fun onItemClicked(data: ProblemRepair,position: Int)
+        fun onItemClicked(data: RepairDetailPart,position: Int)
     }
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
@@ -29,26 +29,22 @@ class RepairProblemAdapter() : RecyclerView.Adapter<RepairProblemAdapter.ItemVie
     }
 
 
-    inner class ItemViewHolder(private val view: ItemRepairProblemBinding) :
+    inner class ItemViewHolder(private val view: ItemRepairDetailPartBinding) :
         RecyclerView.ViewHolder(view.root) {
-        fun bind(item: ProblemRepair, position: Int) {
+        fun bind(item: RepairDetailPart, position: Int) {
             with(view) {
-                if (position==0){
-                    ivLineSeparator.visibility= View.GONE
-                }
-                val photoAdapter = PhotoAdapter()
-
-                tvProblemNote.text = item.problemNote
-
-                photoAdapter.setItems(item.problemPhotos)
-                rvPhoto.adapter=photoAdapter
-
+                tvPartName.text = item.partName
+                tvPartBrand.text = item.partBrand
+                tvPartQuantity.text = item.partQuantity
+                tvPartUnit.text = item.partUnit
+                tvPartSku.text = item.partSku
+                tvPartId.text = item.newPartId
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        val view = ItemRepairProblemBinding.inflate(
+        val view = ItemRepairDetailPartBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false

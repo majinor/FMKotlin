@@ -1,42 +1,31 @@
-package com.daffamuhtar.fmkotlin.ui.check
+package com.daffamuhtar.fmkotlin.ui.repair_ongoing
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.android.volley.RequestQueue
 import com.daffamuhtar.fmkotlin.constants.Constanta
 import com.daffamuhtar.fmkotlin.constants.ConstantaApp
-import com.daffamuhtar.fmkotlin.databinding.ActivityCheckBinding
+import com.daffamuhtar.fmkotlin.databinding.FragmentRepairOngoingNonperiodBinding
 import com.daffamuhtar.fmkotlin.model.Filter
 import com.daffamuhtar.fmkotlin.model.Repair
-import com.daffamuhtar.fmkotlin.model.response.CheckRepairResponse
-import com.daffamuhtar.fmkotlin.ui.adapter.CheckAdapter
+import com.daffamuhtar.fmkotlin.model.response.RepairOnNonperiodResponse
 import com.daffamuhtar.fmkotlin.ui.adapter.FilterAdapter
 import com.daffamuhtar.fmkotlin.ui.adapter.RepairAdapter
 import com.daffamuhtar.fmkotlin.ui.repair_detail.RepairDetailActivity
 
-class CheckActivity : AppCompatActivity() {
+class RepairOngoingNonperiodFragment : Fragment() {
 
-    private lateinit var checkViewModel: CheckViewModel
+    private lateinit var repairOngoingNonperiodViewModel: RepairOngoingNonperiodViewModel
 
-    private lateinit var binding: ActivityCheckBinding
-
-    private val context: Context = this@CheckActivity
-    private val mRecyclerView: RecyclerView? = null
-    private val mCheckAdapter: CheckAdapter? = null
-    private val mCheckList: ArrayList<Repair>? = null
-    private val mRequestQueue: RequestQueue? = null
-
-    private val userid: String? = null
-    private var companyType: String? = null
-    private var token: String? = null
-    private val isGetCheckWo = false
+    private lateinit var binding: FragmentRepairOngoingNonperiodBinding
+    private lateinit var context: Context
 
     private val repairList = ArrayList<Repair>()
     private val filterList = ArrayList<Filter>()
@@ -44,11 +33,17 @@ class CheckActivity : AppCompatActivity() {
     private val repairAdapter: RepairAdapter = RepairAdapter()
     private val filterAdapter: FilterAdapter = FilterAdapter()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityCheckBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        supportActionBar?.hide()
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        binding = FragmentRepairOngoingNonperiodBinding.inflate(inflater)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         declare()
         initViewModel()
@@ -57,12 +52,12 @@ class CheckActivity : AppCompatActivity() {
     }
 
     private fun callData() {
-        checkViewModel.getAllCheckRepair(this, ConstantaApp.BASE_URL_V2_0, "MEC-MBA-99")
+        repairOngoingNonperiodViewModel.getRepairNonperiod(context, ConstantaApp.BASE_URL_V2_0, "MEC-MBA-99")
 
     }
 
     private fun initViewModel() {
-        checkViewModel.repairList.observe(this) {
+        repairOngoingNonperiodViewModel.repairList.observe(requireActivity()) {
             if (it.isNotEmpty()) {
                 setReportResults(it)
             } else {
@@ -70,25 +65,26 @@ class CheckActivity : AppCompatActivity() {
             }
         }
 
-        checkViewModel.isLoadingGetAllCheckRepair.observe(this) {
+        repairOngoingNonperiodViewModel.isLoadingGetRepair.observe(requireActivity()) {
             loading(it)
         }
 
         binding.srCheck.setOnRefreshListener {
-            checkViewModel.getAllCheckRepair(this, ConstantaApp.BASE_URL_V2_0, "MEC-MBA-99")
+            repairOngoingNonperiodViewModel.getRepairNonperiod(context, ConstantaApp.BASE_URL_V2_0, "MEC-MBA-99")
 
         }
     }
 
     private fun declare() {
-        checkViewModel = ViewModelProvider(this)[CheckViewModel::class.java]
+        context = requireActivity()
+        repairOngoingNonperiodViewModel = ViewModelProvider(this)[RepairOngoingNonperiodViewModel::class.java]
     }
 
     private fun loading(value: Boolean) {
         binding.srCheck.isRefreshing = value
     }
 
-    private fun setReportResults(repairs: List<CheckRepairResponse>) {
+    private fun setReportResults(repairs: List<RepairOnNonperiodResponse>) {
         repairList.clear()
         val listReport = ArrayList<Repair>()
 
@@ -96,7 +92,7 @@ class CheckActivity : AppCompatActivity() {
             repair.apply {
                 val getResult = Repair(
                     orderId,
-                    spkId = null,
+                    spkId,
                     pbId = null,
                     stageId,
                     stageName = null,
@@ -112,10 +108,10 @@ class CheckActivity : AppCompatActivity() {
                     workshopName = null,
                     workshopLocation = null,
                     startAssignment,
-                    additionalPartNote = null,
-                    startRepairOdometer = null,
+                    additionalPartNote,
+                    startRepairOdometer,
                     locationOption,
-                    isStoring,
+                    isStoring = null,
                     orderType = null,
                     colorCode = null
 
@@ -166,8 +162,9 @@ class CheckActivity : AppCompatActivity() {
 
         filterAdapter.setAllFilter(filterList)
 
-        binding.rvCoFilter.layoutManager = LinearLayoutManager(this@CheckActivity,LinearLayoutManager.HORIZONTAL,false)
-        binding.rvCoFilter.adapter = filterAdapter
+        binding.rvFilter.layoutManager = LinearLayoutManager(context,
+            LinearLayoutManager.HORIZONTAL,false)
+        binding.rvFilter.adapter = filterAdapter
         filterAdapter.setOnItemClickCallback(object : FilterAdapter.OnItemClickCallback {
             override fun onItemClicked(data: Filter, position: Int) {
 
@@ -183,7 +180,7 @@ class CheckActivity : AppCompatActivity() {
     private fun setRecycler() {
         repairAdapter.setAllLaporan(repairList)
 
-        binding.rvCheck.layoutManager = LinearLayoutManager(this@CheckActivity)
+        binding.rvCheck.layoutManager = LinearLayoutManager(context)
         binding.rvCheck.adapter = repairAdapter
 
         repairAdapter.setOnItemClickCallback(object : RepairAdapter.OnItemClickCallback {
@@ -192,6 +189,7 @@ class CheckActivity : AppCompatActivity() {
                 val intent = Intent(context, RepairDetailActivity::class.java)
                 intent.putExtra(Constanta.EXTRA_SPKID, data.spkId)
                 intent.putExtra(Constanta.EXTRA_ORDERID, data.orderId)
+                intent.putExtra(Constanta.EXTRA_SPKID, data.spkId)
                 intent.putExtra(Constanta.EXTRA_VID, data.vehicleId)
                 intent.putExtra(Constanta.EXTRA_VBRAND, data.vehicleBrand)
                 intent.putExtra(Constanta.EXTRA_VTYPE, data.vehicleType)
@@ -204,6 +202,7 @@ class CheckActivity : AppCompatActivity() {
                 intent.putExtra(Constanta.EXTRA_STAGENAME, data.stageName)
                 intent.putExtra(Constanta.EXTRA_LOCOPTION, data.locationOption)
                 intent.putExtra(Constanta.EXTRA_SASSIGN, data.startAssignment)
+                intent.putExtra(Constanta.EXTRA_ODO, data.startRepairOdometer)
                 intent.putExtra(Constanta.EXTRA_ISSTORING, data.isStoring)
                 intent.putExtra(Constanta.EXTRA_NOTESA, data.noteSA)
                 startActivity(intent)

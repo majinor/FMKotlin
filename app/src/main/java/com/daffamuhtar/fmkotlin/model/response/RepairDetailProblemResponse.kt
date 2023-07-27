@@ -2,7 +2,7 @@ package com.daffamuhtar.fmkotlin.model.response
 
 import com.google.gson.annotations.SerializedName
 
-data class RepairProblemResponse(
+data class RepairDetailProblemResponse(
 
     @SerializedName("problemId")
     var problemId: String,

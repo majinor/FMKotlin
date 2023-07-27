@@ -1,6 +1,6 @@
 package com.daffamuhtar.fmkotlin.model
 
-class ProblemRepair (
+class RepairDetailProblem (
     var problemId: String,
     var problemNote: String,
     val problemPhotos: ArrayList<Photo>,

@@ -16,6 +16,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.daffamuhtar.fmkotlin.R
 import com.daffamuhtar.fmkotlin.databinding.ItemPhotoBinding
 import com.daffamuhtar.fmkotlin.model.Photo
+import com.daffamuhtar.fmkotlin.util.PhotoHelper
 import java.util.*
 
 class PhotoAdapter() : RecyclerView.Adapter<PhotoAdapter.LaporanViewHolder>() {
@@ -45,39 +46,7 @@ class PhotoAdapter() : RecyclerView.Adapter<PhotoAdapter.LaporanViewHolder>() {
         fun bind(item: Photo) {
             with(view) {
 
-                if ((item.file.substring(item.file.lastIndexOf(".") + 1) == "jpg") or
-                    (item.file.substring(item.file.lastIndexOf(".") + 1) == "jpeg") or
-                    (item.file.substring(item.file.lastIndexOf(".") + 1) == "png")
-                ) {
-                    Glide.with(ivPhoto.context)
-                        .load(item.file)
-                        .centerCrop()
-                        .placeholder(R.drawable.baseline_image_24)
-                        .override(200, 200)
-                        .into(ivPhoto)
-
-                } else {
-                    try {
-                        Glide.with(ivPhoto.context)
-                            .load(item.file)
-                            .apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
-                            .centerCrop()
-                            .into(ivPhoto)
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                            ivPhoto.setForeground(
-                                ContextCompat.getDrawable(
-                                    ivPhoto.context,
-                                    R.drawable.ic_play_arrow_black_24dp
-                                )
-                            )
-                        } else {
-                        }
-
-
-                    } catch (throwable: Throwable) {
-                        throwable.printStackTrace()
-                    }
-                }
+                PhotoHelper.setPhotoOrVideo(view.root.context,item.file, ivPhoto)
 
 
             }
@@ -97,13 +66,13 @@ class PhotoAdapter() : RecyclerView.Adapter<PhotoAdapter.LaporanViewHolder>() {
     override fun onBindViewHolder(holder: LaporanViewHolder, position: Int) {
         holder.bind(items[position])
 
-        if (!items[position].isEditable) {
-            holder.itemView.setOnClickListener {
-                onItemClickCallback.onItemClicked(items[holder.adapterPosition], position)
-            }
-        } else {
-            holder.itemView.isClickable = false
-        }
+//        if (!items[position].isEditable) {
+//            holder.itemView.setOnClickListener {
+//                onItemClickCallback.onItemClicked(items[holder.adapterPosition], position)
+//            }
+//        } else {
+//            holder.itemView.isClickable = false
+//        }
     }
 
     override fun getItemCount(): Int = items.size

@@ -3,6 +3,7 @@ package com.daffamuhtar.fmkotlin.model
 data class Repair(
     val orderId: String,
     val spkId: String?,
+    val pbId: String?,
     val stageId: String,
     val stageName: String?,
     val vehicleId: String,
@@ -17,8 +18,10 @@ data class Repair(
     val workshopName: String?,
     val workshopLocation: String?,
     val startAssignment: String,
+    val additionalPartNote: String?,
+    val startRepairOdometer: String?,
     val locationOption: String?,
-    val isStoring: String,
+    val isStoring: String?,
     val orderType: String?,
     val colorCode: String?,
 

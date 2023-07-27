@@ -138,8 +138,8 @@ class Server {
             val sharedpreferences =
                 context.getSharedPreferences(Constanta.my_shared_preferences, Context.MODE_PRIVATE)
             userId = sharedpreferences.getString(Constanta.EXTRA_USERID, null)
-            token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjIiLCJ1c2VybmFtZSI6InVtLXRlc3RpbmctOTk5OSIsImlhdCI6MTY4OTgyNjA4MCwiZXhwIjoxNjg5OTEyNDgwfQ.q__EBWCuTn54Rc_OHtpkh2qFzLFGCkkbq6Yx3Fl7CM4"
-            companyType = sharedpreferences.getString(Constanta.EXTRA_COMPANYTYPE, null)
+            token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjIiLCJ1c2VybmFtZSI6InVtLXRlc3RpbmctOTk5OSIsImlhdCI6MTY5MDQ0OTE4OSwiZXhwIjoxNjkwNTM1NTg5fQ.uu1v7-iyX3VHAoNNN1Q3y42aD77r7q64w_XQ2alFLTY"
+            companyType = "1"
         }
 
     }

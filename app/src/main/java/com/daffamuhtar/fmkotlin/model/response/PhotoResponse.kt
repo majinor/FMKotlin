@@ -2,7 +2,7 @@ package com.daffamuhtar.fmkotlin.model.response
 
 import com.google.gson.annotations.SerializedName
 
-data class RepairProblemPhotoResponse(
+data class PhotoResponse(
     @SerializedName("photo")
     var photo: String,
 

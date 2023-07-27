@@ -2,17 +2,48 @@ package com.daffamuhtar.fmkotlin.util
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.content.Intent
+import android.net.Uri
+import android.view.View
+import android.widget.*
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.daffamuhtar.fmkotlin.R
+import com.daffamuhtar.fmkotlin.constants.ConstantaRepair
+import com.google.android.material.imageview.ShapeableImageView
 import java.text.SimpleDateFormat
 import java.util.*
 
 class RepairHelper {
     companion object {
-        fun getRepairTitle(orderId: String, isStoring: String): String {
+        fun getRepairOrderType(orderId: String, isStoring: String?): String {
+            val suborder: String = orderId.substring(4, 6)
+            val orderType: String
+
+            when (suborder) {
+                "PB" -> {
+                    orderType = ConstantaRepair.ORDER_TYPE_MAINTENANCE
+                }
+                "PN" -> {
+                    orderType = ConstantaRepair.ORDER_TYPE_NPM
+                }
+                "TI" -> {
+                    orderType = ConstantaRepair.ORDER_TYPE_TIRE
+                }
+                else -> {
+                    orderType = if (isStoring == "1") {
+                        ConstantaRepair.ORDER_TYPE_ADHOC
+
+                    } else {
+                        ConstantaRepair.ORDER_TYPE_ADHOC
+                    }
+                }
+            }
+
+            return orderType
+        }
+
+        fun getRepairTitle(orderId: String, isStoring: String?): String {
             val suborder: String = orderId.substring(4, 6)
             var repairTitle: String
 
@@ -81,8 +112,7 @@ class RepairHelper {
         }
 
 
-
-        fun getRepairIcon(orderId: String, isStoring: String): Int {
+        fun getRepairIcon(orderId: String, isStoring: String?): Int {
             val suborder: String = orderId.substring(4, 6)
             var resource = R.drawable.bg_circle_repair_pb
 
@@ -416,7 +446,239 @@ class RepairHelper {
             ivStageIcon.setImageResource(stageIcon)
             lyStage.setBackgroundResource(stageBackgroundColor)
             tvStage.text = stageName
-            tvStage.setTextColor(ContextCompat.getColor(context,stageTextColor))
+            tvStage.setTextColor(ContextCompat.getColor(context, stageTextColor))
+
+//            tvStage.setTextColor(stageTextColor)
+
+        }
+
+        fun setDriverPhoto(
+            context: Context,
+            photoUrl: String,
+            ivPhoto: ShapeableImageView,
+        ) {
+            Glide.with(ivPhoto.context)
+                .load(photoUrl)
+                .centerCrop()
+                .placeholder(R.drawable.ic_person_black_24dp)
+                .override(200, 200)
+                .into(ivPhoto)
+        }
+
+        fun setOnClickChat(
+            context: Context,
+            phoneNumber: String,
+            btnChat: ImageButton,
+        ) {
+            btnChat.setOnClickListener {
+                val url = "https://api.whatsapp.com/send?phone=$phoneNumber"
+                val i = Intent(Intent.ACTION_VIEW)
+                i.data = Uri.parse(url)
+                context.startActivity(i)
+            }
+
+        }
+
+        fun isEdistable(
+            context: Context,
+            stageId: Int,
+            totalPhoto: Int,
+        )  : Boolean {
+
+            var isEditable = false
+            if (stageId==12){
+                if (totalPhoto<3){
+                    isEditable = true
+                }
+            }
+            if (stageId==19){
+                if (totalPhoto<3){
+                    isEditable = true
+                }
+            }
+
+            return isEditable
+        }
+
+        fun setViewAfterRepair(
+            context: Context,
+            isEditable: Boolean,
+            isRequiredScan: Int,
+            totalUsedPart: Int,
+            partQuantity: Int,
+            btnScan: Button,
+            btnScanSecondPart: Button,
+            btnRemove: Button,
+            lyPhoto: LinearLayout,
+        )  {
+
+            when (isRequiredScan) {
+                1, 2, 3 -> {
+                    btnScan.text =
+                        "Scan QR Part Baru - [${totalUsedPart})/${partQuantity}]"
+                    btnScan.visibility = View.VISIBLE
+                    lyPhoto.visibility = View.INVISIBLE
+                    if (totalUsedPart != 0) {
+                        btnRemove.visibility = View.VISIBLE
+                        if (totalUsedPart == partQuantity) {
+                            btnScan.setVisibility(View.INVISIBLE)
+                            lyPhoto.visibility = View.VISIBLE
+                        }
+                    } else {
+                        btnRemove.visibility = View.GONE
+                        btnScan.visibility = View.VISIBLE
+                        lyPhoto.setVisibility(View.INVISIBLE)
+                    }
+                }
+                4 -> {
+                    btnScanSecondPart.setText("Scan Part - [${totalUsedPart}/${partQuantity}]")
+                    //                btnScan.visibility = View.VISIBLE;
+                    lyPhoto.visibility = View.VISIBLE
+                    btnScanSecondPart.visibility = View.VISIBLE
+                    if (totalUsedPart != 0) {
+                        btnRemove.visibility = View.VISIBLE
+                        if (totalUsedPart == partQuantity) {
+                            btnScanSecondPart.setVisibility(View.GONE)
+                            lyPhoto.visibility = View.VISIBLE
+                        }
+                    } else {
+                        btnRemove.visibility = View.GONE
+                        btnScanSecondPart.visibility = View.VISIBLE
+                        lyPhoto.visibility = View.VISIBLE
+                    }
+                }
+            }
+
+            if (!isEditable){
+                btnScan.visibility = View.GONE
+                btnScanSecondPart.visibility = View.GONE
+                btnRemove.visibility = View.GONE
+            }
+
+        }
+
+        fun setRepairDetailAfterRepair(
+            context: Context,
+            stageId: String,
+            stageNameRaw: String?,
+            tvStage: TextView,
+            ivStageIcon: ImageView,
+            lyStage: LinearLayout
+        ) {
+
+
+            val stageIcon: Int
+            val stageBackgroundColor: Int
+            val stageTextColor: Int
+            val stageId: Int = stageId.toInt()
+            var stageName = stageNameRaw
+
+            if (stageName == null) {
+                when (stageId) {
+                    12 -> {
+                        stageName = "Menunggu diperiksa"
+                    }
+                    13 -> {
+                        stageName = "Sedang diperiksa"
+                    }
+                    14 -> {
+                        stageName = "Menunggu verifikasi hasil pemeriksaan"
+                    }
+                    15 -> {
+                        stageName = "Menunggu konfirmasi penawaran"
+                    }
+                    16 -> {
+                        stageName = "Menunggu Surat Penawaran diperbarui"
+                    }
+                    17 -> {
+                        stageName = "Penawaran disetujui"
+                    }
+                    18 -> {
+                        stageName = "Lakukan perbaikan"
+                    }
+                    19 -> {
+                        stageName = "WO sedang diproses"
+                    }
+                    20 -> {
+                        stageName = "Menunggu approval hasil perbaikan"
+                    }
+                    21 -> {
+                        stageName = "Menunggu verifikasi hasil perbaikan"
+                    }
+                    22 -> {
+                        stageName = "Perbaikan selesai"
+                    }
+                    23 -> {
+                        stageName = "Dikomplain"
+                    }
+                    24 -> {
+                        stageName = "WO selesai"
+                    }
+                    26, 27, 28 -> {
+                        stageName = "Menunggu konfirmasi penawaran"
+                    }
+                    29 -> {
+                        stageName = "Order pending"
+                    }
+                    31 -> {
+                        stageName = "Penambahan part segera diproses"
+                    }
+                    32 -> {
+                        stageName = "Surat penawaran sedang diperbarui"
+                    }
+                    33 -> {
+                        stageName = "Revisi Surat Penawaran (penambahan part) Ditolak"
+                    }
+                    else -> {
+
+                    }
+                }
+
+            }
+
+            when (stageId) {
+                12, 13 -> {
+                    stageIcon = R.drawable.ic_stage_repair_check
+                    stageBackgroundColor = R.color.orangesoft
+                    stageTextColor = R.color.orange
+                }
+                14, 15, 16, 17, 20, 21 -> {
+                    stageIcon = R.drawable.ic_stage_repair_ongoing
+                    stageBackgroundColor = R.color.bluesoft
+                    stageTextColor = R.color.blue
+                }
+                18, 19 -> {
+                    stageIcon = R.drawable.ic_stage_repair_onrepair
+                    stageBackgroundColor = R.color.orangesoft
+                    stageTextColor = R.color.orange
+                }
+                23 -> {
+                    stageIcon = R.drawable.ic_stage_repair_complain
+                    stageBackgroundColor = R.color.redsoft
+                    stageTextColor = R.color.red
+                }
+                22, 24 -> {
+                    stageIcon = R.drawable.ic_stage_repair_done
+                    stageBackgroundColor = R.color.greensoft
+                    stageTextColor = R.color.green
+                }
+                26, 27, 28, 29, 31, 32, 33 -> {
+                    stageIcon = R.drawable.ic_stage_repair_ongoing
+                    stageBackgroundColor = R.color.bluesoft
+                    stageTextColor = R.color.blue
+                }
+
+                else -> {
+                    stageIcon = R.drawable.ic_stage_repair_ongoing
+                    stageBackgroundColor = R.color.bluesoft
+                    stageTextColor = R.color.blue
+                }
+            }
+
+            ivStageIcon.setImageResource(stageIcon)
+            lyStage.setBackgroundResource(stageBackgroundColor)
+            tvStage.text = stageName
+            tvStage.setTextColor(ContextCompat.getColor(context, stageTextColor))
 
 //            tvStage.setTextColor(stageTextColor)
 

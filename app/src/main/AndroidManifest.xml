@@ -26,6 +26,9 @@
         android:theme="@style/Theme.FMKotlin"
         tools:targetApi="31">
         <activity
+            android:name=".ui.repair_ongoing.RepairOngoingActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.repair_detail.RepairDetailActivity"
             android:exported="false" />
         <activity

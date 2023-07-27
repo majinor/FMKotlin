@@ -12,7 +12,6 @@ import com.daffamuhtar.fmkotlin.util.RepairHelper.Companion.getRepairId
 import com.daffamuhtar.fmkotlin.util.RepairHelper.Companion.getRepairTitle
 import com.daffamuhtar.fmkotlin.util.RepairHelper.Companion.setRepairStage
 import com.daffamuhtar.fmkotlin.util.VehicleHelper.Companion.getVehicleName
-import java.text.SimpleDateFormat
 import java.util.*
 
 class RepairAdapter() : RecyclerView.Adapter<RepairAdapter.LaporanViewHolder>() {
@@ -46,7 +45,6 @@ class RepairAdapter() : RecyclerView.Adapter<RepairAdapter.LaporanViewHolder>() 
                 lyAssignmentNote.visibility = View.GONE
                 val locale = Locale("id")
 
-
                 tvRepairTitle.text = getRepairTitle(repair.orderId, repair.isStoring)
                 ivRepairIcon.setBackgroundResource(getRepairIcon(repair.orderId, repair.isStoring))
                 tvRepairId.text = getRepairId(repair.orderId, repair.spkId)
@@ -59,6 +57,7 @@ class RepairAdapter() : RecyclerView.Adapter<RepairAdapter.LaporanViewHolder>() 
                     ivRepairStageIcon,
                     lyRepairStage
                 )
+
                 tvVehicleName.text = getVehicleName(
                     repair.vehicleId,
                     repair.vehicleBrand,

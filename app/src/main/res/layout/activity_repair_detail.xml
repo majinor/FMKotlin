@@ -331,7 +331,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cv_ucd_problem"
+                android:id="@+id/cv_problem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -370,21 +370,20 @@
 
                             </LinearLayout>
 
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="1dp"
-                                android:layout_marginTop="5dp"
-                                android:layout_marginBottom="5dp"
-                                android:background="@color/lightgrey" />
-
                             <LinearLayout
-                                android:id="@+id/ly_ucd_problem"
+                                android:id="@+id/ly_problem"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical">
 
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:layout_marginVertical="10dp"
+                                    android:background="@color/lightgrey" />
+
                                 <com.facebook.shimmer.ShimmerFrameLayout
-                                    android:id="@+id/ly_ucd_shimmer_problem"
+                                    android:id="@+id/ly_shimmer_problem"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:visibility="gone"
@@ -441,7 +440,7 @@
                                     android:layout_height="wrap_content">
 
                                     <androidx.recyclerview.widget.RecyclerView
-                                        android:id="@+id/rv_confirmdetail"
+                                        android:id="@+id/rv_problem"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:orientation="vertical"
@@ -459,7 +458,7 @@
                             android:layout_marginTop="5dp">
 
                             <!--                            <ImageView-->
-                            <!--                                android:id="@+id/iv_ucd_wphoto"-->
+                            <!--                                android:id="@+id/iv_wphoto"-->
                             <!--                                android:layout_width="70dp"-->
                             <!--                                android:layout_height="70dp"-->
                             <!--                                android:layout_marginRight="10dp" />-->
@@ -475,7 +474,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cv_ucd_driver"
+                android:id="@+id/cv_driver"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -517,12 +516,12 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="1dp"
-                                android:layout_marginTop="5dp"
-                                android:layout_marginBottom="5dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp"
                                 android:background="@color/lightgrey" />
 
                             <com.facebook.shimmer.ShimmerFrameLayout
-                                android:id="@+id/ly_ucd_shimmer_driver"
+                                android:id="@+id/ly_shimmer_driver"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:visibility="gone"
@@ -637,7 +636,7 @@
                             </com.facebook.shimmer.ShimmerFrameLayout>
 
                             <LinearLayout
-                                android:id="@+id/ly_ucd_driver"
+                                android:id="@+id/ly_driver"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical">
@@ -645,12 +644,11 @@
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="10dp"
                                     android:orientation="horizontal">
 
 
                                     <com.google.android.material.imageview.ShapeableImageView
-                                        android:id="@+id/civ_ucd_driver_photo"
+                                        android:id="@+id/iv_driver_photo"
                                         android:layout_width="50dp"
                                         android:layout_height="50dp"
                                         android:layout_centerHorizontal="true"
@@ -665,7 +663,7 @@
                                         android:orientation="vertical">
 
                                         <TextView
-                                            android:id="@+id/tv_ucd_driver_name"
+                                            android:id="@+id/tv_driver_name"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:text=" "
@@ -674,7 +672,7 @@
                                             android:visibility="visible" />
 
                                         <TextView
-                                            android:id="@+id/tv_ucd_driver_address"
+                                            android:id="@+id/tv_driver_address"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:text=""
@@ -682,13 +680,16 @@
 
                                     </LinearLayout>
 
-                                    <Button
-                                        android:id="@+id/btn_ucd_whatsapp_driver"
-                                        android:layout_width="35dp"
-                                        android:layout_height="35dp"
+                                    <ImageButton
+                                        android:id="@+id/btn_whatsapp_driver"
+                                        android:layout_width="40dp"
+                                        android:layout_height="40dp"
                                         android:layout_gravity="center"
                                         android:layout_marginLeft="10dp"
-                                        android:background="@drawable/ic_whatsapp"
+                                        android:background="@drawable/bg_circle_greensoft"
+                                        android:padding="5dp"
+                                        android:src="@drawable/ic_whatsapp"
+                                        android:scaleType="fitCenter"
                                         android:visibility="visible" />
                                 </LinearLayout>
 
@@ -703,7 +704,7 @@
                             android:layout_marginTop="5dp">
 
                             <!--                            <ImageView-->
-                            <!--                                android:id="@+id/iv_ucd_wphoto"-->
+                            <!--                                android:id="@+id/iv_wphoto"-->
                             <!--                                android:layout_width="70dp"-->
                             <!--                                android:layout_height="70dp"-->
                             <!--                                android:layout_marginRight="10dp" />-->
@@ -755,7 +756,7 @@
                                     android:textStyle="bold" />
 
                                 <TextView
-                                    android:id="@+id/tv_ucd_locoption"
+                                    android:id="@+id/tv_locoption"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
@@ -775,7 +776,7 @@
                                 android:background="@color/lightgrey" />
 
                             <com.facebook.shimmer.ShimmerFrameLayout
-                                android:id="@+id/ly_ucd_shimmer_workshop"
+                                android:id="@+id/ly_shimmer_workshop"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:visibility="gone"
@@ -890,7 +891,7 @@
                             </com.facebook.shimmer.ShimmerFrameLayout>
 
                             <LinearLayout
-                                android:id="@+id/ly_ucd_workshop"
+                                android:id="@+id/ly_workshop"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical">
@@ -920,7 +921,7 @@
                                             android:orientation="horizontal">
 
                                             <TextView
-                                                android:id="@+id/tv_ucd_wname"
+                                                android:id="@+id/tv_workshop_name"
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
                                                 android:text="Nama Bengkel"
@@ -935,7 +936,7 @@
                                             android:orientation="horizontal">
 
                                             <TextView
-                                                android:id="@+id/tv_ucd_waddress"
+                                                android:id="@+id/tv_workshop_address"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:text="Alamat" />
@@ -944,12 +945,16 @@
 
                                     </LinearLayout>
 
-                                    <Button
-                                        android:id="@+id/btn_ucd_map"
-                                        android:layout_width="35dp"
-                                        android:layout_height="35dp"
+                                    <ImageButton
+                                        android:id="@+id/btn_map"
+                                        android:layout_width="40dp"
+                                        android:layout_height="40dp"
+                                        android:layout_gravity="center"
                                         android:layout_marginLeft="10dp"
-                                        android:background="@drawable/baseline_map_24" />
+                                        android:background="@drawable/bg_circle_bluesoft"
+                                        android:padding="5dp"
+                                        android:src="@drawable/baseline_map_24"
+                                        android:visibility="visible" />
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -973,14 +978,14 @@
                                         android:orientation="vertical">
 
                                         <TextView
-                                            android:id="@+id/tv_ucd_mname"
+                                            android:id="@+id/tv_mechanic_name"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:text="Mekanik: "
                                             android:visibility="visible" />
 
                                         <TextView
-                                            android:id="@+id/tv_ucd_mphone"
+                                            android:id="@+id/tv_mechanic_phone"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:text="Telepon:  "
@@ -988,12 +993,16 @@
 
                                     </LinearLayout>
 
-                                    <Button
-                                        android:id="@+id/btn_ucd_whatsapp"
-                                        android:layout_width="35dp"
-                                        android:layout_height="35dp"
+                                    <ImageButton
+                                        android:id="@+id/btn_whatsapp_mechanic"
+                                        android:layout_width="40dp"
+                                        android:layout_height="40dp"
+                                        android:layout_gravity="center"
                                         android:layout_marginLeft="10dp"
-                                        android:background="@drawable/ic_whatsapp"
+                                        android:background="@drawable/bg_circle_greensoft"
+                                        android:padding="5dp"
+                                        android:src="@drawable/ic_whatsapp"
+                                        android:scaleType="fitCenter"
                                         android:visibility="visible" />
                                 </LinearLayout>
 
@@ -1007,7 +1016,7 @@
                                 android:src="@drawable/dotted" />
 
                             <com.facebook.shimmer.ShimmerFrameLayout
-                                android:id="@+id/ly_ucd_shimmer_share_location"
+                                android:id="@+id/ly_shimmer_share_location"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:padding="15dp"
@@ -1082,7 +1091,7 @@
                             </com.facebook.shimmer.ShimmerFrameLayout>
 
                             <LinearLayout
-                                android:id="@+id/ly_ucd_maps"
+                                android:id="@+id/ly_maps"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginHorizontal="5dp"
@@ -1101,7 +1110,7 @@
                                         android:layout_height="match_parent">
 
                                         <org.osmdroid.views.MapView
-                                            android:id="@+id/mv_ucd_map"
+                                            android:id="@+id/mv_map"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             app:layout_constraintBottom_toBottomOf="parent"
@@ -1110,7 +1119,7 @@
                                             app:layout_constraintTop_toTopOf="parent" />
 
                                         <RelativeLayout
-                                            android:id="@+id/ly_ucd_clik_map"
+                                            android:id="@+id/ly_clik_map"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:clickable="true"
@@ -1124,7 +1133,7 @@
                             </LinearLayout>
 
                             <LinearLayout
-                                android:id="@+id/ly_ucd_is_sharing"
+                                android:id="@+id/ly_is_sharing"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
@@ -1174,7 +1183,7 @@
                             android:layout_marginTop="5dp">
 
                             <!--                            <ImageView-->
-                            <!--                                android:id="@+id/iv_ucd_wphoto"-->
+                            <!--                                android:id="@+id/iv_wphoto"-->
                             <!--                                android:layout_width="70dp"-->
                             <!--                                android:layout_height="70dp"-->
                             <!--                                android:layout_marginRight="10dp" />-->
@@ -1190,7 +1199,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cv_ucd_check"
+                android:id="@+id/cv_check"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -1215,15 +1224,17 @@
                             android:textSize="17sp"
                             android:textStyle="bold" />
 
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginBottom="5dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
                             android:background="@color/lightgrey" />
 
+
                         <com.facebook.shimmer.ShimmerFrameLayout
-                            android:id="@+id/ly_ucd_shimmer_checking"
+                            android:id="@+id/ly_shimmer_checking"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:visibility="gone"
@@ -1280,7 +1291,7 @@
 
 
                         <LinearLayout
-                            android:id="@+id/ly_ucd_checking_null"
+                            android:id="@+id/ly_checking_null"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/bg_rounded_textview"
@@ -1352,7 +1363,7 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/ly_ucd_checking"
+                            android:id="@+id/ly_checking"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
@@ -1387,7 +1398,7 @@
                                         android:textStyle="bold" />
 
                                     <TextView
-                                        android:id="@+id/tv_ucd_cnote"
+                                        android:id="@+id/tv_cnote"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
@@ -1403,27 +1414,31 @@
 
 
                             <LinearLayout
+                                android:id="@+id/ly_after_check_photo"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp">
+                                android:gravity="center_vertical"
+                                android:minHeight="70dp"
+                                android:orientation="horizontal"
+                                android:visibility="visible">
 
-                                <ImageView
-                                    android:id="@+id/iv_ucd_cphoto1"
-                                    android:layout_width="70dp"
-                                    android:layout_height="70dp"
-                                    android:layout_marginRight="10dp" />
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/rv_after_check_photo"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                                    tools:itemCount="2"
+                                    tools:listitem="@layout/item_photo" />
 
-                                <ImageView
-                                    android:id="@+id/iv_ucd_cphoto2"
-                                    android:layout_width="70dp"
-                                    android:layout_height="70dp"
-                                    android:layout_marginRight="10dp" />
+                                <ImageButton
+                                    android:id="@+id/btn_add_photo"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:layout_margin="10dp"
+                                    android:background="@drawable/ic_add_circle_outline_black_24dp"
+                                    android:visibility="gone" />
 
-                                <ImageView
-                                    android:id="@+id/iv_ucd_cphoto3"
-                                    android:layout_width="70dp"
-                                    android:layout_height="70dp"
-                                    android:layout_marginRight="10dp" />
 
                             </LinearLayout>
 
@@ -1433,21 +1448,21 @@
                                 android:layout_marginTop="5dp">
 
                                 <ImageView
-                                    android:id="@+id/iv_ucd_cphoto4"
+                                    android:id="@+id/iv_cphoto4"
                                     android:layout_width="70dp"
                                     android:layout_height="70dp"
                                     android:layout_marginRight="10dp"
                                     android:visibility="gone" />
 
                                 <ImageView
-                                    android:id="@+id/iv_ucd_cphoto5"
+                                    android:id="@+id/iv_cphoto5"
                                     android:layout_width="70dp"
                                     android:layout_height="70dp"
                                     android:layout_marginRight="10dp"
                                     android:visibility="gone" />
 
                                 <ImageView
-                                    android:id="@+id/iv_ucd_cphoto6"
+                                    android:id="@+id/iv_cphoto6"
                                     android:layout_width="70dp"
                                     android:layout_height="70dp"
                                     android:layout_marginRight="10dp"
@@ -1456,7 +1471,7 @@
                             </LinearLayout>
 
                             <TextView
-                                android:id="@+id/tv_ucd_cverif"
+                                android:id="@+id/tv_cverif"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
@@ -1474,7 +1489,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cv_ucd_parts"
+                android:id="@+id/cv_parts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -1491,15 +1506,43 @@
                         android:layout_margin="15dp"
                         android:orientation="vertical">
 
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Parts dan Jasa"
-                            android:textSize="17sp"
-                            android:textStyle="bold" />
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Part dan Jasa"
+                                android:textSize="15sp"
+                                android:layout_weight="1"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tv_warehouse_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:paddingLeft="5dp"
+                                android:paddingRight="5dp"
+                                android:text=""
+                                android:textColor="@color/blue"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="@color/lightgrey" />
 
                         <com.facebook.shimmer.ShimmerFrameLayout
-                            android:id="@+id/ly_ucd_shimmer_parts"
+                            android:id="@+id/ly_shimmer_parts"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:visibility="gone"
@@ -1578,7 +1621,7 @@
                         </com.facebook.shimmer.ShimmerFrameLayout>
 
                         <LinearLayout
-                            android:id="@+id/ly_ucd_parts"
+                            android:id="@+id/ly_parts"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
@@ -1609,7 +1652,7 @@
                                         <LinearLayout
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
-                                            android:background="@color/yellowsoft">
+                                            android:background="@color/lightgrey">
 
                                             <TextView
                                                 android:layout_width="1dp"
@@ -1621,13 +1664,14 @@
                                                 android:textStyle="bold" />
 
 
+
                                             <TextView
                                                 android:id="@+id/tv_irdp_item"
                                                 android:layout_width="150dp"
                                                 android:layout_height="wrap_content"
                                                 android:gravity="center_vertical"
-                                                android:text="Nama Part"
-                                                android:textStyle="bold" />
+                                                android:textStyle="bold"
+                                                android:text="Nama Part" />
 
                                             <TextView
                                                 android:layout_width="1dp"
@@ -1643,8 +1687,8 @@
                                                 android:layout_width="80dp"
                                                 android:layout_height="wrap_content"
                                                 android:gravity="center_vertical"
-                                                android:text="Brand"
-                                                android:textStyle="bold" />
+                                                android:textStyle="bold"
+                                                android:text="Brand" />
 
                                             <TextView
                                                 android:layout_width="1dp"
@@ -1660,8 +1704,8 @@
                                                 android:layout_width="50dp"
                                                 android:layout_height="wrap_content"
                                                 android:gravity="center"
-                                                android:text="Jumlah"
-                                                android:textStyle="bold" />
+                                                android:textStyle="bold"
+                                                android:text="Jumlah" />
 
                                             <TextView
                                                 android:layout_width="1dp"
@@ -1677,8 +1721,8 @@
                                                 android:layout_width="50dp"
                                                 android:layout_height="wrap_content"
                                                 android:gravity="center"
-                                                android:text="Satuan"
-                                                android:textStyle="bold" />
+                                                android:textStyle="bold"
+                                                android:text="Satuan" />
 
                                             <TextView
                                                 android:layout_width="1dp"
@@ -1700,6 +1744,22 @@
                                             <TextView
                                                 android:layout_width="1dp"
                                                 android:layout_height="match_parent"
+                                                android:layout_marginHorizontal="10dp"
+                                                android:background="@color/lightgrey"
+                                                android:gravity="center"
+                                                android:textSize="10dp"
+                                                android:textStyle="bold" />
+                                            <TextView
+                                                android:id="@+id/tv_irdp_part_id"
+                                                android:layout_width="100dp"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginBottom="5dp"
+                                                android:text="ID Part"
+                                                android:textStyle="bold" />
+
+                                            <TextView
+                                                android:layout_width="1dp"
+                                                android:layout_height="match_parent"
                                                 android:layout_marginLeft="10dp"
                                                 android:background="@color/lightgrey"
                                                 android:gravity="center"
@@ -1709,10 +1769,11 @@
                                         </LinearLayout>
 
                                         <androidx.recyclerview.widget.RecyclerView
-                                            android:id="@+id/rv_confirmdetailparts"
+                                            android:id="@+id/rv_part"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:orientation="vertical"
+                                            tools:listitem="@layout/item_repair_detail_part"
                                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
                                     </LinearLayout>
@@ -1731,7 +1792,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cv_ucd_reportv"
+                android:id="@+id/cv_reportv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -1760,12 +1821,11 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginBottom="5dp"
+                            android:layout_marginVertical="10dp"
                             android:background="@color/lightgrey" />
 
                         <com.facebook.shimmer.ShimmerFrameLayout
-                            android:id="@+id/ly_ucd_shimmer_repairv"
+                            android:id="@+id/ly_shimmer_repairv"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:visibility="gone"
@@ -1818,7 +1878,7 @@
                         </com.facebook.shimmer.ShimmerFrameLayout>
 
                         <LinearLayout
-                            android:id="@+id/ly_ucd_repairv"
+                            android:id="@+id/ly_repairv"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
@@ -1853,7 +1913,7 @@
                                         android:textStyle="bold" />
 
                                     <TextView
-                                        android:id="@+id/et_ucd_notev"
+                                        android:id="@+id/et_notev"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
@@ -1872,7 +1932,7 @@
                                 android:layout_height="wrap_content">
 
                                 <androidx.recyclerview.widget.RecyclerView
-                                    android:id="@+id/rv_ucd_donereport"
+                                    android:id="@+id/rv_donereport"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:orientation="vertical" />
@@ -1887,7 +1947,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cv_ucd_reportx"
+                android:id="@+id/cv_reportx"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -1915,8 +1975,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginBottom="5dp"
+                            android:layout_marginVertical="10dp"
                             android:background="@color/lightgrey" />
 
                         <LinearLayout
@@ -1924,7 +1983,7 @@
                             android:layout_height="wrap_content" />
 
                         <com.facebook.shimmer.ShimmerFrameLayout
-                            android:id="@+id/ly_ucd_shimmer_repairx"
+                            android:id="@+id/ly_shimmer_repairx"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:visibility="gone"
@@ -1965,53 +2024,32 @@
                         </com.facebook.shimmer.ShimmerFrameLayout>
 
                         <LinearLayout
-                            android:id="@+id/ly_ucd_repairx"
+                            android:id="@+id/ly_repairx"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
-
-
-                            <LinearLayout
-                                android:id="@+id/ly_ucd_reportx_nonlist"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp">
-
-                                <ImageView
-                                    android:id="@+id/iv_ucd_photo1x"
-                                    android:layout_width="70dp"
-                                    android:layout_height="70dp"
-                                    android:layout_marginRight="10dp"
-                                    android:visibility="visible" />
-
-                                <ImageView
-                                    android:id="@+id/iv_ucd_photo2x"
-                                    android:layout_width="70dp"
-                                    android:layout_height="70dp"
-                                    android:layout_marginRight="10dp"
-                                    android:visibility="gone" />
-
-                                <ImageView
-                                    android:id="@+id/iv_ucd_photo3x"
-                                    android:layout_width="70dp"
-                                    android:layout_height="70dp"
-                                    android:layout_marginRight="10dp"
-                                    android:visibility="gone" />
-
-
-                            </LinearLayout>
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
 
                                 <androidx.recyclerview.widget.RecyclerView
-                                    android:id="@+id/rv_ucd_wastereport"
-                                    android:layout_width="match_parent"
+                                    android:id="@+id/rv_after_repair_waste"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:orientation="vertical"
-                                    android:visibility="gone"
+                                    android:orientation="horizontal"
+                                    android:visibility="visible"
+                                    tools:itemCount="2"
+                                    tools:listitem="@layout/item_photo"
                                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+                                <ImageButton
+                                    android:id="@+id/btn_add_photo_waste"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:layout_margin="10dp"
+                                    android:background="@drawable/ic_add_circle_outline_black_24dp"
+                                    android:visibility="gone" />
 
                             </RelativeLayout>
                         </LinearLayout>
@@ -2023,7 +2061,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cv_ucd_complain"
+                android:id="@+id/cv_complain"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -2056,7 +2094,7 @@
                                 android:textStyle="bold" />
 
                             <TextView
-                                android:id="@+id/tv_ucd_complainstatus"
+                                android:id="@+id/tv_complainstatus"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/bg_rounded_textview"
@@ -2073,8 +2111,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginBottom="5dp"
+                            android:layout_marginVertical="10dp"
                             android:background="@color/lightgrey" />
 
                         <TextView
@@ -2087,7 +2124,7 @@
                             android:layout_height="wrap_content">
 
                             <EditText
-                                android:id="@+id/et_ucd_complainnote"
+                                android:id="@+id/et_complainnote"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -2105,28 +2142,28 @@
                             android:layout_marginTop="5dp">
 
                             <ImageView
-                                android:id="@+id/iv_ucd_complain1"
+                                android:id="@+id/iv_complain1"
                                 android:layout_width="70dp"
                                 android:layout_height="70dp"
                                 android:layout_marginRight="10dp"
                                 android:visibility="gone" />
 
                             <ImageView
-                                android:id="@+id/iv_ucd_complain2"
+                                android:id="@+id/iv_complain2"
                                 android:layout_width="70dp"
                                 android:layout_height="70dp"
                                 android:layout_marginRight="10dp"
                                 android:visibility="gone" />
 
                             <ImageView
-                                android:id="@+id/iv_ucd_complain3"
+                                android:id="@+id/iv_complain3"
                                 android:layout_width="70dp"
                                 android:layout_height="70dp"
                                 android:layout_marginRight="10dp"
                                 android:visibility="gone" />
 
                             <ImageView
-                                android:id="@+id/iv_ucd_addcomplain"
+                                android:id="@+id/iv_addcomplain"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:layout_margin="10dp"
@@ -2149,7 +2186,7 @@
                 android:paddingTop="20dp">
 
                 <Button
-                    android:id="@+id/btn_ucd_doconfirm"
+                    android:id="@+id/btn_doconfirm"
                     style="@style/ButtonYellow"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -2160,7 +2197,7 @@
                     android:text="Verifikasi Perbaikan" />
 
                 <Button
-                    android:id="@+id/btn_ucd_rerepair"
+                    android:id="@+id/btn_rerepair"
                     style="@style/ButtonOutlineRed"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -2171,7 +2208,7 @@
                     android:text="Ajukan Komplain Perbaikan" />
 
                 <Button
-                    android:id="@+id/btn_ucd_sendrerepair"
+                    android:id="@+id/btn_sendrerepair"
                     style="@style/ButtonRed"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -2181,7 +2218,7 @@
                     android:visibility="gone" />
 
                 <Button
-                    android:id="@+id/btn_ucd_cancle"
+                    android:id="@+id/btn_cancle"
                     style="@style/ButtonOutlineGrey"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

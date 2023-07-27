@@ -4,10 +4,11 @@ object Constanta {
     const val TAG = "TAG FM KOTLIN"
 
     //Ordertype
-    const val ORDERTYPE_ADHOC = "adhoc"
-    const val ORDERTYPE_MAINTENANCE = "maintenance"
-    const val ORDERTYPE_NPM = "npm"
-    const val ORDERTYPE_TIRE = "tire"
+    const val ORDER_TYPE_ADHOC = "adhoc"
+    const val ORDER_TYPE_ADHOC_STORING = "adhoc_storing"
+    const val ORDER_TYPE_MAINTENANCE = "maintenance"
+    const val ORDER_TYPE_NPM = "npm"
+    const val ORDER_TYPE_TIRE = "tire"
 
     //sharedpreferences
     const val my_shared_preferences = "my_shared_preferences"

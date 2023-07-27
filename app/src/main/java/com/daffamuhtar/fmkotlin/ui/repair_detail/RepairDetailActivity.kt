@@ -1,24 +1,23 @@
 package com.daffamuhtar.fmkotlin.ui.repair_detail
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.daffamuhtar.fmkotlin.constants.Constanta
 import com.daffamuhtar.fmkotlin.constants.ConstantaApp
 import com.daffamuhtar.fmkotlin.databinding.ActivityRepairDetailBinding
 import com.daffamuhtar.fmkotlin.model.*
-import com.daffamuhtar.fmkotlin.model.response.CheckRepairResponse
-import com.daffamuhtar.fmkotlin.model.response.RepairProblemResponse
-import com.daffamuhtar.fmkotlin.ui.adapter.RepairAdapter
-import com.daffamuhtar.fmkotlin.ui.adapter.RepairProblemAdapter
+import com.daffamuhtar.fmkotlin.model.response.*
+import com.daffamuhtar.fmkotlin.ui.adapter.PhotoAdapter
+import com.daffamuhtar.fmkotlin.ui.adapter.RepairDetailAfterRepairAdapter
+import com.daffamuhtar.fmkotlin.ui.adapter.RepairDetailPartAdapter
+import com.daffamuhtar.fmkotlin.ui.adapter.RepairDetailProblemAdapter
 import com.daffamuhtar.fmkotlin.util.RepairHelper
 import com.daffamuhtar.fmkotlin.util.VehicleHelper
-import java.util.*
-import kotlin.collections.ArrayList
 
 class RepairDetailActivity : AppCompatActivity() {
 
@@ -27,10 +26,11 @@ class RepairDetailActivity : AppCompatActivity() {
 
     private var reqType: String? = null
     private var actionType: String? = null
-    private var orderId: String? = null
+    private var orderType: String? = null
+    private lateinit var orderId: String
     private var spkId: String? = null
     private var repairDate: String? = null
-    private var stageId: String? = null
+    private lateinit var stageId: String
     private var stageName: String? = null
     private var pbId: String? = null
     private var isStoring: String? = null
@@ -49,14 +49,25 @@ class RepairDetailActivity : AppCompatActivity() {
     private var vehicleLambungId: String? = null
     private var vehicleDistrict: String? = null
 
-    private val repairProblemAdapter: RepairProblemAdapter = RepairProblemAdapter()
-    private val repairProblems: ArrayList<ProblemRepair> = ArrayList<ProblemRepair>()
+    private val repairDetailProblemAdapter: RepairDetailProblemAdapter =
+        RepairDetailProblemAdapter()
+    private val repairDetailProblems: ArrayList<RepairDetailProblem> = ArrayList()
 
-//    private val mRepairDetailPartsAdapter: RepairDetailPartsAdapter? = null
-//    private val mRepairDetailPartsList: ArrayList<RepairDetailPartsModel>? = null
-//
-//    private val mRepairDetailDoneAdapter: RepairDetailDoneAdapter? = null
-//    private val mRepairDetailDoneList: ArrayList<RepairDetailDoneModel>? = null
+    private val repairDetailPartAdapter: RepairDetailPartAdapter = RepairDetailPartAdapter()
+    private val repairDetailParts: ArrayList<RepairDetailPart> = ArrayList()
+
+    private val repairDetailAfterCheckAdapter: PhotoAdapter = PhotoAdapter()
+    private val repairDetailAfterCheckPhoto: ArrayList<Photo> = ArrayList()
+
+    private val repairDetailAfterRepairAdapter: RepairDetailAfterRepairAdapter =
+        RepairDetailAfterRepairAdapter()
+    private val repairDetailAfterRepairs: ArrayList<RepairDetailAfterRepair> = ArrayList()
+
+    private val repairDetailAfterRepairWasteAdapter: PhotoAdapter = PhotoAdapter()
+    private val repairDetailAfterRepairWastePhoto: ArrayList<Photo> = ArrayList()
+
+    private val repairDetailAfterRepairComplainAdapter: PhotoAdapter = PhotoAdapter()
+    private val repairDetailAfterRepairComplainPhoto: ArrayList<Photo> = ArrayList()
 //
 //    private val mRepairDetailDoneNewAdapter: RepairDetailDoneNewAdapter? = null
 //    private val mRepairDetailDoneNewList: ArrayList<RepairDetailDoneNewModel>? = null
@@ -85,21 +96,20 @@ class RepairDetailActivity : AppCompatActivity() {
         getData()
         setData()
         prepareView()
-        initObserver()
+        initViewModel()
 
     }
 
     private fun setData() {
         binding.lyAssignmentNote.visibility = View.GONE
 
-        binding.tvRepairTitle.text = RepairHelper.getRepairTitle(orderId!!, isStoring!!)
+        binding.tvRepairTitle.text = RepairHelper.getRepairTitle(orderId, isStoring)
         binding.ivRepairIcon.setBackgroundResource(
             RepairHelper.getRepairIcon(
-                orderId!!,
-                isStoring!!
+                orderId, isStoring
             )
         )
-        binding.tvRepairId.text = RepairHelper.getRepairId(orderId!!, spkId)
+        binding.tvRepairId.text = RepairHelper.getRepairId(orderId, spkId)
         binding.tvRepairDate.text = RepairHelper.getRepairDate(repairDate!!)
         RepairHelper.setRepairStage(
             this,
@@ -129,34 +139,539 @@ class RepairDetailActivity : AppCompatActivity() {
     }
 
     private fun callData() {
-        repairDetailViewModel.getAllRepairProblem(this, ConstantaApp.BASE_URL_V1_0, orderId!!)
+        repairDetailViewModel.getRepairDetailProblemList(
+            this, ConstantaApp.BASE_URL_V1_0, orderType, orderId, spkId
+        )
+        repairDetailViewModel.getRepairDetailActiveDriver(
+            this, ConstantaApp.BASE_URL_V1_0, orderType, orderId, spkId
+        )
+        repairDetailViewModel.getRepairDetailWorkshopInfo(
+            this, ConstantaApp.BASE_URL_V1_0, orderType, orderId, spkId
+        )
+        repairDetailViewModel.getRepairDetailMechanicInfo(
+            this, ConstantaApp.BASE_URL_V1_0, orderType, orderId, spkId
+        )
+        repairDetailViewModel.getRepairDetailPartList(
+            this, ConstantaApp.BASE_URL_V1_0, orderType, orderId, spkId, pbId
+        )
+        repairDetailViewModel.getRepairDetailNote(
+            this, ConstantaApp.BASE_URL_V1_0, orderType, orderId, spkId
+        )
+        repairDetailViewModel.getRepairDetailAfterCheck(
+            this, ConstantaApp.BASE_URL_V1_0, orderType, orderId, spkId
+        )
+        repairDetailViewModel.getRepairDetailAfterRepairList(
+            this, ConstantaApp.BASE_URL_V1_0, orderType, orderId, spkId, pbId
+        )
+        repairDetailViewModel.getRepairDetailAfterRepairWaste(
+            this, ConstantaApp.BASE_URL_V1_0, orderType, spkId
+        )
+        repairDetailViewModel.getRepairDetailAfterRepairComplain(
+            this, ConstantaApp.BASE_URL_V1_0, orderType, orderId
+        )
+
     }
 
-    private fun initObserver() {
-        repairDetailViewModel.isLoadingGetAllRepairProblem.observe(this) {
-            if (it) {
-                binding.lyUcdShimmerProblem.visibility = View.VISIBLE
-                binding.rvConfirmdetail.visibility = View.GONE
-
-            } else {
-                binding.lyUcdShimmerProblem.visibility = View.GONE
-                binding.rvConfirmdetail.visibility = View.VISIBLE
-
-            }
-        }
+    private fun initViewModel() {
+        initViewModelIsLoading()
+        initViewModelIsSuccess()
 
         repairDetailViewModel.problemList.observe(this) {
             if (it.isNotEmpty()) {
-                setReportResults(it)
+                setProblemList(it)
+            } else {
+                Toast.makeText(this, "kosong", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        repairDetailViewModel.activeDriver.observe(this) {
+            if (it != null) {
+                if (it.isNotEmpty()) {
+                    setActiveDriver(it)
+                } else {
+                    Toast.makeText(this, "kosong", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        repairDetailViewModel.workshopInfo.observe(this) {
+            if (it != null) {
+                if (it.isNotEmpty()) {
+                    setWorkshopInfo(it)
+                } else {
+                    Toast.makeText(this, "kosong", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        repairDetailViewModel.mechanicInfo.observe(this) {
+            if (it != null) {
+                if (it.isNotEmpty()) {
+                    setMechanicInfo(it)
+                } else {
+                    Toast.makeText(this, "kosong", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        repairDetailViewModel.partList.observe(this) {
+            if (it.isNotEmpty()) {
+                setPartList(it)
+            } else {
+                Toast.makeText(this, "kosong", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        repairDetailViewModel.note.observe(this) {
+            if (it.isNotEmpty()) {
+                setNote(it)
+            } else {
+                Toast.makeText(this, "kosong", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        repairDetailViewModel.afterCheck.observe(this) {
+            if (it.isNotEmpty()) {
+                setAfterCheck(it)
+            } else {
+                Toast.makeText(this, "kosong", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        repairDetailViewModel.afterRepairList.observe(this) {
+            if (it.isNotEmpty()) {
+                setAfterRepair(it)
+            } else {
+                Toast.makeText(this, "kosong", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        repairDetailViewModel.afterRepairWaste.observe(this) {
+            if (it.isNotEmpty()) {
+                setAfterRepairWaste(it)
+            } else {
+                Toast.makeText(this, "kosong", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        repairDetailViewModel.afterRepairComplain.observe(this) {
+            if (it.isNotEmpty()) {
+                setAfterRepairComplain(it)
             } else {
                 Toast.makeText(this, "kosong", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    private fun setReportResults(items: List<RepairProblemResponse>) {
-        repairProblems.clear()
-        val listProblem = ArrayList<ProblemRepair>()
+    private fun initViewModelIsLoading() {
+        repairDetailViewModel.isLoadingGetAllRepairProblem.observe(this) {
+            loadAllRepairProblem(it)
+        }
+        repairDetailViewModel.isLoadingGetRepairActiveDriver.observe(this) {
+            loadActiveDriver(it)
+
+        }
+        repairDetailViewModel.isLoadingGetRepairWorkshopAndMechanicInfo.observe(this) {
+            loadWorkshopAndMechanicInfo(it)
+
+        }
+        repairDetailViewModel.isLoadingGetRepairDetailPartList.observe(this) {
+            loadPartList(it)
+
+        }
+        repairDetailViewModel.isLoadingGetRepairDetailAfterCheck.observe(this) {
+            loadAfterCheck(it)
+
+        }
+        repairDetailViewModel.isLoadingGetRepairDetailAfterRepairList.observe(this) {
+            loadAfterRepair(it)
+
+        }
+        repairDetailViewModel.isLoadingGetRepairDetailAfterRepairWaste.observe(this) {
+            loadAfterRepairWaste(it)
+
+        }
+        repairDetailViewModel.isLoadingGetRepairDetailAfterRepairComplain.observe(this) {
+            loadAfterRepairWaste(it)
+
+        }
+
+    }
+
+    private fun initViewModelIsSuccess() {
+        repairDetailViewModel.isSuccessGetRepairDetailProblemList.observe(this) {
+            setIsSuccessGetRepairDetailProblemList(it)
+        }
+
+        repairDetailViewModel.isSuccessGetRepairActiveDriver.observe(this) {
+            setIsSuccessGetRepairActiveDriver(it)
+        }
+
+        repairDetailViewModel.isSuccessGetRepairDetailAfterCheck.observe(this) {
+            setIsSuccessGetRepairDetailAfterCheck(it)
+        }
+
+        repairDetailViewModel.isSuccessGetRepairDetailAfterRepairList.observe(this) {
+            setIsSuccessGetRepairDetailAfterRepairList(it)
+        }
+
+        repairDetailViewModel.isSuccessGetRepairDetailAfterRepairWaste.observe(this) {
+            setIsSuccessGetRepairDetailAfterRepairWaste(it)
+        }
+
+        repairDetailViewModel.isSuccessGetRepairDetailAfterRepairComplain.observe(this) {
+            setIsSuccessGetRepairDetailAfterRepairComplain(it)
+        }
+
+    }
+
+
+    private fun setIsSuccessGetRepairDetailProblemList(it: Boolean) {
+        binding.cvProblem.visibility = if (it) View.VISIBLE else View.GONE
+
+    }
+
+    private fun setIsSuccessGetRepairActiveDriver(it: Boolean) {
+        binding.cvDriver.visibility = if (it) View.VISIBLE else View.GONE
+    }
+
+    private fun setIsSuccessGetRepairDetailAfterCheck(it: Boolean) {
+        if (stageId.toInt() != 12 or 13) {
+            binding.cvCheck.visibility = if (it) View.VISIBLE else View.GONE
+        }
+    }
+
+    private fun setIsSuccessGetRepairDetailAfterRepairList(it: Boolean) {
+        if (stageId.toInt() != 18 or 19) {
+            binding.cvReportv.visibility = if (it) View.VISIBLE else View.GONE
+        }
+    }
+
+    private fun setIsSuccessGetRepairDetailAfterRepairWaste(it: Boolean) {
+        if (stageId.toInt() != 18 && stageId.toInt() != 19 ) {
+
+            Toast.makeText(this, "bukan yaaa $stageId", Toast.LENGTH_SHORT).show()
+            binding.cvReportx.visibility = if (it) View.VISIBLE else View.GONE
+        }else{
+            Toast.makeText(this, "bener nih $stageId", Toast.LENGTH_SHORT).show()
+
+        }
+
+    }
+
+    private fun setIsSuccessGetRepairDetailAfterRepairComplain(it: Boolean) {
+        binding.cvComplain.visibility = if (it) View.VISIBLE else View.GONE
+    }
+
+    private fun loadAfterRepairWaste(it: Boolean) {
+        if (it) {
+            binding.lyShimmerRepairx.visibility = View.VISIBLE
+            binding.lyRepairx.visibility = View.GONE
+        } else {
+            binding.lyShimmerRepairx.visibility = View.GONE
+            binding.lyRepairx.visibility = View.VISIBLE
+        }
+    }
+
+
+    private fun setAfterRepairWaste(it: List<RepairDetailAfterRepairWasteResponse>) {
+        repairDetailAfterRepairWastePhoto.clear()
+        val items = ArrayList<Photo>()
+
+        for (item in it) {
+            item.apply {
+                item.problemPhoto1?.let {
+                    items.add(Photo(item.problemPhoto1, problemPhoto1, "photo", false))
+                }
+                item.problemPhoto2?.let {
+                    items.add(Photo(item.problemPhoto2, problemPhoto2, "photo", false))
+                }
+                item.problemPhoto3?.let {
+                    items.add(Photo(item.problemPhoto3, problemPhoto3, "photo", false))
+                }
+            }
+            repairDetailAfterRepairWastePhoto.addAll(items)
+
+            setToViewAfterRepairWaste()
+        }
+    }
+
+    private fun setAfterRepairComplain(it: List<RepairDetailAfterRepairComplainResponse>) {
+        repairDetailAfterRepairComplainPhoto.clear()
+        val items = ArrayList<Photo>()
+
+        for (item in it) {
+            item.apply {
+                item.problemPhoto1?.let {
+                    items.add(Photo(item.problemPhoto1, problemPhoto1, "photo", false))
+                }
+                item.problemPhoto2?.let {
+                    items.add(Photo(item.problemPhoto2, problemPhoto2, "photo", false))
+                }
+                item.problemPhoto3?.let {
+                    items.add(Photo(item.problemPhoto3, problemPhoto3, "photo", false))
+                }
+            }
+            repairDetailAfterRepairComplainPhoto.addAll(items)
+
+        }
+    }
+
+    private fun setToViewAfterRepairWaste() {
+        repairDetailAfterRepairWasteAdapter.setItems(repairDetailAfterRepairWastePhoto)
+
+        binding.rvAfterRepairWaste.layoutManager = (GridLayoutManager(this, 3))
+        binding.rvAfterRepairWaste.adapter = repairDetailAfterRepairWasteAdapter
+
+        if (repairDetailAfterRepairWastePhoto.size < 3) {
+            binding.btnAddPhoto.visibility = View.VISIBLE
+        } else {
+            binding.btnAddPhoto.visibility = View.GONE
+        }
+
+    }
+
+    private fun setAfterRepair(it: List<RepairDetailAfterRepairResponse>) {
+        repairDetailAfterRepairs.clear()
+        val listProblem = ArrayList<RepairDetailAfterRepair>()
+
+        for (item in it) {
+            item.apply {
+
+                val photos: ArrayList<Photo> = ArrayList()
+
+                if (problemPhoto1 != null) {
+                    photos.add(
+                        Photo(
+                            problemPhoto1, problemPhoto1, "photo", false
+                        )
+                    )
+                }
+                if (problemPhoto2 != null) {
+                    photos.add(
+                        Photo(
+                            problemPhoto2, problemPhoto2, "photo", false
+                        )
+                    )
+                }
+                if (problemPhoto3 != null) {
+                    photos.add(
+                        Photo(
+                            problemPhoto3, problemPhoto3, "photo", false
+                        )
+                    )
+                }
+
+
+                val getResult = RepairDetailAfterRepair(
+                    item.partIdFromFleetify,
+                    item.partSku,
+                    item.partName,
+                    item.totalUsedPart,
+                    item.partQuantity,
+                    item.realPartQuantity,
+                    item.isRequiredScan,
+                    item.usedPartType,
+                    item.isSkip,
+                    photos,
+                    item.isAllowToSkip,
+                    item.tirePositionId,
+                )
+
+                listProblem.add(getResult)
+            }
+        }
+        repairDetailAfterRepairs.addAll(listProblem)
+
+        setToViewAfterRepair()
+    }
+
+    private fun setToViewAfterRepair() {
+        repairDetailAfterRepairAdapter.setItems(repairDetailAfterRepairs)
+        repairDetailAfterRepairAdapter.setRepairStageId(stageId.toInt())
+
+        binding.rvDonereport.layoutManager = object : LinearLayoutManager(this) {
+            override fun canScrollVertically() = false
+        }
+        binding.rvDonereport.adapter = repairDetailAfterRepairAdapter
+
+    }
+
+    private fun loadAfterRepair(it: Boolean) {
+        if (it) {
+            binding.lyShimmerRepairv.visibility = View.VISIBLE
+            binding.lyRepairv.visibility = View.GONE
+        } else {
+            binding.lyShimmerRepairv.visibility = View.GONE
+            binding.lyRepairv.visibility = View.VISIBLE
+        }
+    }
+
+    private fun loadPartList(it: Boolean) {
+        if (it) {
+            binding.lyShimmerParts.visibility = View.VISIBLE
+            binding.lyParts.visibility = View.GONE
+        } else {
+            binding.lyShimmerParts.visibility = View.GONE
+            binding.lyParts.visibility = View.VISIBLE
+        }
+    }
+
+    private fun loadAfterCheck(it: Boolean) {
+        if (it) {
+            binding.lyShimmerChecking.visibility = View.VISIBLE
+            binding.lyChecking.visibility = View.GONE
+        } else {
+            binding.lyShimmerChecking.visibility = View.GONE
+            binding.lyChecking.visibility = View.VISIBLE
+        }
+    }
+
+    private fun setAfterCheck(it: List<RepairDetailAfterCheckResponse>) {
+        repairDetailAfterCheckPhoto.clear()
+        val items = ArrayList<Photo>()
+
+        for (item in it) {
+            item.apply {
+                item.problemPhoto1?.let {
+                    items.add(Photo(item.problemPhoto1, problemPhoto1, "photo", false))
+                }
+                item.problemPhoto2?.let {
+                    items.add(Photo(item.problemPhoto2, problemPhoto2, "photo", false))
+                }
+                item.problemPhoto3?.let {
+                    items.add(Photo(item.problemPhoto3, problemPhoto3, "photo", false))
+                }
+                item.problemPhoto4?.let {
+                    items.add(Photo(item.problemPhoto4, problemPhoto4, "photo", false))
+                }
+                item.problemPhoto5?.let {
+                    items.add(Photo(item.problemPhoto5, problemPhoto5, "photo", false))
+                }
+                item.problemPhoto6?.let {
+                    items.add(Photo(item.problemPhoto6, problemPhoto6, "photo", false))
+                }
+            }
+        }
+        repairDetailAfterCheckPhoto.addAll(items)
+
+        setToViewAfterCheck()
+    }
+
+    private fun setToViewAfterCheck() {
+        repairDetailAfterCheckAdapter.setItems(repairDetailAfterCheckPhoto)
+
+        binding.rvAfterCheckPhoto.layoutManager = (GridLayoutManager(this, 3))
+        binding.rvAfterCheckPhoto.adapter = repairDetailAfterCheckAdapter
+    }
+
+    private fun setNote(it: List<RepairDetailNoteResponse>) {
+        binding.tvCnote.text = (it[0].noteCheckFromMechanic)
+        binding.etNotev.text = (it[0].noteAfterRepairFromMechanic)
+        val saName = it[0].saName
+        binding.tvCverif.text = ("Diverifikasi oleh $saName (SA)")
+        binding.tvWarehouseName.text = (it[0].warehouseName)
+
+    }
+
+    private fun setPartList(it: List<RepairDetailPartResponse>) {
+        repairDetailParts.clear()
+        val items = ArrayList<RepairDetailPart>()
+
+        for (item in it) {
+            item.apply {
+
+                val getResult = RepairDetailPart(
+                    item.partSku,
+                    item.partName,
+                    item.partBrand,
+                    item.partQuantity,
+                    item.partUnit,
+
+                    item.partUnit,
+                    item.partUnit,
+                    item.partUnit,
+
+//                    item.newPartId,
+//                    item.itemPrice,
+//                    item.totalPrice
+                )
+
+                items.add(getResult)
+            }
+        }
+        repairDetailParts.addAll(items)
+
+        setToViewPartList()
+
+    }
+
+    private fun setToViewPartList() {
+        repairDetailPartAdapter.setItems(repairDetailParts)
+
+        binding.rvPart.layoutManager = object : LinearLayoutManager(this) {
+            override fun canScrollVertically() = false
+        }
+        binding.rvPart.adapter = repairDetailPartAdapter
+
+    }
+
+    private fun setWorkshopInfo(it: List<RepairDetailWorkshopInfoResponse>) {
+        binding.tvWorkshopName.text = it[0].workshopName
+        binding.tvWorkshopAddress.text = it[0].locationAddress
+
+    }
+
+    private fun setMechanicInfo(it: List<RepairDetailMechanicInfoResponse>) {
+        binding.tvMechanicName.text = it[0].mechanicName
+        binding.tvMechanicPhone.text = it[0].mechanicPhone
+        RepairHelper.setOnClickChat(
+            this@RepairDetailActivity, it[0].mechanicPhone, binding.btnWhatsappMechanic
+        )
+    }
+
+    private fun loadWorkshopAndMechanicInfo(it: Boolean) {
+        if (it) {
+            binding.lyShimmerWorkshop.visibility = View.VISIBLE
+            binding.lyWorkshop.visibility = View.GONE
+        } else {
+            binding.lyShimmerWorkshop.visibility = View.GONE
+            binding.lyWorkshop.visibility = View.VISIBLE
+        }
+    }
+
+    private fun loadActiveDriver(it: Boolean) {
+        if (it) {
+            binding.lyShimmerDriver.visibility = View.VISIBLE
+            binding.lyDriver.visibility = View.GONE
+        } else {
+            binding.lyShimmerDriver.visibility = View.GONE
+            binding.lyDriver.visibility = View.VISIBLE
+
+        }
+    }
+
+    private fun loadAllRepairProblem(it: Boolean) {
+        if (it) {
+            binding.lyShimmerProblem.visibility = View.VISIBLE
+            binding.rvProblem.visibility = View.GONE
+        } else {
+            binding.lyShimmerProblem.visibility = View.GONE
+            binding.rvProblem.visibility = View.VISIBLE
+        }
+    }
+
+    private fun setActiveDriver(it: List<RepairDetailActiveDriverResponse>) {
+        binding.tvDriverName.text = it[0].driverName
+        RepairHelper.setDriverPhoto(this, it[0].driverPhoto, binding.ivDriverPhoto)
+        RepairHelper.setOnClickChat(
+            this@RepairDetailActivity, it[0].driverPhone, binding.btnWhatsappMechanic
+        )
+    }
+
+    private fun setProblemList(items: List<RepairDetailProblemResponse>) {
+        repairDetailProblems.clear()
+        val listProblem = ArrayList<RepairDetailProblem>()
 
         for (item in items) {
             item.apply {
@@ -184,47 +699,47 @@ class RepairDetailActivity : AppCompatActivity() {
                 }
 
 
-                val getResult = ProblemRepair(
-                    item.problemId,
-                    item.problemNote,
-                    problemPhotos
+                val getResult = RepairDetailProblem(
+                    item.problemId, item.problemNote, problemPhotos
                 )
 
                 listProblem.add(getResult)
             }
         }
-        repairProblems.addAll(listProblem)
+        repairDetailProblems.addAll(listProblem)
 
-//        if (repairList.isEmpty()) {
-//            binding.lyNotFound.visibility = View.VISIBLE
-//        } else {
-//            binding.lyNotFound.visibility = View.GONE
-//        }
-
-        setRecycler()
+        setToViewProblemList()
     }
 
-    private fun setRecycler() {
-        repairProblemAdapter.setItems(repairProblems)
+    private fun setToViewProblemList() {
+        repairDetailProblemAdapter.setItems(repairDetailProblems)
 
-        binding.rvConfirmdetail.layoutManager = LinearLayoutManager(this)
-        binding.rvConfirmdetail.adapter = repairProblemAdapter
+        binding.rvProblem.layoutManager = object : LinearLayoutManager(this) {
+            override fun canScrollVertically() = false
+        }
+
+        binding.rvProblem.adapter = repairDetailProblemAdapter
 
     }
 
 
     private fun prepareView() {
         callData()
+
+        when (stageId.toInt()) {
+            13 -> binding.btnAddPhoto.visibility = View.VISIBLE
+            19 -> binding.btnAddPhotoWaste.visibility = View.VISIBLE
+        }
     }
 
     private fun getData() {
         actionType = intent.getStringExtra(Constanta.EXTRA_ACTION_TYPE)
         reqType = intent.getStringExtra(Constanta.EXTRA_REQTYPE)
-        orderId = intent.getStringExtra(Constanta.EXTRA_ORDERID)
+        orderId = intent.getStringExtra(Constanta.EXTRA_ORDERID)!!
         spkId = intent.getStringExtra(Constanta.EXTRA_SPKID)
         isStoring = intent.getStringExtra(Constanta.EXTRA_ISSTORING)
         pbId = intent.getStringExtra(Constanta.EXTRA_PBID)
-        stageId = intent.getStringExtra(Constanta.EXTRA_STAGEID)
+        stageId = intent.getStringExtra(Constanta.EXTRA_STAGEID)!!
         stageName = intent.getStringExtra(Constanta.EXTRA_STAGENAME)
         startRepairOdometer = intent.getStringExtra(Constanta.EXTRA_ODO)
         vehicleId = intent.getStringExtra(Constanta.EXTRA_VID)
@@ -239,5 +754,7 @@ class RepairDetailActivity : AppCompatActivity() {
         repairDate = intent.getStringExtra(Constanta.EXTRA_SASSIGN)
         locationOption = intent.getStringExtra(Constanta.EXTRA_LOCOPTION)
         isUsingTMS = intent.getIntExtra(Constanta.EXTRA_IS_USING_TMS, 0)
+
+        orderType = RepairHelper.getRepairOrderType(orderId, isStoring)
     }
 }
