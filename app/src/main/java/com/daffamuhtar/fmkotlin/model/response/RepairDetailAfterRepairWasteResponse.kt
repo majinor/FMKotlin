@@ -5,13 +5,13 @@ import com.google.gson.annotations.SerializedName
 data class RepairDetailAfterRepairWasteResponse(
 
     @SerializedName("1")
-    val problemPhoto1: String?,
+    val photo1: String?,
 
     @SerializedName("2")
-    val problemPhoto2: String?,
+    val photo2: String?,
 
     @SerializedName("3")
-    val problemPhoto3: String?,
+    val photo3: String?,
 
-)
+    )
 

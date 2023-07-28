@@ -348,11 +348,11 @@ class RepairDetailActivity : AppCompatActivity() {
     }
 
     private fun setIsSuccessGetRepairDetailAfterRepairWaste(it: Boolean) {
-        if (stageId.toInt() != 18 && stageId.toInt() != 19 ) {
+        if (stageId.toInt() != 18 && stageId.toInt() != 19) {
 
             Toast.makeText(this, "bukan yaaa $stageId", Toast.LENGTH_SHORT).show()
             binding.cvReportx.visibility = if (it) View.VISIBLE else View.GONE
-        }else{
+        } else {
             Toast.makeText(this, "bener nih $stageId", Toast.LENGTH_SHORT).show()
 
         }
@@ -380,14 +380,14 @@ class RepairDetailActivity : AppCompatActivity() {
 
         for (item in it) {
             item.apply {
-                item.problemPhoto1?.let {
-                    items.add(Photo(item.problemPhoto1, problemPhoto1, "photo", false))
+                item.photo1?.let {
+                    items.add(Photo(item.photo1, photo1, "photo", false))
                 }
-                item.problemPhoto2?.let {
-                    items.add(Photo(item.problemPhoto2, problemPhoto2, "photo", false))
+                item.photo2?.let {
+                    items.add(Photo(item.photo2, photo2, "photo", false))
                 }
-                item.problemPhoto3?.let {
-                    items.add(Photo(item.problemPhoto3, problemPhoto3, "photo", false))
+                item.photo3?.let {
+                    items.add(Photo(item.photo3, photo3, "photo", false))
                 }
             }
             repairDetailAfterRepairWastePhoto.addAll(items)
