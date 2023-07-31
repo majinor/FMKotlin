@@ -3,7 +3,6 @@ package com.daffamuhtar.fmkotlin.ui.repair_detail
 import android.content.ContentValues
 import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -21,6 +20,18 @@ import retrofit2.Response
 import java.io.IOException
 
 class RepairDetailViewModel : ViewModel() {
+
+    private val _repairStageId = MutableLiveData<Int>()
+    val repairStageId: LiveData<Int> = _repairStageId
+
+    fun getRepairDetailRepairStage(
+        context: Context,
+        stageId: Int,
+    ) {
+        _repairStageId.value = stageId
+    }
+//    ======================================================
+
     private val _isLoadingGetAllRepairProblem = MutableLiveData<Boolean>()
     val isLoadingGetAllRepairProblem: LiveData<Boolean> = _isLoadingGetAllRepairProblem
 
@@ -93,8 +104,8 @@ class RepairDetailViewModel : ViewModel() {
                             _isSuccessGetAllRepairProblem.value = status
                             _messageGetAllRepairProblem.value = message
 
-                            Toast.makeText(context, "Gagal Mengirim $message", Toast.LENGTH_SHORT)
-                                .show()
+                            Log.e("Call Failed", "Gagal Mengirim $message")
+                                
                         } catch (e: IOException) {
                             e.printStackTrace()
                             Log.d(VolleyLog.TAG, "onResponse: $e")
@@ -188,8 +199,8 @@ class RepairDetailViewModel : ViewModel() {
                             _isSuccessGetRepairActiveDriver.value = status
                             _messageGetRepairActiveDriver.value = message
 
-                            Toast.makeText(context, "Gagal Mengirim $message", Toast.LENGTH_SHORT)
-                                .show()
+                            Log.e("Call Failed", "Gagal Mengirim $message")
+                                
                         } catch (e: IOException) {
                             e.printStackTrace()
                             Log.d(VolleyLog.TAG, "onResponse: $e")
@@ -305,8 +316,8 @@ class RepairDetailViewModel : ViewModel() {
                             _isSuccessGetRepairWorkshopInfo.value = status
                             _messageGetRepairWorkshopInfo.value = message
 
-                            Toast.makeText(context, "Gagal Mengirim $message", Toast.LENGTH_SHORT)
-                                .show()
+                            Log.e("Call Failed", "Gagal Mengirim $message")
+                                
                         } catch (e: IOException) {
                             e.printStackTrace()
                             Log.d(VolleyLog.TAG, "onResponse: $e")
@@ -390,8 +401,8 @@ class RepairDetailViewModel : ViewModel() {
                             _isSuccessGetRepairMechanicInfo.value = status
                             _messageGetRepairMechanicInfo.value = message
 
-                            Toast.makeText(context, "Gagal Mengirim $message", Toast.LENGTH_SHORT)
-                                .show()
+                            Log.e("Call Failed", "Gagal Mengirim $message")
+                                
                         } catch (e: IOException) {
                             e.printStackTrace()
                             Log.d(VolleyLog.TAG, "onResponse: $e")
@@ -486,8 +497,8 @@ class RepairDetailViewModel : ViewModel() {
                             _isSuccessGetRepairDetailPartList.value = status
                             _messageGetRepairDetailPartList.value = message
 
-                            Toast.makeText(context, "Gagal Mengirim $message", Toast.LENGTH_SHORT)
-                                .show()
+                            Log.e("Call Failed", "Gagal Mengirim $message")
+                                
                         } catch (e: IOException) {
                             e.printStackTrace()
                             Log.d(VolleyLog.TAG, "onResponse: $e")
@@ -581,8 +592,8 @@ class RepairDetailViewModel : ViewModel() {
                             _isSuccessGetRepairDetailNote.value = status
                             _messageGetRepairDetailNote.value = message
 
-                            Toast.makeText(context, "Gagal Mengirim $message", Toast.LENGTH_SHORT)
-                                .show()
+                            Log.e("Call Failed", "Gagal Mengirim $message")
+                                
                         } catch (e: IOException) {
                             e.printStackTrace()
                             Log.d(VolleyLog.TAG, "onResponse: $e")
@@ -670,8 +681,8 @@ class RepairDetailViewModel : ViewModel() {
                             _isSuccessGetRepairDetailAfterCheck.value = status
                             _messageGetRepairDetailAfterCheck.value = message
 
-                            Toast.makeText(context, "Gagal Mengirim $message", Toast.LENGTH_SHORT)
-                                .show()
+                            Log.e("Call Failed", "Gagal Mengirim $message")
+                                
                         } catch (e: IOException) {
                             e.printStackTrace()
                             Log.d(VolleyLog.TAG, "onResponse: $e")
@@ -767,8 +778,8 @@ class RepairDetailViewModel : ViewModel() {
                             _isSuccessGetRepairDetailAfterRepairList.value = status
                             _messageGetRepairDetailAfterRepairList.value = message
 
-                            Toast.makeText(context, "Gagal Mengirim $message", Toast.LENGTH_SHORT)
-                                .show()
+                            Log.e("Call Failed", "Gagal Mengirim $message")
+                                
                         } catch (e: IOException) {
                             e.printStackTrace()
                             Log.d(VolleyLog.TAG, "onResponse: $e")
@@ -863,8 +874,8 @@ class RepairDetailViewModel : ViewModel() {
                             _isSuccessGetRepairDetailAfterRepairWaste.value = status
                             _messageGetRepairDetailAfterRepairWaste.value = message
 
-                            Toast.makeText(context, "Gagal Mengirim $message", Toast.LENGTH_SHORT)
-                                .show()
+                            Log.e("Call Failed", "Gagal Mengirim $message")
+                                
                         } catch (e: IOException) {
                             e.printStackTrace()
                             Log.d(VolleyLog.TAG, "onResponse: $e")
@@ -957,8 +968,8 @@ class RepairDetailViewModel : ViewModel() {
                             _isSuccessGetRepairDetailAfterRepairComplain.value = status
                             _messageGetRepairDetailAfterRepairComplain.value = message
 
-                            Toast.makeText(context, "Gagal Mengirim $message", Toast.LENGTH_SHORT)
-                                .show()
+                            Log.e("Call Failed", "Gagal Mengirim $message")
+                                
                         } catch (e: IOException) {
                             e.printStackTrace()
                             Log.d(VolleyLog.TAG, "onResponse: $e")

@@ -6,11 +6,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.daffamuhtar.fmkotlin.databinding.ItemRepairBinding
 import com.daffamuhtar.fmkotlin.model.Repair
+import com.daffamuhtar.fmkotlin.util.RepairHelper
 import com.daffamuhtar.fmkotlin.util.RepairHelper.Companion.getRepairDate
 import com.daffamuhtar.fmkotlin.util.RepairHelper.Companion.getRepairIcon
 import com.daffamuhtar.fmkotlin.util.RepairHelper.Companion.getRepairId
 import com.daffamuhtar.fmkotlin.util.RepairHelper.Companion.getRepairTitle
-import com.daffamuhtar.fmkotlin.util.RepairHelper.Companion.setRepairStage
 import com.daffamuhtar.fmkotlin.util.VehicleHelper.Companion.getVehicleName
 import java.util.*
 
@@ -28,7 +28,7 @@ class RepairAdapter() : RecyclerView.Adapter<RepairAdapter.LaporanViewHolder>() 
 
 
     interface OnItemClickCallback {
-        fun onItemClicked(data: Repair)
+        fun onItemClicked(data: Repair, position: Int)
     }
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
@@ -38,7 +38,7 @@ class RepairAdapter() : RecyclerView.Adapter<RepairAdapter.LaporanViewHolder>() 
 
     inner class LaporanViewHolder(private val view: ItemRepairBinding) :
         RecyclerView.ViewHolder(view.root) {
-        fun bind(repair: Repair) {
+        fun bind(repair: Repair, position: Int) {
             with(view) {
 
                 lyWorkshop.visibility = View.GONE
@@ -49,9 +49,9 @@ class RepairAdapter() : RecyclerView.Adapter<RepairAdapter.LaporanViewHolder>() 
                 ivRepairIcon.setBackgroundResource(getRepairIcon(repair.orderId, repair.isStoring))
                 tvRepairId.text = getRepairId(repair.orderId, repair.spkId)
                 tvRepairDate.text = getRepairDate(repair.startAssignment)
-                setRepairStage(
+                RepairHelper.setRepairStage(
                     view.root.context,
-                    repair.stageId,
+                    repair.stageId.toInt(),
                     repair.stageName,
                     tvRepairStage,
                     ivRepairStageIcon,
@@ -77,6 +77,10 @@ class RepairAdapter() : RecyclerView.Adapter<RepairAdapter.LaporanViewHolder>() 
                     lyAssignmentNote.visibility = View.VISIBLE
                     tvAssignmentNote.text = repair.noteSA
                 }
+
+                view.root.setOnClickListener {
+                    onItemClickCallback.onItemClicked(repair, position)
+                }
             }
         }
     }
@@ -92,10 +96,7 @@ class RepairAdapter() : RecyclerView.Adapter<RepairAdapter.LaporanViewHolder>() 
     }
 
     override fun onBindViewHolder(holder: LaporanViewHolder, position: Int) {
-        holder.bind(allRepair[position])
-        holder.itemView.setOnClickListener {
-            onItemClickCallback.onItemClicked(allRepair[holder.adapterPosition])
-        }
+        holder.bind(allRepair[position], position)
     }
 
     override fun getItemCount(): Int = allRepair.size

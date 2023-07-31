@@ -4,8 +4,10 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.text.Editable
 import android.view.View
 import android.widget.*
+import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.daffamuhtar.fmkotlin.R
@@ -327,7 +329,7 @@ class RepairHelper {
         @SuppressLint("ResourceAsColor")
         fun setRepairStage(
             context: Context,
-            stageId: String,
+            stageId: Int,
             stageNameRaw: String?,
             tvStage: TextView,
             ivStageIcon: ImageView,
@@ -483,16 +485,16 @@ class RepairHelper {
             context: Context,
             stageId: Int,
             totalPhoto: Int,
-        )  : Boolean {
+        ): Boolean {
 
             var isEditable = false
-            if (stageId==12){
-                if (totalPhoto<3){
+            if (stageId == 12) {
+                if (totalPhoto < 3) {
                     isEditable = true
                 }
             }
-            if (stageId==19){
-                if (totalPhoto<3){
+            if (stageId == 19) {
+                if (totalPhoto < 3) {
                     isEditable = true
                 }
             }
@@ -510,7 +512,7 @@ class RepairHelper {
             btnScanSecondPart: Button,
             btnRemove: Button,
             lyPhoto: LinearLayout,
-        )  {
+        ) {
 
             when (isRequiredScan) {
                 1, 2, 3 -> {
@@ -549,7 +551,7 @@ class RepairHelper {
                 }
             }
 
-            if (!isEditable){
+            if (!isEditable) {
                 btnScan.visibility = View.GONE
                 btnScanSecondPart.visibility = View.GONE
                 btnRemove.visibility = View.GONE
@@ -557,133 +559,348 @@ class RepairHelper {
 
         }
 
-        fun setRepairDetailAfterRepair(
+        fun setRepairDetailLayout(
             context: Context,
-            stageId: String,
-            stageNameRaw: String?,
-            tvStage: TextView,
-            ivStageIcon: ImageView,
-            lyStage: LinearLayout
+            stageId: Int,
+            orderType: String,
+            noteAfterRepairFromMechanic: String?,
+            cvProblem: CardView,
+            cvDriver: CardView,
+            cvCheck: CardView,
+            cvParts: CardView,
+            cvReportv: CardView,
+            cvReportx: CardView,
+            cvComplain: CardView,
+            btnAddPhotoCheck: ImageButton,
+            btnAddPhotoWaste: ImageButton,
+            lyAfterCheckNote: LinearLayout,
+            lyAfterRepairNote: LinearLayout,
+            etAfterCheckNote: EditText,
+            etAfterRepairNote: EditText,
+            lyAdditionalPartRequest: LinearLayout,
+            btnAdditionalPartRequest: Button,
+            btnRepairStart: Button,
+            btnRepairStart1: Button,
+            btnRepairNext: Button,
+            btnRepairDone: Button,
+            btnCheckStart: Button,
+            btnCheckDone: Button
         ) {
 
-
-            val stageIcon: Int
-            val stageBackgroundColor: Int
-            val stageTextColor: Int
-            val stageId: Int = stageId.toInt()
-            var stageName = stageNameRaw
-
-            if (stageName == null) {
-                when (stageId) {
-                    12 -> {
-                        stageName = "Menunggu diperiksa"
-                    }
-                    13 -> {
-                        stageName = "Sedang diperiksa"
-                    }
-                    14 -> {
-                        stageName = "Menunggu verifikasi hasil pemeriksaan"
-                    }
-                    15 -> {
-                        stageName = "Menunggu konfirmasi penawaran"
-                    }
-                    16 -> {
-                        stageName = "Menunggu Surat Penawaran diperbarui"
-                    }
-                    17 -> {
-                        stageName = "Penawaran disetujui"
-                    }
-                    18 -> {
-                        stageName = "Lakukan perbaikan"
-                    }
-                    19 -> {
-                        stageName = "WO sedang diproses"
-                    }
-                    20 -> {
-                        stageName = "Menunggu approval hasil perbaikan"
-                    }
-                    21 -> {
-                        stageName = "Menunggu verifikasi hasil perbaikan"
-                    }
-                    22 -> {
-                        stageName = "Perbaikan selesai"
-                    }
-                    23 -> {
-                        stageName = "Dikomplain"
-                    }
-                    24 -> {
-                        stageName = "WO selesai"
-                    }
-                    26, 27, 28 -> {
-                        stageName = "Menunggu konfirmasi penawaran"
-                    }
-                    29 -> {
-                        stageName = "Order pending"
-                    }
-                    31 -> {
-                        stageName = "Penambahan part segera diproses"
-                    }
-                    32 -> {
-                        stageName = "Surat penawaran sedang diperbarui"
-                    }
-                    33 -> {
-                        stageName = "Revisi Surat Penawaran (penambahan part) Ditolak"
-                    }
-                    else -> {
-
-                    }
-                }
-
-            }
-
             when (stageId) {
-                12, 13 -> {
-                    stageIcon = R.drawable.ic_stage_repair_check
-                    stageBackgroundColor = R.color.orangesoft
-                    stageTextColor = R.color.orange
+                12 -> {
+                    cvProblem.visibility = View.VISIBLE
+                    cvDriver.visibility = View.VISIBLE
+                    cvCheck.visibility = View.GONE
+                    cvParts.visibility = View.GONE
+                    cvReportv.visibility = View.GONE
+                    cvReportx.visibility = View.GONE
+                    cvComplain.visibility = View.GONE
+                    btnAddPhotoCheck.visibility = View.GONE
+                    btnAddPhotoWaste.visibility = View.GONE
+                    setEditTextEnabled(context,lyAfterCheckNote,etAfterCheckNote,false)
+                    setEditTextEnabled(context,lyAfterRepairNote,etAfterRepairNote,false)
+                    lyAdditionalPartRequest.visibility = View.GONE
+                    btnCheckStart.visibility = View.VISIBLE
+                    btnCheckDone.visibility = View.GONE
+                    btnRepairStart.visibility = View.GONE
+                    btnRepairNext.visibility = View.GONE
+                    btnRepairDone.visibility = View.GONE
+
                 }
-                14, 15, 16, 17, 20, 21 -> {
-                    stageIcon = R.drawable.ic_stage_repair_ongoing
-                    stageBackgroundColor = R.color.bluesoft
-                    stageTextColor = R.color.blue
+                13 -> {
+                    cvProblem.visibility = View.VISIBLE
+                    cvDriver.visibility = View.VISIBLE
+                    cvCheck.visibility = View.VISIBLE
+                    cvParts.visibility = View.GONE
+                    cvReportv.visibility = View.GONE
+                    cvReportx.visibility = View.GONE
+                    cvComplain.visibility = View.GONE
+                    btnAddPhotoCheck.visibility = View.VISIBLE
+                    btnAddPhotoWaste.visibility = View.GONE
+                    setEditTextEnabled(context,lyAfterCheckNote,etAfterCheckNote,true)
+                    setEditTextEnabled(context,lyAfterRepairNote,etAfterRepairNote,false)
+                    lyAdditionalPartRequest.visibility = View.GONE
+                    btnCheckStart.visibility = View.VISIBLE
+                    btnCheckDone.visibility = View.GONE
+                    btnRepairStart.visibility = View.GONE
+                    btnRepairNext.visibility = View.GONE
+                    btnRepairDone.visibility = View.GONE
                 }
-                18, 19 -> {
-                    stageIcon = R.drawable.ic_stage_repair_onrepair
-                    stageBackgroundColor = R.color.orangesoft
-                    stageTextColor = R.color.orange
+                14-> {
+                    cvProblem.visibility = View.VISIBLE
+                    cvDriver.visibility = View.VISIBLE
+                    cvCheck.visibility = View.VISIBLE
+                    cvParts.visibility = View.GONE
+                    cvReportv.visibility = View.GONE
+                    cvReportx.visibility = View.GONE
+                    cvComplain.visibility = View.GONE
+                    btnAddPhotoCheck.visibility = View.VISIBLE
+                    btnAddPhotoWaste.visibility = View.GONE
+                    setEditTextEnabled(context,lyAfterCheckNote,etAfterCheckNote,false)
+                    setEditTextEnabled(context,lyAfterRepairNote,etAfterRepairNote,false)
+                    lyAdditionalPartRequest.visibility = View.GONE
+                    btnCheckStart.visibility = View.GONE
+                    btnCheckDone.visibility = View.GONE
+                    btnRepairStart.visibility = View.GONE
+                    btnRepairNext.visibility = View.GONE
+                    btnRepairDone.visibility = View.GONE
+                }
+                15 ,16 ,17-> {
+                    cvProblem.visibility = View.VISIBLE
+                    cvDriver.visibility = View.VISIBLE
+                    cvCheck.visibility = View.VISIBLE
+                    cvParts.visibility = View.GONE
+                    cvReportv.visibility = View.GONE
+                    cvReportx.visibility = View.GONE
+                    cvComplain.visibility = View.GONE
+                    btnAddPhotoCheck.visibility = View.GONE
+                    btnAddPhotoWaste.visibility = View.GONE
+                    setEditTextEnabled(context,lyAfterCheckNote,etAfterCheckNote,false)
+                    setEditTextEnabled(context,lyAfterRepairNote,etAfterRepairNote,false)
+                    lyAdditionalPartRequest.visibility = View.GONE
+                    btnCheckStart.visibility = View.GONE
+                    btnCheckDone.visibility = View.GONE
+                    btnRepairStart.visibility = View.GONE
+                    btnRepairNext.visibility = View.GONE
+                    btnRepairDone.visibility = View.GONE
+                }
+                18 -> {
+                    cvProblem.visibility = View.VISIBLE
+                    cvDriver.visibility = View.VISIBLE
+                    cvCheck.visibility = View.VISIBLE
+                    cvParts.visibility = View.VISIBLE
+                    cvReportv.visibility = View.GONE
+                    cvReportx.visibility = View.GONE
+                    cvComplain.visibility = View.GONE
+                    btnAddPhotoCheck.visibility = View.GONE
+                    btnAddPhotoWaste.visibility = View.GONE
+                    setEditTextEnabled(context,lyAfterCheckNote,etAfterCheckNote,false)
+                    setEditTextEnabled(context,lyAfterRepairNote,etAfterRepairNote,false)
+                    lyAdditionalPartRequest.visibility = View.GONE
+                    btnCheckStart.visibility = View.GONE
+                    btnCheckDone.visibility = View.GONE
+                    btnRepairStart.visibility = View.VISIBLE
+                    btnRepairNext.visibility = View.GONE
+                    btnRepairDone.visibility = View.GONE
+                }
+                19 -> {
+
+                    cvProblem.visibility = View.VISIBLE
+                    cvDriver.visibility = View.VISIBLE
+                    cvCheck.visibility = View.VISIBLE
+                    cvParts.visibility = View.VISIBLE
+                    cvReportv.visibility = View.VISIBLE
+                    cvReportx.visibility = if (noteAfterRepairFromMechanic!=null) View.VISIBLE else View.GONE
+                    cvComplain.visibility = View.GONE
+                    btnAddPhotoCheck.visibility = View.GONE
+                    btnAddPhotoWaste.visibility = if (noteAfterRepairFromMechanic!=null) View.VISIBLE else View.GONE
+                    setEditTextEnabled(context,lyAfterCheckNote,etAfterCheckNote,false)
+                    setEditTextEnabled(context,lyAfterRepairNote,etAfterRepairNote,true)
+                    lyAdditionalPartRequest.visibility = View.VISIBLE
+                    btnCheckStart.visibility = View.GONE
+                    btnCheckDone.visibility = View.GONE
+                    btnRepairStart.visibility = View.GONE
+                    btnRepairNext.visibility = if (noteAfterRepairFromMechanic!=null) View.GONE else View.VISIBLE
+                    btnRepairDone.visibility = if (noteAfterRepairFromMechanic!=null) View.VISIBLE else View.GONE
+                }
+                20 ,21 ,22 -> {
+                    cvProblem.visibility = View.VISIBLE
+                    cvDriver.visibility = View.VISIBLE
+                    cvCheck.visibility = View.VISIBLE
+                    cvParts.visibility = View.VISIBLE
+                    cvReportv.visibility = View.VISIBLE
+                    cvReportx.visibility = View.VISIBLE
+                    cvComplain.visibility = View.GONE
+                    btnAddPhotoCheck.visibility = View.GONE
+                    btnAddPhotoWaste.visibility = View.GONE
+                    setEditTextEnabled(context,lyAfterCheckNote,etAfterCheckNote,false)
+                    setEditTextEnabled(context,lyAfterRepairNote,etAfterRepairNote,false)
+                    lyAdditionalPartRequest.visibility = View.GONE
+                    btnCheckStart.visibility = View.GONE
+                    btnCheckDone.visibility = View.GONE
+                    btnRepairStart.visibility = View.GONE
+                    btnRepairNext.visibility = View.GONE
+                    btnRepairDone.visibility = View.GONE
                 }
                 23 -> {
-                    stageIcon = R.drawable.ic_stage_repair_complain
-                    stageBackgroundColor = R.color.redsoft
-                    stageTextColor = R.color.red
+                    cvProblem.visibility = View.VISIBLE
+                    cvDriver.visibility = View.VISIBLE
+                    cvCheck.visibility = View.VISIBLE
+                    cvParts.visibility = View.VISIBLE
+                    cvReportv.visibility = View.VISIBLE
+                    cvReportx.visibility = View.VISIBLE
+                    cvComplain.visibility = View.VISIBLE
+                    btnAddPhotoCheck.visibility = View.GONE
+                    btnAddPhotoWaste.visibility = View.GONE
+                    setEditTextEnabled(context,lyAfterCheckNote,etAfterCheckNote,false)
+                    setEditTextEnabled(context,lyAfterRepairNote,etAfterRepairNote,false)
+                    lyAdditionalPartRequest.visibility = View.GONE
+                    btnCheckStart.visibility = View.GONE
+                    btnCheckDone.visibility = View.GONE
+                    btnRepairStart.visibility = View.GONE
+                    btnRepairNext.visibility = View.GONE
+                    btnRepairDone.visibility = View.GONE
                 }
-                22, 24 -> {
-                    stageIcon = R.drawable.ic_stage_repair_done
-                    stageBackgroundColor = R.color.greensoft
-                    stageTextColor = R.color.green
+                24, 25 -> {
+                    cvProblem.visibility = View.VISIBLE
+                    cvDriver.visibility = View.VISIBLE
+                    cvCheck.visibility = View.VISIBLE
+                    cvParts.visibility = View.VISIBLE
+                    cvReportv.visibility = View.VISIBLE
+                    cvReportx.visibility = View.VISIBLE
+                    cvComplain.visibility = View.GONE
+                    btnAddPhotoCheck.visibility = View.GONE
+                    btnAddPhotoWaste.visibility = View.GONE
+                    setEditTextEnabled(context,lyAfterCheckNote,etAfterCheckNote,false)
+                    setEditTextEnabled(context,lyAfterRepairNote,etAfterRepairNote,false)
+                    lyAdditionalPartRequest.visibility = View.GONE
+                    btnCheckStart.visibility = View.GONE
+                    btnCheckDone.visibility = View.GONE
+                    btnRepairStart.visibility = View.GONE
+                    btnRepairNext.visibility = View.GONE
+                    btnRepairDone.visibility = View.GONE
                 }
-                26, 27, 28, 29, 31, 32, 33 -> {
-                    stageIcon = R.drawable.ic_stage_repair_ongoing
-                    stageBackgroundColor = R.color.bluesoft
-                    stageTextColor = R.color.blue
+                26, 27, 28 -> {
+                    cvProblem.visibility = View.VISIBLE
+                    cvDriver.visibility = View.VISIBLE
+                    cvCheck.visibility = View.VISIBLE
+                    cvParts.visibility = View.GONE
+                    cvReportv.visibility = View.GONE
+                    cvReportx.visibility = View.GONE
+                    cvComplain.visibility = View.GONE
+                    btnAddPhotoCheck.visibility = View.GONE
+                    btnAddPhotoWaste.visibility = View.GONE
+                    setEditTextEnabled(context,lyAfterCheckNote,etAfterCheckNote,false)
+                    setEditTextEnabled(context,lyAfterRepairNote,etAfterRepairNote,false)
+                    lyAdditionalPartRequest.visibility = View.GONE
+                    btnCheckStart.visibility = View.GONE
+                    btnCheckDone.visibility = View.GONE
+                    btnRepairStart.visibility = View.GONE
+                    btnRepairNext.visibility = View.GONE
+                    btnRepairDone.visibility = View.GONE
                 }
-
+                29 -> {
+                    cvProblem.visibility = View.VISIBLE
+                    cvDriver.visibility = View.VISIBLE
+                    cvCheck.visibility = View.VISIBLE
+                    cvParts.visibility = View.VISIBLE
+                    cvReportv.visibility = View.VISIBLE
+                    cvReportx.visibility = View.VISIBLE
+                    cvComplain.visibility = View.GONE
+                    btnAddPhotoCheck.visibility = View.GONE
+                    btnAddPhotoWaste.visibility = View.GONE
+                    setEditTextEnabled(context,lyAfterCheckNote,etAfterCheckNote,false)
+                    setEditTextEnabled(context,lyAfterRepairNote,etAfterRepairNote,false)
+                    lyAdditionalPartRequest.visibility = View.GONE
+                    btnCheckStart.visibility = View.GONE
+                    btnCheckDone.visibility = View.GONE
+                    btnRepairStart.visibility = View.GONE
+                    btnRepairNext.visibility = View.GONE
+                    btnRepairDone.visibility = View.GONE
+                }
+                31 -> {
+                    cvProblem.visibility = View.VISIBLE
+                    cvDriver.visibility = View.VISIBLE
+                    cvCheck.visibility = View.VISIBLE
+                    cvParts.visibility = View.VISIBLE
+                    cvReportv.visibility = View.GONE
+                    cvReportx.visibility = View.GONE
+                    cvComplain.visibility = View.GONE
+                    btnAddPhotoCheck.visibility = View.GONE
+                    btnAddPhotoWaste.visibility = View.GONE
+                    setEditTextEnabled(context,lyAfterCheckNote,etAfterCheckNote,false)
+                    setEditTextEnabled(context,lyAfterRepairNote,etAfterRepairNote,false)
+                    lyAdditionalPartRequest.visibility = View.GONE
+                    btnCheckStart.visibility = View.GONE
+                    btnCheckDone.visibility = View.GONE
+                    btnRepairStart.visibility = View.GONE
+                    btnRepairNext.visibility = View.GONE
+                    btnRepairDone.visibility = View.GONE
+                }
+                32 -> {
+                    cvProblem.visibility = View.VISIBLE
+                    cvDriver.visibility = View.VISIBLE
+                    cvCheck.visibility = View.VISIBLE
+                    cvParts.visibility = View.GONE
+                    cvReportv.visibility = View.GONE
+                    cvReportx.visibility = View.GONE
+                    cvComplain.visibility = View.GONE
+                    btnAddPhotoCheck.visibility = View.GONE
+                    btnAddPhotoWaste.visibility = View.GONE
+                    setEditTextEnabled(context,lyAfterCheckNote,etAfterCheckNote,false)
+                    setEditTextEnabled(context,lyAfterRepairNote,etAfterRepairNote,false)
+                    lyAdditionalPartRequest.visibility = View.GONE
+                    btnCheckStart.visibility = View.GONE
+                    btnCheckDone.visibility = View.GONE
+                    btnRepairStart.visibility = View.GONE
+                    btnRepairNext.visibility = View.GONE
+                    btnRepairDone.visibility = View.GONE
+                }
+                33 -> {
+                    cvProblem.visibility = View.VISIBLE
+                    cvDriver.visibility = View.VISIBLE
+                    cvCheck.visibility = View.VISIBLE
+                    cvParts.visibility = View.VISIBLE
+                    cvReportv.visibility = View.GONE
+                    cvReportx.visibility = View.GONE
+                    cvComplain.visibility = View.GONE
+                    btnAddPhotoCheck.visibility = View.GONE
+                    btnAddPhotoWaste.visibility = View.GONE
+                    setEditTextEnabled(context,lyAfterCheckNote,etAfterCheckNote,false)
+                    setEditTextEnabled(context,lyAfterRepairNote,etAfterRepairNote,false)
+                    lyAdditionalPartRequest.visibility = View.GONE
+                    btnCheckStart.visibility = View.GONE
+                    btnCheckDone.visibility = View.GONE
+                    btnRepairStart.visibility = View.GONE
+                    btnRepairNext.visibility = View.GONE
+                    btnRepairDone.visibility = View.GONE
+                }
                 else -> {
-                    stageIcon = R.drawable.ic_stage_repair_ongoing
-                    stageBackgroundColor = R.color.bluesoft
-                    stageTextColor = R.color.blue
+                    cvProblem.visibility = View.VISIBLE
+                    cvDriver.visibility = View.VISIBLE
+                    cvCheck.visibility = View.VISIBLE
+                    cvParts.visibility = View.VISIBLE
+                    cvReportv.visibility = View.VISIBLE
+                    cvReportx.visibility = View.VISIBLE
+                    cvComplain.visibility = View.GONE
+                    btnAddPhotoCheck.visibility = View.GONE
+                    btnAddPhotoWaste.visibility = View.GONE
+                    setEditTextEnabled(context,lyAfterCheckNote,etAfterCheckNote,false)
+                    setEditTextEnabled(context,lyAfterRepairNote,etAfterRepairNote,false)
+                    lyAdditionalPartRequest.visibility = View.GONE
+                    btnCheckStart.visibility = View.GONE
+                    btnCheckDone.visibility = View.GONE
+                    btnRepairStart.visibility = View.GONE
+                    btnRepairNext.visibility = View.GONE
+                    btnRepairDone.visibility = View.GONE
                 }
             }
-
-            ivStageIcon.setImageResource(stageIcon)
-            lyStage.setBackgroundResource(stageBackgroundColor)
-            tvStage.text = stageName
-            tvStage.setTextColor(ContextCompat.getColor(context, stageTextColor))
-
-//            tvStage.setTextColor(stageTextColor)
 
         }
 
+        fun setEditTextEnabled (
+            context: Context,
+            lyEdit: LinearLayout,
+            editText: EditText,
+            isEnabled : Boolean
+        ){
+            if (isEnabled){
+                lyEdit.setBackgroundResource(R.drawable.bg_button_rounded_outline_grey)
+                editText.isFocusableInTouchMode = true
+                editText.isFocusable = true
+                editText.isLongClickable = true
+                lyEdit.setOnClickListener { editText.requestFocus() }
+            }else {
+                lyEdit.setBackgroundResource(R.drawable.bg_rounded_textview_greysoft)
+                editText.isFocusableInTouchMode = false
+                editText.isFocusable = false
+                editText.isLongClickable = false
+                lyEdit.setOnClickListener {  }
+            }
+        }
+
+        fun String.toEditable(): Editable =  Editable.Factory.getInstance().newEditable(this)
 
     }
 }

@@ -16,6 +16,7 @@ import com.daffamuhtar.fmkotlin.databinding.ActivityCheckBinding
 import com.daffamuhtar.fmkotlin.model.Filter
 import com.daffamuhtar.fmkotlin.model.Repair
 import com.daffamuhtar.fmkotlin.model.response.CheckRepairResponse
+import com.daffamuhtar.fmkotlin.model.response.RepairOnAdhocResponse
 import com.daffamuhtar.fmkotlin.ui.adapter.CheckAdapter
 import com.daffamuhtar.fmkotlin.ui.adapter.FilterAdapter
 import com.daffamuhtar.fmkotlin.ui.adapter.RepairAdapter
@@ -57,12 +58,13 @@ class CheckActivity : AppCompatActivity() {
     }
 
     private fun callData() {
-        checkViewModel.getAllCheckRepair(this, ConstantaApp.BASE_URL_V2_0, "MEC-MBA-99")
+//        checkViewModel.getAllCheckRepair(this, ConstantaApp.BASE_URL_V2_0, "MEC-MBA-99")
+        checkViewModel.getAllOngoingRepair(this, ConstantaApp.BASE_URL_V2_0, "MEC-MBA-99")
 
     }
 
     private fun initViewModel() {
-        checkViewModel.repairList.observe(this) {
+        checkViewModel.repairList2.observe(this) {
             if (it.isNotEmpty()) {
                 setReportResults(it)
             } else {
@@ -88,7 +90,7 @@ class CheckActivity : AppCompatActivity() {
         binding.srCheck.isRefreshing = value
     }
 
-    private fun setReportResults(repairs: List<CheckRepairResponse>) {
+    private fun setReportResults(repairs: List<RepairOnAdhocResponse>) {
         repairList.clear()
         val listReport = ArrayList<Repair>()
 
@@ -96,11 +98,11 @@ class CheckActivity : AppCompatActivity() {
             repair.apply {
                 val getResult = Repair(
                     orderId,
-                    spkId = null,
+                    spkId,
                     pbId = null,
                     stageId,
                     stageName = null,
-                    vehicleId,
+                    "vehicleId",
                     vehicleBrand,
                     vehicleType,
                     vehicleVarian,
@@ -111,7 +113,7 @@ class CheckActivity : AppCompatActivity() {
                     noteFromSA,
                     workshopName = null,
                     workshopLocation = null,
-                    startAssignment,
+                    "2021-08-31 10:00:00",
                     additionalPartNote = null,
                     startRepairOdometer = null,
                     locationOption,
@@ -187,7 +189,7 @@ class CheckActivity : AppCompatActivity() {
         binding.rvCheck.adapter = repairAdapter
 
         repairAdapter.setOnItemClickCallback(object : RepairAdapter.OnItemClickCallback {
-            override fun onItemClicked(data: Repair) {
+            override fun onItemClicked(data: Repair, position: Int) {
                 Toast.makeText(context, data.orderId, Toast.LENGTH_SHORT).show()
                 val intent = Intent(context, RepairDetailActivity::class.java)
                 intent.putExtra(Constanta.EXTRA_SPKID, data.spkId)
@@ -200,7 +202,11 @@ class CheckActivity : AppCompatActivity() {
                 intent.putExtra(Constanta.EXTRA_VLICEN, data.vehicleLicenseNumber)
                 intent.putExtra(Constanta.EXTRA_VDIS, data.vehicleDistrict)
                 intent.putExtra(Constanta.EXTRA_VLID, data.vehicleLambungId)
-                intent.putExtra(Constanta.EXTRA_STAGEID, data.stageId)
+                if (position ==0 ){
+                    intent.putExtra(Constanta.EXTRA_STAGEID, "13")
+                }else{
+                    intent.putExtra(Constanta.EXTRA_STAGEID, data.stageId)
+                }
                 intent.putExtra(Constanta.EXTRA_STAGENAME, data.stageName)
                 intent.putExtra(Constanta.EXTRA_LOCOPTION, data.locationOption)
                 intent.putExtra(Constanta.EXTRA_SASSIGN, data.startAssignment)

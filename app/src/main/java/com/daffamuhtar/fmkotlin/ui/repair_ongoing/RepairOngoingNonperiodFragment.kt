@@ -184,7 +184,7 @@ class RepairOngoingNonperiodFragment : Fragment() {
         binding.rvCheck.adapter = repairAdapter
 
         repairAdapter.setOnItemClickCallback(object : RepairAdapter.OnItemClickCallback {
-            override fun onItemClicked(data: Repair) {
+            override fun onItemClicked(data: Repair, position: Int) {
                 Toast.makeText(context, data.orderId, Toast.LENGTH_SHORT).show()
                 val intent = Intent(context, RepairDetailActivity::class.java)
                 intent.putExtra(Constanta.EXTRA_SPKID, data.spkId)

@@ -1,6 +1,7 @@
 package com.daffamuhtar.fmkotlin.ui.repair_detail
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -16,7 +17,10 @@ import com.daffamuhtar.fmkotlin.ui.adapter.PhotoAdapter
 import com.daffamuhtar.fmkotlin.ui.adapter.RepairDetailAfterRepairAdapter
 import com.daffamuhtar.fmkotlin.ui.adapter.RepairDetailPartAdapter
 import com.daffamuhtar.fmkotlin.ui.adapter.RepairDetailProblemAdapter
+import com.daffamuhtar.fmkotlin.ui.bottomsheet.AdditionalPartRequestBottomSheet
+import com.daffamuhtar.fmkotlin.ui.bottomsheet.PhotoVideoPreviewBottomSheet
 import com.daffamuhtar.fmkotlin.util.RepairHelper
+import com.daffamuhtar.fmkotlin.util.RepairHelper.Companion.toEditable
 import com.daffamuhtar.fmkotlin.util.VehicleHelper
 
 class RepairDetailActivity : AppCompatActivity() {
@@ -38,6 +42,8 @@ class RepairDetailActivity : AppCompatActivity() {
     private var isUsingTMS: Int = 0
     private var locationOption: String? = null
     private var noteSA: String? = null
+
+    private var noteAfterRepairFromMechanic: String? = null
 
     private var vehicleId: String? = null
     private var vehiclePhoto: String? = null
@@ -111,14 +117,7 @@ class RepairDetailActivity : AppCompatActivity() {
         )
         binding.tvRepairId.text = RepairHelper.getRepairId(orderId, spkId)
         binding.tvRepairDate.text = RepairHelper.getRepairDate(repairDate!!)
-        RepairHelper.setRepairStage(
-            this,
-            stageId!!,
-            stageName,
-            binding.tvRepairStage,
-            binding.ivRepairStageIcon,
-            binding.lyRepairStage
-        )
+
         binding.tvVehicleName.text = VehicleHelper.getVehicleName(
             vehicleId!!,
             vehicleBrand!!,
@@ -139,6 +138,10 @@ class RepairDetailActivity : AppCompatActivity() {
     }
 
     private fun callData() {
+        Log.i("callData stageId ", stageId)
+        repairDetailViewModel.getRepairDetailRepairStage(
+            this, stageId.toInt()
+        )
         repairDetailViewModel.getRepairDetailProblemList(
             this, ConstantaApp.BASE_URL_V1_0, orderType, orderId, spkId
         )
@@ -175,6 +178,48 @@ class RepairDetailActivity : AppCompatActivity() {
     private fun initViewModel() {
         initViewModelIsLoading()
         initViewModelIsSuccess()
+
+        repairDetailViewModel.repairStageId.observe(this) {
+
+            Log.d("StageId ", "view model " + stageId)
+            stageId = it.toString()
+            RepairHelper.setRepairStage(
+                this,
+                it,
+                stageName,
+                binding.tvRepairStage,
+                binding.ivRepairStageIcon,
+                binding.lyRepairStage
+            )
+
+            RepairHelper.setRepairDetailLayout(
+                this,
+                it,
+                orderType!!,
+                noteAfterRepairFromMechanic,
+                binding.cvProblem,
+                binding.cvDriver,
+                binding.cvCheck,
+                binding.cvParts,
+                binding.cvReportv,
+                binding.cvReportx,
+                binding.cvComplain,
+                binding.btnAddPhoto,
+                binding.btnAddPhotoWaste,
+                binding.lyAfterCheckNote,
+                binding.lyAfterRepairNote,
+                binding.etAfterCheckNote,
+                binding.etAfterRepairNote,
+                binding.lyAdditionalPartRequest,
+                binding.btnAdditionalPartRequest,
+                binding.btnRepairStart,
+                binding.btnRepairStart,
+                binding.btnRepairNext,
+                binding.btnRepairDone,
+                binding.btnCheckStart,
+                binding.btnCheckDone,
+            )
+        }
 
         repairDetailViewModel.problemList.observe(this) {
             if (it.isNotEmpty()) {
@@ -247,10 +292,14 @@ class RepairDetailActivity : AppCompatActivity() {
         }
 
         repairDetailViewModel.afterRepairWaste.observe(this) {
-            if (it.isNotEmpty()) {
-                setAfterRepairWaste(it)
+            if (it != null) {
+                if (it.isNotEmpty()) {
+                    setAfterRepairWaste(it)
+                } else {
+                    Toast.makeText(this, "kosong", Toast.LENGTH_SHORT).show()
+                }
             } else {
-                Toast.makeText(this, "kosong", Toast.LENGTH_SHORT).show()
+                binding.btnAddPhotoWaste.visibility = View.VISIBLE
             }
         }
 
@@ -261,6 +310,7 @@ class RepairDetailActivity : AppCompatActivity() {
                 Toast.makeText(this, "kosong", Toast.LENGTH_SHORT).show()
             }
         }
+
     }
 
     private fun initViewModelIsLoading() {
@@ -311,6 +361,10 @@ class RepairDetailActivity : AppCompatActivity() {
             setIsSuccessGetRepairDetailAfterCheck(it)
         }
 
+        repairDetailViewModel.isSuccessGetRepairDetailPartList.observe(this) {
+            setIsSuccessGetRepairDetailPartList(it)
+        }
+
         repairDetailViewModel.isSuccessGetRepairDetailAfterRepairList.observe(this) {
             setIsSuccessGetRepairDetailAfterRepairList(it)
         }
@@ -335,6 +389,10 @@ class RepairDetailActivity : AppCompatActivity() {
         binding.cvDriver.visibility = if (it) View.VISIBLE else View.GONE
     }
 
+    private fun setIsSuccessGetRepairDetailPartList(it: Boolean) {
+        binding.cvParts.visibility = if (it) View.VISIBLE else View.GONE
+    }
+
     private fun setIsSuccessGetRepairDetailAfterCheck(it: Boolean) {
         if (stageId.toInt() != 12 or 13) {
             binding.cvCheck.visibility = if (it) View.VISIBLE else View.GONE
@@ -342,19 +400,15 @@ class RepairDetailActivity : AppCompatActivity() {
     }
 
     private fun setIsSuccessGetRepairDetailAfterRepairList(it: Boolean) {
-        if (stageId.toInt() != 18 or 19) {
+        if (stageId.toInt() != 18 && stageId.toInt() != 19) {
             binding.cvReportv.visibility = if (it) View.VISIBLE else View.GONE
         }
     }
 
     private fun setIsSuccessGetRepairDetailAfterRepairWaste(it: Boolean) {
         if (stageId.toInt() != 18 && stageId.toInt() != 19) {
-
-            Toast.makeText(this, "bukan yaaa $stageId", Toast.LENGTH_SHORT).show()
             binding.cvReportx.visibility = if (it) View.VISIBLE else View.GONE
         } else {
-            Toast.makeText(this, "bener nih $stageId", Toast.LENGTH_SHORT).show()
-
         }
 
     }
@@ -388,6 +442,7 @@ class RepairDetailActivity : AppCompatActivity() {
                 }
                 item.photo3?.let {
                     items.add(Photo(item.photo3, photo3, "photo", false))
+                    binding.btnAddPhotoWaste.visibility = View.VISIBLE
                 }
             }
             repairDetailAfterRepairWastePhoto.addAll(items)
@@ -428,7 +483,6 @@ class RepairDetailActivity : AppCompatActivity() {
         } else {
             binding.btnAddPhoto.visibility = View.GONE
         }
-
     }
 
     private fun setAfterRepair(it: List<RepairDetailAfterRepairResponse>) {
@@ -566,8 +620,9 @@ class RepairDetailActivity : AppCompatActivity() {
     }
 
     private fun setNote(it: List<RepairDetailNoteResponse>) {
-        binding.tvCnote.text = (it[0].noteCheckFromMechanic)
-        binding.etNotev.text = (it[0].noteAfterRepairFromMechanic)
+
+        binding.etAfterCheckNote.text = (it[0].noteCheckFromMechanic)?.toEditable()
+        binding.etAfterRepairNote.text = (it[0].noteAfterRepairFromMechanic)?.toEditable()
         val saName = it[0].saName
         binding.tvCverif.text = ("Diverifikasi oleh $saName (SA)")
         binding.tvWarehouseName.text = (it[0].warehouseName)
@@ -726,10 +781,25 @@ class RepairDetailActivity : AppCompatActivity() {
     private fun prepareView() {
         callData()
 
+        setClickListener()
+
         when (stageId.toInt()) {
             13 -> binding.btnAddPhoto.visibility = View.VISIBLE
             19 -> binding.btnAddPhotoWaste.visibility = View.VISIBLE
         }
+    }
+
+    private fun setClickListener() {
+        binding.btnAdditionalPartRequest.setOnClickListener { openBottomSheetAdditionalPartRequest() }
+    }
+
+    private fun openBottomSheetAdditionalPartRequest() {
+        val bundle = Bundle()
+        bundle.putString(Constanta.EXTRA_ORDERID, orderId)
+        bundle.putString(Constanta.EXTRA_SPKID, spkId)
+        val preview = AdditionalPartRequestBottomSheet()
+        preview.arguments = bundle
+        preview.show((this).supportFragmentManager, "openBottomSheetAdditionalPartRequest")
     }
 
     private fun getData() {
@@ -756,5 +826,6 @@ class RepairDetailActivity : AppCompatActivity() {
         isUsingTMS = intent.getIntExtra(Constanta.EXTRA_IS_USING_TMS, 0)
 
         orderType = RepairHelper.getRepairOrderType(orderId, isStoring)
+        Log.d("StageId ", "get data " + stageId)
     }
 }

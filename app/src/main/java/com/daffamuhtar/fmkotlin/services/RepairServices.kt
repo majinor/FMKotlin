@@ -1,9 +1,10 @@
 package com.daffamuhtar.fmkotlin.services
 
 import com.daffamuhtar.fmkotlin.model.response.*
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface RepairServices {
 
@@ -12,6 +13,12 @@ interface RepairServices {
         @Query("loggedMechanicId") loggedMechanicId: String,
         @Query("stageId") stageId: Int
     ): Call<List<CheckRepairResponse>>
+
+    @GET("api/mechanics/ongoing_order")
+    fun getRepairOngoing(
+        @Query("loggedMechanicId") loggedMechanicId: String,
+        @Query("stageId") stageId: Int
+    ): Call<List<RepairOnAdhocResponse>>
 
     @GET("api/mechanics/open_repair")
     fun getRepairAdhoc(
@@ -36,7 +43,6 @@ interface RepairServices {
         @Query("loggedMechanicId") loggedMechanicId: String,
         @Query("stageId") stageId: Int
     ): Call<List<RepairOnTireResponse>>
-
 
 
     //detail
@@ -208,6 +214,24 @@ interface RepairServices {
     fun getRepairDetailAfterRepairComplainNonperiod(
         @Query("orderId") orderId: String
     ): Call<List<RepairDetailAfterRepairComplainResponse>>
+
+    @Multipart
+    @POST("api/mechanics/request_additional_part_adhoc")
+    fun postAdditionalPartRequestAdhoc(
+        @Part("loggedMechanicId") loggedMechanicId: RequestBody,
+        @Part("orderId") orderId: RequestBody,
+        @Part("additionalNote") additionalNote: RequestBody,
+        @Part file1: MultipartBody,
+        @Part file2: MultipartBody,
+        @Part file3: MultipartBody,
+    ): Call<CallResponse>
+
+//    val requestFile = RequestBody.create("file".toMediaTypeOrNull(), file)
+//    val filePart = MultipartBody.Part.createFormData("photo", file.name, requestFile)
+//    val vehicleIdPart = vehicleId.toRequestBody("text/plain".toMediaTypeOrNull())
+//    val userIdPart = userId.toRequestBody("text/plain".toMediaTypeOrNull())
+//    val notePart = note.toRequestBody("text/plain".toMediaTypeOrNull())
+
 
 
 }

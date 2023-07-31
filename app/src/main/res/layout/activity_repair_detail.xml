@@ -273,21 +273,22 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:background="@color/lightgrey"/>
+                            android:background="@color/lightgrey" />
 
                         <LinearLayout
                             android:id="@+id/ly_repair_stage"
                             android:layout_width="match_parent"
-                            android:padding="15dp"
                             android:layout_height="wrap_content"
                             android:background="@color/bluesoft"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:padding="15dp">
+
                             <ImageView
                                 android:id="@+id/iv_repair_stage_icon"
                                 android:layout_width="20sp"
                                 android:layout_height="20sp"
-                                android:src="@drawable/ic_baseline_waiting_blue_24"
-                                android:layout_marginRight="10dp"/>
+                                android:layout_marginRight="10dp"
+                                android:src="@drawable/ic_baseline_waiting_blue_24" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -303,12 +304,11 @@
                                         android:id="@+id/tv_repair_stage"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:textStyle="bold"
+                                        android:text="Menunggu Approval"
                                         android:textColor="@color/blue"
-                                        android:text="Menunggu Approval"/>
+                                        android:textStyle="bold" />
 
                                     <TextView
-                                        android:visibility="gone"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:gravity="center"
@@ -316,7 +316,8 @@
                                         android:paddingRight="5dp"
                                         android:text="Datang ke Lokasi"
                                         android:textColor="@color/blue"
-                                        android:textStyle="bold" />
+                                        android:textStyle="bold"
+                                        android:visibility="gone" />
 
                                 </LinearLayout>
 
@@ -688,8 +689,8 @@
                                         android:layout_marginLeft="10dp"
                                         android:background="@drawable/bg_circle_greensoft"
                                         android:padding="5dp"
-                                        android:src="@drawable/ic_whatsapp"
                                         android:scaleType="fitCenter"
+                                        android:src="@drawable/ic_whatsapp"
                                         android:visibility="visible" />
                                 </LinearLayout>
 
@@ -1001,51 +1002,146 @@
                                         android:layout_marginLeft="10dp"
                                         android:background="@drawable/bg_circle_greensoft"
                                         android:padding="5dp"
-                                        android:src="@drawable/ic_whatsapp"
                                         android:scaleType="fitCenter"
+                                        android:src="@drawable/ic_whatsapp"
                                         android:visibility="visible" />
                                 </LinearLayout>
 
                             </LinearLayout>
 
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="5dp"
-                                android:layout_marginTop="15dp"
-                                android:layout_marginBottom="10dp"
-                                android:src="@drawable/dotted" />
-
-                            <com.facebook.shimmer.ShimmerFrameLayout
-                                android:id="@+id/ly_shimmer_share_location"
+                            <LinearLayout
+                                android:id="@+id/ly_location_shairng"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:padding="15dp"
-                                android:visibility="gone"
-                                app:shimmer_duration="1000">
+                                android:orientation="vertical"
+                                android:visibility="gone">
 
-                                <androidx.cardview.widget.CardView
+                                <ImageView
                                     android:layout_width="match_parent"
-                                    android:layout_height="150dp"
-                                    app:cardCornerRadius="10dp"
-                                    app:cardElevation="0dp">
+                                    android:layout_height="5dp"
+                                    android:layout_marginTop="15dp"
+                                    android:layout_marginBottom="10dp"
+                                    android:src="@drawable/dotted" />
 
-                                    <androidx.constraintlayout.widget.ConstraintLayout
+                                <com.facebook.shimmer.ShimmerFrameLayout
+                                    android:id="@+id/ly_shimmer_share_location"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:padding="15dp"
+                                    android:visibility="gone"
+                                    app:shimmer_duration="1000">
+
+                                    <androidx.cardview.widget.CardView
                                         android:layout_width="match_parent"
-                                        android:layout_height="match_parent">
+                                        android:layout_height="150dp"
+                                        app:cardCornerRadius="10dp"
+                                        app:cardElevation="0dp">
+
+                                        <androidx.constraintlayout.widget.ConstraintLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent">
+
+                                            <LinearLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent"
+                                                android:background="@drawable/bg_rounded_textview_shimmer"
+                                                app:layout_constraintBottom_toBottomOf="parent"
+                                                app:layout_constraintEnd_toEndOf="parent"
+                                                app:layout_constraintStart_toStartOf="parent"
+                                                app:layout_constraintTop_toTopOf="parent" />
+                                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                                    </androidx.cardview.widget.CardView>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal"
+                                        android:visibility="visible">
+
+                                        <LinearLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/bg_rounded_textview_bluesoft"
+                                            android:backgroundTint="@color/bluesoft"
+                                            android:padding="10dp">
+
+                                            <ImageView
+                                                android:layout_width="20dp"
+                                                android:layout_height="20dp"
+                                                android:src="@drawable/ic_stage_repair_ongoing"
+                                                app:tint="@color/blue" />
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:background="@drawable/bg_rounded_textview_shimmer"
+                                                android:ellipsize="end"
+                                                android:text="Lokasi kendaraan sedang dibagikan"
+                                                android:textColor="@color/grey" />
+                                        </LinearLayout>
 
                                         <LinearLayout
                                             android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:background="@drawable/bg_rounded_textview_shimmer"
-                                            app:layout_constraintBottom_toBottomOf="parent"
-                                            app:layout_constraintEnd_toEndOf="parent"
-                                            app:layout_constraintStart_toStartOf="parent"
-                                            app:layout_constraintTop_toTopOf="parent" />
-                                    </androidx.constraintlayout.widget.ConstraintLayout>
+                                            android:layout_height="wrap_content"
+                                            android:gravity="end">
 
-                                </androidx.cardview.widget.CardView>
+                                            <ImageButton
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="match_parent"
+                                                android:padding="5dp"
+                                                android:src="@drawable/baseline_more_horiz_24"
+                                                app:tint="@color/blue" />
+                                        </LinearLayout>
+
+                                    </LinearLayout>
+
+                                </com.facebook.shimmer.ShimmerFrameLayout>
 
                                 <LinearLayout
+                                    android:id="@+id/ly_maps"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="5dp"
+                                    android:layout_marginBottom="10dp"
+                                    android:orientation="vertical"
+                                    android:visibility="visible">
+
+                                    <androidx.cardview.widget.CardView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="150dp"
+                                        app:cardCornerRadius="10dp"
+                                        app:cardElevation="0dp">
+
+                                        <androidx.constraintlayout.widget.ConstraintLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent">
+
+                                            <org.osmdroid.views.MapView
+                                                android:id="@+id/mv_map"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent"
+                                                app:layout_constraintBottom_toBottomOf="parent"
+                                                app:layout_constraintEnd_toEndOf="parent"
+                                                app:layout_constraintStart_toStartOf="parent"
+                                                app:layout_constraintTop_toTopOf="parent" />
+
+                                            <RelativeLayout
+                                                android:id="@+id/ly_clik_map"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent"
+                                                android:clickable="true"
+                                                app:layout_constraintBottom_toBottomOf="parent"
+                                                app:layout_constraintEnd_toEndOf="parent"
+                                                app:layout_constraintStart_toStartOf="parent"
+                                                app:layout_constraintTop_toTopOf="parent" />
+                                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                                    </androidx.cardview.widget.CardView>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/ly_is_sharing"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:orientation="horizontal"
@@ -1055,7 +1151,6 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:background="@drawable/bg_rounded_textview_bluesoft"
-                                        android:backgroundTint="@color/bluesoft"
                                         android:padding="10dp">
 
                                         <ImageView
@@ -1067,10 +1162,8 @@
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:background="@drawable/bg_rounded_textview_shimmer"
                                             android:ellipsize="end"
-                                            android:text="Lokasi kendaraan sedang dibagikan"
-                                            android:textColor="@color/grey" />
+                                            android:text="Lokasi kendaraan sedang dibagikan" />
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -1079,6 +1172,7 @@
                                         android:gravity="end">
 
                                         <ImageButton
+                                            style="@style/ButtonOutlineBlueNetral"
                                             android:layout_width="wrap_content"
                                             android:layout_height="match_parent"
                                             android:padding="5dp"
@@ -1086,90 +1180,6 @@
                                             app:tint="@color/blue" />
                                     </LinearLayout>
 
-                                </LinearLayout>
-
-                            </com.facebook.shimmer.ShimmerFrameLayout>
-
-                            <LinearLayout
-                                android:id="@+id/ly_maps"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginHorizontal="5dp"
-                                android:layout_marginBottom="10dp"
-                                android:orientation="vertical"
-                                android:visibility="visible">
-
-                                <androidx.cardview.widget.CardView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="150dp"
-                                    app:cardCornerRadius="10dp"
-                                    app:cardElevation="0dp">
-
-                                    <androidx.constraintlayout.widget.ConstraintLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent">
-
-                                        <org.osmdroid.views.MapView
-                                            android:id="@+id/mv_map"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            app:layout_constraintBottom_toBottomOf="parent"
-                                            app:layout_constraintEnd_toEndOf="parent"
-                                            app:layout_constraintStart_toStartOf="parent"
-                                            app:layout_constraintTop_toTopOf="parent" />
-
-                                        <RelativeLayout
-                                            android:id="@+id/ly_clik_map"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:clickable="true"
-                                            app:layout_constraintBottom_toBottomOf="parent"
-                                            app:layout_constraintEnd_toEndOf="parent"
-                                            app:layout_constraintStart_toStartOf="parent"
-                                            app:layout_constraintTop_toTopOf="parent" />
-                                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                                </androidx.cardview.widget.CardView>
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:id="@+id/ly_is_sharing"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:visibility="visible">
-
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:background="@drawable/bg_rounded_textview_bluesoft"
-                                    android:padding="10dp">
-
-                                    <ImageView
-                                        android:layout_width="20dp"
-                                        android:layout_height="20dp"
-                                        android:src="@drawable/ic_stage_repair_ongoing"
-                                        app:tint="@color/blue" />
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:ellipsize="end"
-                                        android:text="Lokasi kendaraan sedang dibagikan" />
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="end">
-
-                                    <ImageButton
-                                        style="@style/ButtonOutlineBlueNetral"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
-                                        android:padding="5dp"
-                                        android:src="@drawable/baseline_more_horiz_24"
-                                        app:tint="@color/blue" />
                                 </LinearLayout>
 
                             </LinearLayout>
@@ -1182,17 +1192,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp">
 
-                            <!--                            <ImageView-->
-                            <!--                                android:id="@+id/iv_wphoto"-->
-                            <!--                                android:layout_width="70dp"-->
-                            <!--                                android:layout_height="70dp"-->
-                            <!--                                android:layout_marginRight="10dp" />-->
-
                         </LinearLayout>
 
-
                     </LinearLayout>
-
 
                 </LinearLayout>
 
@@ -1369,10 +1371,11 @@
                             android:orientation="vertical">
 
                             <LinearLayout
+                                android:id="@+id/ly_after_check_note"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="15dp"
-                                android:background="@drawable/bg_rounded_textview_greysoft"
+                                android:background="@drawable/bg_button_rounded_outline_grey"
                                 android:padding="10dp">
 
                                 <ImageView
@@ -1397,14 +1400,17 @@
                                         android:textColor="@color/grey"
                                         android:textStyle="bold" />
 
-                                    <TextView
-                                        android:id="@+id/tv_cnote"
+                                    <EditText
+                                        android:id="@+id/et_after_check_note"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
+                                        android:layout_marginTop="5dp"
                                         android:layout_weight="1"
+                                        android:background="@color/transparant"
                                         android:gravity="left|top"
-                                        android:minHeight="30dp"
-                                        android:text=""
+                                        android:hint="Masukkan catatan pemeriksaan"
+                                        android:textColorHint="@color/grey"
+                                        android:textSize="14sp"
                                         android:textStyle="bold" />
 
                                 </LinearLayout>
@@ -1477,7 +1483,8 @@
                                 android:layout_marginTop="10dp"
                                 android:drawableLeft="@drawable/ic_true_circle_green"
                                 android:drawablePadding="10dp"
-                                android:text="Diverifikasi oleh :" />
+                                android:text="Diverifikasi oleh :"
+                                android:visibility="gone" />
 
 
                         </LinearLayout>
@@ -1514,9 +1521,9 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_weight="1"
                                 android:text="Part dan Jasa"
                                 android:textSize="15sp"
-                                android:layout_weight="1"
                                 android:textStyle="bold" />
 
                             <TextView
@@ -1531,7 +1538,6 @@
                                 android:textStyle="bold" />
 
                         </LinearLayout>
-
 
 
                         <TextView
@@ -1640,7 +1646,6 @@
                                 <HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginBottom="10dp"
                                     android:scrollbarFadeDuration="0">
 
                                     <LinearLayout
@@ -1664,14 +1669,13 @@
                                                 android:textStyle="bold" />
 
 
-
                                             <TextView
                                                 android:id="@+id/tv_irdp_item"
                                                 android:layout_width="150dp"
                                                 android:layout_height="wrap_content"
                                                 android:gravity="center_vertical"
-                                                android:textStyle="bold"
-                                                android:text="Nama Part" />
+                                                android:text="Nama Part"
+                                                android:textStyle="bold" />
 
                                             <TextView
                                                 android:layout_width="1dp"
@@ -1687,8 +1691,8 @@
                                                 android:layout_width="80dp"
                                                 android:layout_height="wrap_content"
                                                 android:gravity="center_vertical"
-                                                android:textStyle="bold"
-                                                android:text="Brand" />
+                                                android:text="Brand"
+                                                android:textStyle="bold" />
 
                                             <TextView
                                                 android:layout_width="1dp"
@@ -1704,8 +1708,8 @@
                                                 android:layout_width="50dp"
                                                 android:layout_height="wrap_content"
                                                 android:gravity="center"
-                                                android:textStyle="bold"
-                                                android:text="Jumlah" />
+                                                android:text="Jumlah"
+                                                android:textStyle="bold" />
 
                                             <TextView
                                                 android:layout_width="1dp"
@@ -1721,8 +1725,8 @@
                                                 android:layout_width="50dp"
                                                 android:layout_height="wrap_content"
                                                 android:gravity="center"
-                                                android:textStyle="bold"
-                                                android:text="Satuan" />
+                                                android:text="Satuan"
+                                                android:textStyle="bold" />
 
                                             <TextView
                                                 android:layout_width="1dp"
@@ -1749,6 +1753,7 @@
                                                 android:gravity="center"
                                                 android:textSize="10dp"
                                                 android:textStyle="bold" />
+
                                             <TextView
                                                 android:id="@+id/tv_irdp_part_id"
                                                 android:layout_width="100dp"
@@ -1773,14 +1778,88 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:orientation="vertical"
-                                            tools:listitem="@layout/item_repair_detail_part"
-                                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                            tools:itemCount="5"
+                                            tools:listitem="@layout/item_repair_detail_part" />
 
                                     </LinearLayout>
 
                                 </HorizontalScrollView>
 
                             </RelativeLayout>
+
+                            <LinearLayout
+                                android:id="@+id/ly_additional_part_request"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:background="@drawable/bg_rounded_textview_bluesoft"
+                                android:orientation="vertical"
+                                android:padding="10dp">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <ImageView
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:layout_marginRight="5dp"
+                                        android:src="@drawable/ic_help_outline_black_24dp"
+                                        app:tint="@color/blue" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:text="Ada part yang Kurang?"
+                                        android:textColor="@color/blue"
+                                        android:textStyle="bold" />
+
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <ImageView
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:layout_marginRight="5dp"
+                                        android:src="@drawable/ic_false_circle_black_24dp"
+                                        android:visibility="invisible"
+                                        app:tint="@color/reddark" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="Anda dapat membuat laporan untuk mengajukan penambahan part pada perbaikan ini"
+                                        android:textColor="@color/blue" />
+
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:gravity="right"
+                                    android:orientation="horizontal">
+
+                                    <Button
+                                        android:id="@+id/btn_additional_part_request"
+                                        style="@style/ButtonBlueNetral"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="30dp"
+                                        android:paddingHorizontal="10dp"
+                                        android:text="Ajukan Part" />
+                                </LinearLayout>
+
+                            </LinearLayout>
 
 
                         </LinearLayout>
@@ -1884,10 +1963,11 @@
                             android:orientation="vertical">
 
                             <LinearLayout
+                                android:id="@+id/ly_after_repair_note"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="15dp"
-                                android:background="@drawable/bg_rounded_textview_greysoft"
+                                android:background="@drawable/bg_button_rounded_outline_grey"
                                 android:padding="10dp">
 
                                 <ImageView
@@ -1912,14 +1992,17 @@
                                         android:textColor="@color/grey"
                                         android:textStyle="bold" />
 
-                                    <TextView
-                                        android:id="@+id/et_notev"
+                                    <EditText
+                                        android:id="@+id/et_after_repair_note"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
+                                        android:layout_marginTop="5dp"
                                         android:layout_weight="1"
+                                        android:background="@color/transparant"
                                         android:gravity="left|top"
-                                        android:minHeight="30dp"
-                                        android:text=""
+                                        android:hint="Masukkan catatan hasil perbaikan"
+                                        android:textColorHint="@color/grey"
+                                        android:textSize="14sp"
                                         android:textStyle="bold" />
 
                                 </LinearLayout>
@@ -1935,7 +2018,9 @@
                                     android:id="@+id/rv_donereport"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:orientation="vertical" />
+                                    android:orientation="vertical"
+                                    tools:itemCount="2"
+                                    tools:listitem="@layout/item_repair_detail_after_repair" />
                             </RelativeLayout>
 
                         </LinearLayout>
@@ -2039,9 +2124,9 @@
                                     android:layout_height="wrap_content"
                                     android:orientation="horizontal"
                                     android:visibility="visible"
+                                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                                     tools:itemCount="2"
-                                    tools:listitem="@layout/item_photo"
-                                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                                    tools:listitem="@layout/item_photo" />
 
                                 <ImageButton
                                     android:id="@+id/btn_add_photo_waste"
@@ -2065,7 +2150,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
                 android:visibility="visible"
                 app:cardElevation="3dp">
 
@@ -2178,15 +2262,17 @@
             </androidx.cardview.widget.CardView>
 
             <LinearLayout
+                android:id="@+id/ly_action"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:background="@color/white"
                 android:elevation="5dp"
                 android:orientation="vertical"
                 android:paddingTop="20dp">
 
                 <Button
-                    android:id="@+id/btn_doconfirm"
+                    android:id="@+id/btn_repair_start"
                     style="@style/ButtonYellow"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -2194,40 +2280,51 @@
                     android:layout_marginRight="10dp"
                     android:layout_marginBottom="10dp"
                     android:fontFamily="@font/messinasans_bold"
-                    android:text="Verifikasi Perbaikan" />
+                    android:text="Lakukan Perbaikan" />
 
                 <Button
-                    android:id="@+id/btn_rerepair"
-                    style="@style/ButtonOutlineRed"
+                    android:id="@+id/btn_repair_next"
+                    style="@style/ButtonYellow"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginBottom="10dp"
                     android:fontFamily="@font/messinasans_bold"
-                    android:text="Ajukan Komplain Perbaikan" />
+                    android:text="Lanjutkan" />
 
                 <Button
-                    android:id="@+id/btn_sendrerepair"
-                    style="@style/ButtonRed"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:fontFamily="@font/messinasans_bold"
-                    android:text="Kirim Komplain Perbaikan"
-                    android:visibility="gone" />
-
-                <Button
-                    android:id="@+id/btn_cancle"
-                    style="@style/ButtonOutlineGrey"
+                    android:id="@+id/btn_repair_done"
+                    style="@style/ButtonYellow"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginBottom="10dp"
                     android:fontFamily="@font/messinasans_bold"
-                    android:text="Batal"
-                    android:visibility="gone" />
+                    android:text="Selesai Diperbaiki" />
+
+                <Button
+                    android:id="@+id/btn_check_start"
+                    style="@style/ButtonYellow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/messinasans_bold"
+                    android:text="Mulai Pemeriksaan" />
+
+                <Button
+                    android:id="@+id/btn_check_done"
+                    style="@style/ButtonYellow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/messinasans_bold"
+                    android:text="Selesai Diperiksa" />
 
             </LinearLayout>
 

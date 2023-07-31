@@ -62,45 +62,11 @@ class PhotoVideoPreviewBottomSheet : BottomSheetDialogFragment() {
     ): View? {
         binding = BsDocumentPreviewBinding.inflate(inflater, container, false)
 
-
-//        v.isFocusableInTouchMode = true
-//        v.requestFocus()
-//        v.setOnKeyListener { _, keyCode, event ->
-//            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_BACK) {
-//                hideBs()
-//                true
-//            } else {
-//                false
-//            }
-//        }
-
         val who = arguments?.getString("WHO")
         binding.pbLoading.visibility = View.GONE
 
         if (who == "Video") {
             binding.ivBsp.visibility = View.GONE
-//            mediaController = MediaController(binding.videoView.context)
-//            mediaController.setMediaPlayer(binding.videoView)
-//            mediaController.setAnchorView(binding.videoView)
-//            //specify the location of media file
-//            //Setting MediaController and URI, then starting the videoView
-//            binding.videoView.setMediaController(mediaController)
-//            binding.videoView.setVideoPath(arguments?.getString(Constanta.EXTRA_PREVIEW));
-//            binding.videoView.start()
-//
-//            binding.videoView.setOnPreparedListener(OnPreparedListener { mp ->
-//                mp.setOnVideoSizeChangedListener { mp, width, height -> /*
-//                             * add media controller
-//                             */
-//                    mediaController = MediaController(requireContext())
-//                    binding.videoView.setMediaController(mediaController)
-//                    /*
-//                             * and set its position on screen
-//                             */mediaController.setAnchorView(binding.videoView)
-//                }
-//            })
-
-
 
             val player = ExoPlayer.Builder(requireContext()).build()
 
@@ -139,19 +105,6 @@ class PhotoVideoPreviewBottomSheet : BottomSheetDialogFragment() {
 
     }
 
-
-//    private fun hideBs() {
-//        behavior.isHideable = true
-//        behavior.state = BottomSheetBehavior.STATE_HIDDEN
-//        playerView.visibility = View.GONE
-//        player.stop()
-//    }
-
-//    private fun getWindowHeight(): Int {
-//        val displayMetrics = DisplayMetrics()
-//        activity?.windowManager?.defaultDisplay?.getMetrics(displayMetrics)
-//        return displayMetrics.heightPixels
-//    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState)

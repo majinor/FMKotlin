@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_rounded_half_top_big">
+
+    <LinearLayout
+        android:id="@+id/ly_additional_part_request_form"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pengajuan Part Tambahan"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="15dp"/>
+
+        <LinearLayout
+            android:id="@+id/ly_additional_part_request_form_note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/bg_button_rounded_outline_grey"
+            android:padding="10dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/baseline_assignment_24"
+                app:tint="@color/grey" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="Catatan :"
+                    android:textColor="@color/grey"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/et_additional_part_request_form_note"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:background="@color/transparant"
+                    android:gravity="left|top"
+                    android:hint="Masukkan catatan pemeriksaan"
+                    android:textColorHint="@color/grey"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ly_additional_part_request_form_photo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:minHeight="70dp"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_additional_part_request_form_photo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                tools:itemCount="2"
+                tools:listitem="@layout/item_photo" />
+
+            <ImageButton
+                android:id="@+id/btn_additional_part_request_form_add_photo"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/ic_add_circle_outline_black_24dp"
+                android:visibility="visible" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_cancel"
+                style="@style/ButtonOutlineBlue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/messinasans_bold"
+                android:text="Batal" />
+
+            <View
+                android:layout_width="15dp"
+                android:layout_height="match_parent"/>
+
+            <Button
+                android:id="@+id/btn_send"
+                style="@style/ButtonBlue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/messinasans_bold"
+                android:text="Ajukan Part" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>
