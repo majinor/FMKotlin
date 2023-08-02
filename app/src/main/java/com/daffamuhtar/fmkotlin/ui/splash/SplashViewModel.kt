@@ -31,6 +31,9 @@ class SplashViewModel : ViewModel() {
     private val _messageRefreshToken = MutableLiveData<String>()
     val messageRefreshToken: LiveData<String> = _messageRefreshToken
 
+    private val _token = MutableLiveData<String>()
+    val token: LiveData<String> = _token
+
     fun postRefreshToken(
         context: Context,
         apiVersion: String,
@@ -55,6 +58,7 @@ class SplashViewModel : ViewModel() {
                     val responseBody = response.body()
                     _isSuccessRefreshToken.value = true
                     _messageRefreshToken.value = responseBody?.message
+                    _token.value = responseBody?.token
 
                 } else {
                     val responseErrorBody = response.errorBody()

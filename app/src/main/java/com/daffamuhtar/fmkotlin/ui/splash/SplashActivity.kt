@@ -9,17 +9,12 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.Animation
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.daffamuhtar.fmkotlin.ui.main.MainActivity
 import com.daffamuhtar.fmkotlin.R
 import com.daffamuhtar.fmkotlin.app.Server
 import com.daffamuhtar.fmkotlin.constants.Constanta
@@ -27,7 +22,7 @@ import com.daffamuhtar.fmkotlin.constants.Constanta.TAG
 import com.daffamuhtar.fmkotlin.constants.ConstantaApp
 import com.daffamuhtar.fmkotlin.databinding.ActivitySplashBinding
 import com.daffamuhtar.fmkotlin.databinding.DialogErrorRefreshtokenBinding
-import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.daffamuhtar.fmkotlin.ui.main.MainActivity
 import com.google.android.material.snackbar.Snackbar
 
 class SplashActivity : AppCompatActivity() {
@@ -108,6 +103,10 @@ class SplashActivity : AppCompatActivity() {
             showMessage(it, isBindingAdd = true)
         }
 
+        splashViewModel.token.observe(this@SplashActivity) {
+            updateToken(it, isBindingAdd = true)
+        }
+
         splashViewModel.isSuccessRefreshToken.observe(this@SplashActivity) {
             if (it) {
                 intentToMainActivity()
@@ -115,6 +114,13 @@ class SplashActivity : AppCompatActivity() {
                 Toast.makeText(context, "", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun updateToken(it: String?, isBindingAdd: Boolean) {
+        val editor = getSharedPreferences(Constanta.my_shared_preferences, MODE_PRIVATE).edit()
+        editor.putString(Constanta.EXTRA_TOKEN, it)
+        editor.putString(Constanta.EXTRA_COMPANYTYPE, "1")
+        editor.apply()
     }
 
 //    private fun loadingAdd(value: Boolean) {

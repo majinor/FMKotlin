@@ -6,13 +6,16 @@ data class RefreshTokenResponse(
     @SerializedName("status")
     val status: Boolean,
 
+    @SerializedName("loggedUserId")
+    val loggedUserId: String,
+
+    @SerializedName("requiredUpdate")
+    val requiredUpdate: String,
+
+    @SerializedName("jwtToken")
+    val token: String,
+
     @SerializedName("message")
-    val message: String,
-
-    @SerializedName("errorType")
-    val code: Int,
-
-    @SerializedName("errorType2")
-    var errorType: String
+    var message: String
 )
 

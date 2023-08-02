@@ -16,7 +16,6 @@ class VehicleHelper {
                 vehicleName = "$vehicleBrand $vehicleType $vehicleVariant $vehicleYear\n$vehicleLicenseNumber"
             } else {
                 vehicleName = "$vehicleBrand $vehicleType $vehicleVariant $vehicleYear"
-
             }
             return vehicleName
         }

@@ -172,7 +172,6 @@ class RepairDetailActivity : AppCompatActivity() {
         repairDetailViewModel.getRepairDetailAfterRepairComplain(
             this, ConstantaApp.BASE_URL_V1_0, orderType, orderId
         )
-
     }
 
     private fun initViewModel() {
@@ -677,7 +676,6 @@ class RepairDetailActivity : AppCompatActivity() {
     private fun setWorkshopInfo(it: List<RepairDetailWorkshopInfoResponse>) {
         binding.tvWorkshopName.text = it[0].workshopName
         binding.tvWorkshopAddress.text = it[0].locationAddress
-
     }
 
     private fun setMechanicInfo(it: List<RepairDetailMechanicInfoResponse>) {
