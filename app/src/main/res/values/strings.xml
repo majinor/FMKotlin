@@ -4,4 +4,5 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_check">Pemeriksaan</string>
     <string name="title_activity_repair_ongoing">Perbaikan Berjalan</string>
+    <string name="title_activity_repair_on">Perbaikan</string>
 </resources>

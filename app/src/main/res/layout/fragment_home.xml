@@ -279,12 +279,13 @@
                                                 android:gravity="center_horizontal"
                                                 android:orientation="vertical">
 
-                                                <Button
-                                                    android:id="@+id/btn_uh_reportproblem"
+                                                <ImageButton
+                                                    android:id="@+id/btn_repair_check"
                                                     android:layout_width="50dp"
                                                     android:layout_height="50dp"
                                                     android:layout_marginTop="0dp"
-                                                    android:background="@drawable/icon_laporkan_masalah"
+                                                    android:background="@drawable/bg_circle_yellow"
+                                                    android:src="@drawable/baseline_search_24"
                                                     android:stateListAnimator="@null" />
 
                                                 <TextView
@@ -308,7 +309,7 @@
                                                 android:layout_height="wrap_content"
                                                 android:layout_marginTop="5dp"
                                                 android:gravity="center"
-                                                android:text="Lapor\nMasalah"
+                                                android:text="Pemeriksaan\n"
                                                 android:textSize="10sp" />
                                         </LinearLayout>
 
@@ -350,13 +351,15 @@
                                                 android:gravity="center_horizontal"
                                                 android:orientation="vertical">
 
-                                                <Button
-                                                    android:id="@+id/btn_uh_schedule"
+                                                <ImageButton
+                                                    android:id="@+id/btn_repair_ongoing"
                                                     android:layout_width="50dp"
                                                     android:layout_height="50dp"
                                                     android:layout_marginTop="0dp"
-                                                    android:background="@drawable/icon_jadwal_perbaikan"
-                                                    android:stateListAnimator="@null" />
+                                                    android:background="@drawable/bg_circle_yellow"
+                                                    android:src="@drawable/ic_baseline_waiting_24"
+                                                    android:stateListAnimator="@null"
+                                                    app:tint="@color/black" />
 
                                                 <TextView
                                                     android:id="@+id/tv_uh_schedulebadge"
@@ -380,7 +383,7 @@
                                                 android:layout_height="wrap_content"
                                                 android:layout_marginTop="5dp"
                                                 android:gravity="center"
-                                                android:text="Jadwal\nPerbaikan"
+                                                android:text="Perbaikan\nBerjalan"
                                                 android:textSize="10sp" />
                                         </LinearLayout>
 
@@ -421,12 +424,13 @@
                                                 android:gravity="center_horizontal"
                                                 android:orientation="vertical">
 
-                                                <Button
-                                                    android:id="@+id/btn_uh_confirmrepair"
+                                                <ImageButton
+                                                    android:id="@+id/btn_repair_on"
                                                     android:layout_width="50dp"
                                                     android:layout_height="50dp"
                                                     android:layout_marginTop="0dp"
-                                                    android:background="@drawable/icon_verify_repair"
+                                                    android:background="@drawable/bg_circle_yellow"
+                                                    android:src="@drawable/baseline_settings_24"
                                                     android:stateListAnimator="@null" />
 
                                                 <TextView
@@ -450,7 +454,7 @@
                                                 android:layout_height="wrap_content"
                                                 android:layout_marginTop="5dp"
                                                 android:gravity="center"
-                                                android:text="Verifikasi\nPerbaikan"
+                                                android:text="Perbaikan\n"
                                                 android:textSize="10sp" />
 
                                         </LinearLayout>

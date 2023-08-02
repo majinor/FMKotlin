@@ -12,7 +12,7 @@ interface RepairServices {
     fun getCheckRepair(
         @Query("loggedMechanicId") loggedMechanicId: String,
         @Query("stageId") stageId: Int
-    ): Call<List<CheckRepairResponse>>
+    ): Call<List<RepairCheckResponse>>
 
     @GET("api/mechanics/ongoing_order")
     fun getRepairOngoing(

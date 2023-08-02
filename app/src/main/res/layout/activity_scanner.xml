@@ -1,0 +1,704 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".ui.scanner.ScannerActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="-15dp"
+            android:layout_weight="1">
+
+            <com.journeyapps.barcodescanner.BarcodeView
+                android:id="@+id/zxing_scanner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_rounded_half_top_big"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="-15dp"
+                android:backgroundTint="@color/white"
+                android:orientation="vertical"
+                android:paddingHorizontal="15dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:visibility="visible">
+
+                <TextView
+                    android:layout_width="50dp"
+                    android:layout_height="5dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/bg_button_rounded_grey"
+                    android:backgroundTint="@color/grey"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:id="@+id/ly_scanner_bottomsheet_base_vehicle_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Kendaraan Aktif"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="1"
+                        android:visibility="visible">
+
+                        <!--                    <ImageView-->
+                        <!--                        android:id="@+id/iv_dh_vphoto"-->
+                        <!--                        android:layout_width="80dp"-->
+                        <!--                        android:layout_height="80dp"-->
+                        <!--                        android:layout_marginRight="10dp"-->
+                        <!--                        android:src="@color/grey"-->
+                        <!--                        app:shapeAppearanceOverlay="@style/circleImageView" />-->
+
+
+                        <ImageView
+                            android:id="@+id/iv_dh_vphoto"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_marginRight="10dp"
+                            android:src="@color/grey" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tv_dh_vlicen"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="15dp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/tv_dh_vname"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"/>
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:background="@drawable/bg_rounded_textview_outline"
+                                android:minWidth="100dp"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tv_dh_vlid"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/bg_rounded_textview_half_top"
+                                    android:backgroundTint="@color/grey"
+                                    android:gravity="center"
+                                    android:paddingLeft="5dp"
+                                    android:paddingRight="5dp"
+                                    android:text="-"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/tv_dh_vdis"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:paddingLeft="10dp"
+                                    android:paddingRight="10dp"
+                                    android:text=""
+                                    android:textColor="@color/grey"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ly_scanner_bottomsheet_base_tire_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/bg_button_rounded_blue"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:text="Posisi Ban"
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_rounded_outline_grey"
+                            android:padding="10dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/bg_rounded_textview_bluesoft"
+                                android:padding="10dp"
+                                android:text="FR"
+                                android:textColor="@color/blue"
+                                android:textStyle="bold" />
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:padding="10dp"
+                                android:text="Depan Kanan" />
+
+                            <Button
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                style="@style/ButtonOutlineBlue"
+                                android:minHeight="1dp"
+                                android:paddingHorizontal="10dp"
+                                android:paddingVertical="5dp"
+                                android:text="Lihat Skema Sasis"
+                                android:visibility="visible" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="5dp"
+                        android:layout_marginTop="10dp"
+                        android:layerType="software"
+                        android:src="@drawable/dashes_lines" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ly_scanner_bottomsheet_help"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:backgroundTint="@color/white"
+                android:orientation="vertical"
+                android:paddingHorizontal="15dp"
+                android:visibility="visible">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="Terkendala saat scan QR?" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    style="@style/ButtonOutlineGrey"
+                    android:drawableStart="@drawable/ic_help_black_24dp"
+                    android:drawablePadding="15dp"
+                    android:drawableTint="@color/grey"
+                    android:gravity="left|center_vertical"
+                    android:padding="15dp"
+                    android:stateListAnimator="@null"
+                    android:text="Bantuan"
+                    android:visibility="visible" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_rounded_half_top_big"
+                android:orientation="vertical"
+                android:padding="15dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Terkendala saat scan?" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    style="@style/ButtonOutlineGreyNetral"
+                    android:background="@drawable/bg_rounded_outline_grey"
+                    android:drawableStart="@drawable/ic_baseline_edit_24"
+                    android:drawablePadding="15dp"
+                    android:gravity="left|center_vertical"
+                    android:padding="15dp"
+                    android:stateListAnimator="@null"
+                    android:text="Input Manual"
+                    android:visibility="visible" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    style="@style/ButtonOutlineGreyNetral"
+                    android:drawableStart="@drawable/ic_help_black_24dp"
+                    android:drawablePadding="15dp"
+                    android:gravity="left|center_vertical"
+                    android:padding="15dp"
+                    android:stateListAnimator="@null"
+                    android:text="Bantuan"
+                    android:visibility="visible" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    style="@style/ButtonRedSoftNetral"
+                    android:drawableStart="@drawable/ic_baseline_error_red_24"
+                    android:drawablePadding="15dp"
+                    android:gravity="left|center_vertical"
+                    android:padding="15dp"
+                    android:stateListAnimator="@null"
+                    android:text="Lapor Stiker Bermasalah"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shadow_bottom">
+
+        <TextView
+            android:id="@+id/tv_scanner_object"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="15dp"
+            android:gravity="center"
+            android:text="Gunakan kamera untuk \n scan QR kode kendaraan"
+            android:textColor="@color/white"
+            android:textSize="17sp" />
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/sheet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:visibility="visible"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ly_scanner_bottomsheet_upper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="bottom"
+                    android:padding="10dp">
+
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/icon_fleetifyfull" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_scanner_flash"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Off"
+                            android:textColor="@color/white"
+                            android:visibility="visible" />
+
+                        <ImageView
+                            android:id="@+id/iv_scanner_flash"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/ic_circle_black_24dp"
+                            android:backgroundTint="@color/white"
+                            android:padding="8dp"
+                            android:src="@drawable/ic_highlight_black_24dp" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_rounded_half_top_big"
+                    android:backgroundTint="@color/white"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="15dp"
+                    android:paddingTop="15dp"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="5dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/bg_button_rounded_grey"
+                        android:backgroundTint="@color/grey"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+
+                    <LinearLayout
+                        android:id="@+id/ly_scanner_bottomsheet_vehicle_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="visible">
+
+                        <TextView
+                            android:id="@+id/tv_scanner_bottomsheet_vehicle_info_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Kendaraan"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:layout_weight="1"
+                            android:visibility="visible">
+
+                            <ImageView
+                                android:id="@+id/iv_scanner_bottomsheet_vehicle_photo"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:layout_marginRight="10dp"
+                                android:src="@drawable/grey_rounded_button" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="10dp"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/tv_scanner_bottomsheet_vehicle_licensenumber"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="B 1234 AA"
+                                        android:maxLines="1"
+                                        android:textSize="15sp"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/tv_scanner_bottomsheet_vehicle_name"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:ellipsize="end"
+                                        android:maxLines="1"
+                                        android:text="Hino 200 4.0MT 2019 - 2018" />
+
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_marginTop="5dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/bg_rounded_textview_outline"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:id="@+id/tv_scanner_bottomsheet_vehicle_lambungid"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:background="@drawable/bg_rounded_textview_half_left"
+                                        android:backgroundTint="@color/grey"
+                                        android:gravity="center"
+                                        android:minWidth="30dp"
+                                        android:paddingLeft="5dp"
+                                        android:paddingRight="5dp"
+                                        android:text="-"
+                                        android:textColor="@color/white"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/tv_scanner_bottomsheet_vehicle_district"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/grey"
+                                        android:paddingRight="5dp"
+                                        android:paddingLeft="5dp"
+                                        android:ellipsize="end"
+                                        android:maxLines="1"
+                                        android:text="-"/>
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp"
+                                    android:layout_weight="1"
+                                    android:visibility="gone"
+                                    android:background="@drawable/bg_rounded_textview_outline"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/bg_rounded_textview_half_top"
+                                        android:backgroundTint="@color/grey"
+                                        android:gravity="center"
+                                        android:paddingLeft="5dp"
+                                        android:paddingRight="5dp"
+                                        android:text="-"
+                                        android:textColor="@color/white"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        android:paddingLeft="10dp"
+                                        android:paddingRight="10dp"
+                                        android:text=""
+                                        android:textColor="@color/grey"
+                                        android:textStyle="bold" />
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ly_scanner_bottomsheet_tire_info"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:background="@drawable/bg_button_rounded_blue"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="10dp"
+                                android:text="Posisi Ban"
+                                android:textColor="@color/white"
+                                android:textStyle="bold" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/bg_rounded_outline_grey"
+                                android:padding="10dp">
+
+                                <TextView
+                                    android:id="@+id/tv_scanner_bottomsheet_tire_position_id"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/bg_rounded_textview_bluesoft"
+                                    android:padding="10dp"
+                                    android:text="FR"
+                                    android:textColor="@color/blue"
+                                    android:textStyle="bold" />
+
+
+                                <TextView
+                                    android:id="@+id/tv_scanner_bottomsheet_tire_position_name"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:paddingHorizontal="10dp"
+                                    android:text="Depan Kanan" />
+
+                                <Button
+                                    android:id="@+id/btn_scanner_tire_show_chassis"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    style="@style/ButtonOutlineBlueNetral"
+                                    android:minHeight="1dp"
+                                    android:paddingHorizontal="10dp"
+                                    android:paddingVertical="5dp"
+                                    android:text="Skema Sasis"
+                                    android:visibility="visible" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="5dp"
+                            android:layout_marginTop="10dp"
+                            android:layerType="software"
+                            android:src="@drawable/dashes_lines" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:backgroundTint="@color/white"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="15dp"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="Terkendala saat scan QR?" />
+
+                    <Button
+                        android:id="@+id/btn_scanner_bottomsheet_help"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        style="@style/ButtonOutlineGreyNetral"
+                        android:drawableStart="@drawable/ic_help_black_24dp"
+                        android:drawablePadding="15dp"
+                        android:drawableTint="@color/grey"
+                        android:gravity="left|center_vertical"
+                        android:padding="15dp"
+                        android:stateListAnimator="@null"
+                        android:text="Bantuan"
+                        android:visibility="visible" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="15dp"
+                    android:paddingBottom="15dp">
+
+                    <Button
+                        android:id="@+id/btn_scanner_manualinput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/ButtonOutlineGreyNetral"
+                        android:drawableStart="@drawable/ic_baseline_edit_24"
+                        android:drawablePadding="15dp"
+                        android:drawableTint="@color/grey"
+                        android:gravity="left|center_vertical"
+                        android:padding="15dp"
+                        android:stateListAnimator="@null"
+                        android:text="Input Manual"
+                        android:visibility="visible" />
+
+                    <Button
+                        android:id="@+id/btn_scanner_bottomsheet_look_vehicle_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        style="@style/ButtonBlueSoft"
+                        android:drawableStart="@drawable/ic_local_shipping_black_24dp"
+                        android:drawablePadding="15dp"
+                        android:gravity="left|center_vertical"
+                        android:padding="15dp"
+                        android:stateListAnimator="@null"
+                        android:text="Lihat Daftar Kendaraan"
+                        android:visibility="gone" />
+
+                    <Button
+                        android:id="@+id/btn_scanner_bottomsheet_report_sticker_issue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/ButtonRedSoft"
+                        android:drawableStart="@drawable/ic_baseline_error_red_24"
+                        android:drawablePadding="15dp"
+                        android:gravity="left|center_vertical"
+                        android:padding="15dp"
+                        android:stateListAnimator="@null"
+                        android:text="Lapor Stiker Bermasalah"
+                        android:visibility="gone"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </FrameLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

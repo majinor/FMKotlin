@@ -34,7 +34,7 @@ class RepairDetailActivity : AppCompatActivity() {
     private lateinit var orderId: String
     private var spkId: String? = null
     private var repairDate: String? = null
-    private lateinit var stageId: String
+    private var stageId: Int = 0
     private var stageName: String? = null
     private var pbId: String? = null
     private var isStoring: String? = null
@@ -138,9 +138,9 @@ class RepairDetailActivity : AppCompatActivity() {
     }
 
     private fun callData() {
-        Log.i("callData stageId ", stageId)
+        Log.i("callData stageId ", ""+stageId)
         repairDetailViewModel.getRepairDetailRepairStage(
-            this, stageId.toInt()
+            this, stageId
         )
         repairDetailViewModel.getRepairDetailProblemList(
             this, ConstantaApp.BASE_URL_V1_0, orderType, orderId, spkId
@@ -182,7 +182,7 @@ class RepairDetailActivity : AppCompatActivity() {
         repairDetailViewModel.repairStageId.observe(this) {
 
             Log.d("StageId ", "view model " + stageId)
-            stageId = it.toString()
+            stageId = it
             RepairHelper.setRepairStage(
                 this,
                 it,
@@ -394,19 +394,19 @@ class RepairDetailActivity : AppCompatActivity() {
     }
 
     private fun setIsSuccessGetRepairDetailAfterCheck(it: Boolean) {
-        if (stageId.toInt() != 12 or 13) {
+        if (stageId != 12 or 13) {
             binding.cvCheck.visibility = if (it) View.VISIBLE else View.GONE
         }
     }
 
     private fun setIsSuccessGetRepairDetailAfterRepairList(it: Boolean) {
-        if (stageId.toInt() != 18 && stageId.toInt() != 19) {
+        if (stageId != 18 && stageId != 19) {
             binding.cvReportv.visibility = if (it) View.VISIBLE else View.GONE
         }
     }
 
     private fun setIsSuccessGetRepairDetailAfterRepairWaste(it: Boolean) {
-        if (stageId.toInt() != 18 && stageId.toInt() != 19) {
+        if (stageId != 18 && stageId != 19) {
             binding.cvReportx.visibility = if (it) View.VISIBLE else View.GONE
         } else {
         }
@@ -478,6 +478,9 @@ class RepairDetailActivity : AppCompatActivity() {
         binding.rvAfterRepairWaste.layoutManager = (GridLayoutManager(this, 3))
         binding.rvAfterRepairWaste.adapter = repairDetailAfterRepairWasteAdapter
 
+        if (stageId != 13){
+            
+        }
         if (repairDetailAfterRepairWastePhoto.size < 3) {
             binding.btnAddPhoto.visibility = View.VISIBLE
         } else {
@@ -542,7 +545,7 @@ class RepairDetailActivity : AppCompatActivity() {
 
     private fun setToViewAfterRepair() {
         repairDetailAfterRepairAdapter.setItems(repairDetailAfterRepairs)
-        repairDetailAfterRepairAdapter.setRepairStageId(stageId.toInt())
+        repairDetailAfterRepairAdapter.setRepairStageId(stageId)
 
         binding.rvDonereport.layoutManager = object : LinearLayoutManager(this) {
             override fun canScrollVertically() = false
@@ -783,7 +786,7 @@ class RepairDetailActivity : AppCompatActivity() {
 
         setClickListener()
 
-        when (stageId.toInt()) {
+        when (stageId) {
             13 -> binding.btnAddPhoto.visibility = View.VISIBLE
             19 -> binding.btnAddPhotoWaste.visibility = View.VISIBLE
         }
@@ -809,7 +812,7 @@ class RepairDetailActivity : AppCompatActivity() {
         spkId = intent.getStringExtra(Constanta.EXTRA_SPKID)
         isStoring = intent.getStringExtra(Constanta.EXTRA_ISSTORING)
         pbId = intent.getStringExtra(Constanta.EXTRA_PBID)
-        stageId = intent.getStringExtra(Constanta.EXTRA_STAGEID)!!
+        stageId = intent.getIntExtra(Constanta.EXTRA_STAGEID,0)
         stageName = intent.getStringExtra(Constanta.EXTRA_STAGENAME)
         startRepairOdometer = intent.getStringExtra(Constanta.EXTRA_ODO)
         vehicleId = intent.getStringExtra(Constanta.EXTRA_VID)

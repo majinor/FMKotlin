@@ -18,6 +18,7 @@ object Constanta {
 
     //Showcase
     const val EXTRA_SHOWCASE_HOME = "showcasehome"
+    const val EXTRA_SR_ID = "srid"
 
     //Request
     const val CAMERA_REQUEST = 1
@@ -76,12 +77,15 @@ object Constanta {
     const val EXTRA_VCHASSISTYPE = "vchassistype"
     const val EXTRA_DISTANCE_UNIT = "distanceUnit"
     const val EXTRA_VSTATUS = "EXTRA_VSTATUS"
+    const val EXTRA_VEHICLE_DISTRICT_TIRE_SCAN = "EXTRA_VEHICLE_DISTRICT_TIRE_SCAN"
+
     const val VEHICLE_CHASSIS_TYPE_CDE = "CDE"
     const val VEHICLE_CHASSIS_TYPE_CDD = "CDD"
     const val VEHICLE_CHASSIS_TYPE_TRN = "TRT"
     const val VEHICLE_CHASSIS_TYPE_MGD = "MGD"
     const val VEHICLE_CHASSIS_TYPE_VBR = "VBR"
     const val VEHICLE_CHASSIS_TYPE_WHL = "WHL"
+
     const val EXTRA_DNAME = "dname"
     const val EXTRA_DPHONE = "dphone"
     const val EXTRA_ISOURCE = "isource"

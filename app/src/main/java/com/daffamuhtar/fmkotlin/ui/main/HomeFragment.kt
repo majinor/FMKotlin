@@ -7,8 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.daffamuhtar.fmkotlin.databinding.FragmentHomeBinding
-import com.daffamuhtar.fmkotlin.ui.check.CheckActivity
-import com.daffamuhtar.fmkotlin.ui.repair_ongoing.RepairOngoingActivity
+import com.daffamuhtar.fmkotlin.ui.check.RepairCheckActivity
+import com.daffamuhtar.fmkotlin.ui.check.RepairOngoingActivity
+import com.daffamuhtar.fmkotlin.ui.repair_on.RepairOnActivity
+import com.daffamuhtar.fmkotlin.ui.scanner.ScannerActivity
 
 class HomeFragment : Fragment() {
 
@@ -27,13 +29,23 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnUhReportproblem.setOnClickListener {
-            val intent = Intent(requireContext(), CheckActivity::class.java)
+        binding.btnRepairCheck.setOnClickListener {
+            val intent = Intent(requireContext(), RepairCheckActivity::class.java)
             startActivity(intent)
         }
 
-        binding.btnUhSchedule.setOnClickListener {
+        binding.btnRepairOngoing.setOnClickListener {
             val intent = Intent(requireContext(), RepairOngoingActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.btnRepairOn.setOnClickListener {
+            val intent = Intent(requireContext(), RepairOnActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.btnUhTire.setOnClickListener {
+            val intent = Intent(requireContext(), ScannerActivity::class.java)
             startActivity(intent)
         }
     }
