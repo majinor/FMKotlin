@@ -1,32 +1,23 @@
 package com.daffamuhtar.fmkotlin.ui.adapter
 
-import android.os.Build
-import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.android.volley.VolleyLog
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.RequestOptions
-import com.daffamuhtar.fmkotlin.R
 import com.daffamuhtar.fmkotlin.databinding.ItemPhotoBinding
-import com.daffamuhtar.fmkotlin.model.Photo
+import com.daffamuhtar.fmkotlin.data.Photo
 import com.daffamuhtar.fmkotlin.util.PhotoHelper
-import java.util.*
 
 class PhotoAdapter() : RecyclerView.Adapter<PhotoAdapter.LaporanViewHolder>() {
 
     private var items = listOf<Photo>()
+    private var maxItem = 0
     private lateinit var onItemClickCallback: OnItemClickCallback
 
-    fun setItems(allItems: List<Photo>) {
+    fun setItems(allItems: List<Photo>, maxItem: Int) {
         allItems.let {
             this.items = it
+            this.maxItem = maxItem
             notifyDataSetChanged()
         }
     }
@@ -43,11 +34,13 @@ class PhotoAdapter() : RecyclerView.Adapter<PhotoAdapter.LaporanViewHolder>() {
 
     inner class LaporanViewHolder(private val view: ItemPhotoBinding) :
         RecyclerView.ViewHolder(view.root) {
-        fun bind(item: Photo) {
+        fun bind(item: Photo, position: Int) {
             with(view) {
 
-                PhotoHelper.setPhotoOrVideo(view.root.context,item.file, ivPhoto)
+                PhotoHelper.setPhotoOrVideo(view.root.context, item.file, ivPhoto)
 
+
+                btnAddPhoto.visibility = if (position == items.size && position <= maxItem) View.VISIBLE else View.GONE
 
             }
         }
@@ -64,7 +57,7 @@ class PhotoAdapter() : RecyclerView.Adapter<PhotoAdapter.LaporanViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: LaporanViewHolder, position: Int) {
-        holder.bind(items[position])
+        holder.bind(items[position],position)
 
 //        if (!items[position].isEditable) {
 //            holder.itemView.setOnClickListener {

@@ -1,9 +1,8 @@
 package com.daffamuhtar.fmkotlin.app
 
 import android.content.Context
-import com.daffamuhtar.fmkotlin.constants.Constanta
-import com.daffamuhtar.fmkotlin.constants.ConstantaApp
-import com.daffamuhtar.fmkotlin.constants.ConstantaApp.BASE_URL_V2_0
+import com.daffamuhtar.fmkotlin.constants.Constants
+import com.daffamuhtar.fmkotlin.constants.ConstantsApp
 
 
 class Server {
@@ -121,8 +120,8 @@ class Server {
             URL = if (companyType != null) {
                 if (companyType == "1") {
                     when (apiVersion) {
-                        ConstantaApp.BASE_URL_V2_0 -> URL1_V20
-                        ConstantaApp.BASE_URL_V2_0_REP -> URL1_V20_REP
+                        ConstantsApp.BASE_URL_V2_0 -> URL1_V20
+                        ConstantsApp.BASE_URL_V2_0_REP -> URL1_V20_REP
                         else -> URL1 //ConstantaApp.BASE_URL_V1_0
                     }
                 } else {
@@ -136,10 +135,10 @@ class Server {
 
         fun checkId(context: Context) {
             val sharedpreferences =
-                context.getSharedPreferences(Constanta.my_shared_preferences, Context.MODE_PRIVATE)
-            userId = sharedpreferences.getString(Constanta.EXTRA_USERID, null)
-            token = sharedpreferences.getString(Constanta.EXTRA_TOKEN, null)
-            companyType = sharedpreferences.getString(Constanta.EXTRA_COMPANYTYPE, null)
+                context.getSharedPreferences(Constants.my_shared_preferences, Context.MODE_PRIVATE)
+            userId = sharedpreferences.getString(Constants.EXTRA_USERID, null)
+            token = sharedpreferences.getString(Constants.EXTRA_TOKEN, null)
+            companyType = sharedpreferences.getString(Constants.EXTRA_COMPANYTYPE, null)
         }
 
     }

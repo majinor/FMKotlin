@@ -1,6 +1,6 @@
 package com.daffamuhtar.fmkotlin.services
 
-import com.daffamuhtar.fmkotlin.model.response.RefreshTokenResponse
+import com.daffamuhtar.fmkotlin.data.response.RefreshTokenResponse
 import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded

@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.daffamuhtar.fmkotlin.R
-import com.daffamuhtar.fmkotlin.constants.Constanta
+import com.daffamuhtar.fmkotlin.constants.Constants
 import com.daffamuhtar.fmkotlin.ui.bottomsheet.PhotoVideoPreviewBottomSheet
 import com.google.android.material.imageview.ShapeableImageView
 
@@ -34,7 +34,7 @@ class PhotoHelper {
 
                 ivPhoto.setOnClickListener{
                     val bundle = Bundle()
-                    bundle.putString(Constanta.EXTRA_PREVIEW, fileUrl)
+                    bundle.putString(Constants.EXTRA_PREVIEW, fileUrl)
                     bundle.putString("WHO", "Photo")
                     val preview = PhotoVideoPreviewBottomSheet()
                     preview.setArguments(bundle)
@@ -59,7 +59,7 @@ class PhotoHelper {
                     }
                     ivPhoto.setOnClickListener{
                         val bundle = Bundle()
-                        bundle.putString(Constanta.EXTRA_PREVIEW, fileUrl)
+                        bundle.putString(Constants.EXTRA_PREVIEW, fileUrl)
                         bundle.putString("WHO", "Video")
                         val preview = PhotoVideoPreviewBottomSheet()
                         preview.setArguments(bundle)

@@ -6,13 +6,9 @@ import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import com.daffamuhtar.fmkotlin.R
-import com.daffamuhtar.fmkotlin.constants.ConstantaDialog
-import com.daffamuhtar.fmkotlin.databinding.ActivityRepairOnBinding
+import com.daffamuhtar.fmkotlin.constants.ConstantsDialog
 import com.daffamuhtar.fmkotlin.databinding.DialogBigBinding
 
 class DialogBig (context: Context?) : AlertDialog(context) {
@@ -122,18 +118,18 @@ class DialogBig (context: Context?) : AlertDialog(context) {
     }
 
     private fun getDialogType(dialogType: String): String? {
-        if (dialogType === ConstantaDialog.DIALOG_TYPE_CONFIRMATION) {
+        if (dialogType === ConstantsDialog.DIALOG_TYPE_CONFIRMATION) {
             binding.ivImage.setImageResource(R.drawable.ic_help_outline_black_24dp)
             binding.ivImage.setBackgroundResource(R.drawable.ic_circle_yellow)
-        } else if (dialogType === ConstantaDialog.DIALOG_TYPE_ERROR) {
+        } else if (dialogType === ConstantsDialog.DIALOG_TYPE_ERROR) {
             binding.ivImage.setImageResource(R.drawable.ic_false_circle_red_24dp)
             binding.ivImage.setBackgroundResource(R.drawable.ic_circle_redsoft)
             binding.ivImage.setPaddingRelative(35, 35, 35, 35)
-        } else if (dialogType === ConstantaDialog.DIALOG_TYPE_SUCCESS) {
+        } else if (dialogType === ConstantsDialog.DIALOG_TYPE_SUCCESS) {
             binding.ivImage.setImageResource(R.drawable.icon_verify_repair)
             binding.ivImage.setBackgroundResource(R.drawable.ic_circle_yellow)
             binding.ivImage.setPadding(10, 10, 10, 10)
-        } else if (dialogType === ConstantaDialog.DIALOG_TYPE_WARNING) {
+        } else if (dialogType === ConstantsDialog.DIALOG_TYPE_WARNING) {
             binding.ivImage.setImageResource(R.drawable.ic_baseline_error_red_24)
             binding.ivImage.setBackgroundResource(R.drawable.ic_circle_redsoft)
             binding.ivImage.setPaddingRelative(35, 35, 35, 35)

@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.daffamuhtar.fmkotlin.databinding.ItemRepairDetailProblemBinding
-import com.daffamuhtar.fmkotlin.model.RepairDetailProblem
+import com.daffamuhtar.fmkotlin.data.RepairDetailProblem
 
 class RepairDetailProblemAdapter() : RecyclerView.Adapter<RepairDetailProblemAdapter.ItemViewHolder>() {
 
@@ -40,7 +40,7 @@ class RepairDetailProblemAdapter() : RecyclerView.Adapter<RepairDetailProblemAda
 
                 tvProblemNote.text = item.problemNote
 
-                photoAdapter.setItems(item.problemPhotos)
+                photoAdapter.setItems(item.problemPhotos, 3)
                 rvPhoto.adapter=photoAdapter
 
             }

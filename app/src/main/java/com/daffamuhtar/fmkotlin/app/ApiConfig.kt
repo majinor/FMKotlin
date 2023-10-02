@@ -1,7 +1,7 @@
 package com.daffamuhtar.fmkotlin.app
 
 import android.content.Context
-import com.daffamuhtar.fmkotlin.constants.Constanta
+import com.daffamuhtar.fmkotlin.constants.Constants
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -24,15 +24,16 @@ class ApiConfig {
             val interceptor = HttpLoggingInterceptor()
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
 
-            val client: OkHttpClient = OkHttpClient.Builder().addInterceptor(Interceptor { chain ->
-                val newRequest = chain.request().newBuilder()
-                    .addHeader(
-                        "Authorization",
-                        "Bearer " + Server.token
-                    )
-                    .build()
-                chain.proceed(newRequest)
-            })
+            val client: OkHttpClient = OkHttpClient.Builder()
+                .addInterceptor(Interceptor { chain ->
+                    val newRequest = chain.request().newBuilder()
+                        .addHeader(
+                            "Authorization",
+                            "Bearer " + Server.token
+                        )
+                        .build()
+                    chain.proceed(newRequest)
+                })
                 .addInterceptor(interceptor)
                 .connectTimeout(1000, TimeUnit.SECONDS)
                 .writeTimeout(1000, TimeUnit.SECONDS)
@@ -48,10 +49,10 @@ class ApiConfig {
 
         fun checkId(context: Context) {
             val sharedpreferences =
-                context.getSharedPreferences(Constanta.my_shared_preferences, Context.MODE_PRIVATE)
-            userId = sharedpreferences.getString(Constanta.EXTRA_USERID, null)
-            token = sharedpreferences.getString(Constanta.EXTRA_TOKEN, null)
-            companyType = sharedpreferences.getString(Constanta.EXTRA_COMPANYTYPE, null)
+                context.getSharedPreferences(Constants.my_shared_preferences, Context.MODE_PRIVATE)
+            userId = sharedpreferences.getString(Constants.EXTRA_USERID, null)
+            token = sharedpreferences.getString(Constants.EXTRA_TOKEN, null)
+            companyType = sharedpreferences.getString(Constants.EXTRA_COMPANYTYPE, null)
         }
     }
 

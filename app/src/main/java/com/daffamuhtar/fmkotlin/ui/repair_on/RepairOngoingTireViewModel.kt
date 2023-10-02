@@ -7,10 +7,10 @@ import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.android.volley.VolleyLog
+
 import com.daffamuhtar.fmkotlin.app.ApiConfig
-import com.daffamuhtar.fmkotlin.model.response.RepairOnTireResponse
-import com.daffamuhtar.fmkotlin.model.response.ErrorResponse
+import com.daffamuhtar.fmkotlin.data.response.RepairOnTireResponse
+import com.daffamuhtar.fmkotlin.data.response.ErrorResponse
 import com.daffamuhtar.fmkotlin.services.RepairServices
 import com.google.gson.GsonBuilder
 import okhttp3.ResponseBody
@@ -90,7 +90,7 @@ class RepairOngoingTireViewModel : ViewModel() {
                                 .show()
                         } catch (e: IOException) {
                             e.printStackTrace()
-                            Log.d(VolleyLog.TAG, "onResponse: $e")
+                            Log.d("TAG", "onResponse: $e")
                         }
                     }
 

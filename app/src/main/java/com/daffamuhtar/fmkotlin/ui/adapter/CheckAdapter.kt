@@ -7,11 +7,10 @@ import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.daffamuhtar.fmkotlin.R
-import com.daffamuhtar.fmkotlin.model.Repair
+import com.daffamuhtar.fmkotlin.data.Repair
 
 class CheckAdapter(
     private val mContext: Context,

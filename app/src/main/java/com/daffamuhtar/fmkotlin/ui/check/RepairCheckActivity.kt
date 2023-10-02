@@ -6,37 +6,31 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.android.volley.RequestQueue
-import com.daffamuhtar.fmkotlin.constants.Constanta
-import com.daffamuhtar.fmkotlin.constants.ConstantaApp
+import com.daffamuhtar.fmkotlin.constants.Constants
+import com.daffamuhtar.fmkotlin.constants.ConstantsApp
 import com.daffamuhtar.fmkotlin.databinding.ActivityRepairCheckBinding
-import com.daffamuhtar.fmkotlin.model.Filter
-import com.daffamuhtar.fmkotlin.model.Repair
-import com.daffamuhtar.fmkotlin.model.response.RepairCheckResponse
+import com.daffamuhtar.fmkotlin.data.Filter
+import com.daffamuhtar.fmkotlin.data.Repair
+import com.daffamuhtar.fmkotlin.data.response.RepairCheckResponse
 import com.daffamuhtar.fmkotlin.ui.adapter.CheckAdapter
 import com.daffamuhtar.fmkotlin.ui.adapter.FilterAdapter
 import com.daffamuhtar.fmkotlin.ui.adapter.RepairAdapter
+import com.daffamuhtar.fmkotlin.ui.main.MainViewModel
 import com.daffamuhtar.fmkotlin.ui.repair_detail.RepairDetailActivity
+import com.daffamuhtar.fmkotlin.util.Status
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class RepairCheckActivity : AppCompatActivity() {
 
-    private lateinit var repairCheckViewModel: RepairCheckViewModel
+    private val repairCheckViewModel : RepairCheckViewModel by viewModel()
 
     private lateinit var binding: ActivityRepairCheckBinding
 
     private val context: Context = this@RepairCheckActivity
-    private val mRecyclerView: RecyclerView? = null
-    private val mCheckAdapter: CheckAdapter? = null
-    private val mCheckList: ArrayList<Repair>? = null
-    private val mRequestQueue: RequestQueue? = null
-
-    private val userid: String? = null
-    private var companyType: String? = null
-    private var token: String? = null
-    private val isGetCheckWo = false
 
     private val repairList = ArrayList<Repair>()
     private val filterList = ArrayList<Filter>()
@@ -51,37 +45,45 @@ class RepairCheckActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         declare()
-        initViewModel()
+        initViewModelObserver()
         prepareFilter()
+        prepareView()
         callData()
     }
 
+    private fun prepareView() {
+        binding.srCheck.setOnRefreshListener {
+            repairCheckViewModel.getAllCheckRepair("MEC-MBA-99")
+
+        }
+    }
+
     private fun callData() {
-        repairCheckViewModel.getAllCheckRepair(this, ConstantaApp.BASE_URL_V2_0, "MEC-MBA-99")
+        repairCheckViewModel.getAllCheckRepair("MEC-MBA-99")
 
     }
 
-    private fun initViewModel() {
-        repairCheckViewModel.repairList.observe(this) {
-            if (it.isNotEmpty()) {
-                setReportResults(it)
-            } else {
-                binding.lyNotFound.visibility = View.VISIBLE
+    private fun initViewModelObserver() {
+        repairCheckViewModel.repairList.observe(this, Observer {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    binding.srCheck.isRefreshing = false
+                    it.data?.let { users -> setReportResults(users) }
+                }
+                Status.LOADING -> {
+                    binding.srCheck.isRefreshing = true
+                    Toast.makeText(this, "loading", Toast.LENGTH_LONG).show()
+                }
+                Status.ERROR -> {
+                    binding.srCheck.isRefreshing = false
+                    Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+                }
             }
-        }
-
-        repairCheckViewModel.isLoadingGetAllCheckRepair.observe(this) {
-            loading(it)
-        }
-
-        binding.srCheck.setOnRefreshListener {
-            repairCheckViewModel.getAllCheckRepair(this, ConstantaApp.BASE_URL_V2_0, "MEC-MBA-99")
-
-        }
+        })
     }
 
     private fun declare() {
-        repairCheckViewModel = ViewModelProvider(this)[RepairCheckViewModel::class.java]
+
     }
 
     private fun loading(value: Boolean) {
@@ -118,7 +120,6 @@ class RepairCheckActivity : AppCompatActivity() {
                     isStoring,
                     orderType = null,
                     colorCode = null
-
                 )
                 listReport.add(getResult)
             }
@@ -190,28 +191,33 @@ class RepairCheckActivity : AppCompatActivity() {
             override fun onItemClicked(data: Repair, position: Int) {
                 Toast.makeText(context, data.orderId, Toast.LENGTH_SHORT).show()
                 val intent = Intent(context, RepairDetailActivity::class.java)
-                intent.putExtra(Constanta.EXTRA_SPKID, data.spkId)
-                intent.putExtra(Constanta.EXTRA_ORDERID, data.orderId)
-                intent.putExtra(Constanta.EXTRA_VID, data.vehicleId)
-                intent.putExtra(Constanta.EXTRA_VBRAND, data.vehicleBrand)
-                intent.putExtra(Constanta.EXTRA_VTYPE, data.vehicleType)
-                intent.putExtra(Constanta.EXTRA_VVAR, data.vehicleVarian)
-                intent.putExtra(Constanta.EXTRA_VYEAR, data.vehicleYear)
-                intent.putExtra(Constanta.EXTRA_VLICEN, data.vehicleLicenseNumber)
-                intent.putExtra(Constanta.EXTRA_VDIS, data.vehicleDistrict)
-                intent.putExtra(Constanta.EXTRA_VLID, data.vehicleLambungId)
-                if (position ==0 ){
-                    intent.putExtra(Constanta.EXTRA_STAGEID, "13")
-                }else{
-                    intent.putExtra(Constanta.EXTRA_STAGEID, data.stageId.toInt())
-                }
-                intent.putExtra(Constanta.EXTRA_STAGENAME, data.stageName)
-                intent.putExtra(Constanta.EXTRA_LOCOPTION, data.locationOption)
-                intent.putExtra(Constanta.EXTRA_SASSIGN, data.startAssignment)
-                intent.putExtra(Constanta.EXTRA_ISSTORING, data.isStoring)
-                intent.putExtra(Constanta.EXTRA_NOTESA, data.noteSA)
+                intent.putExtra(Constants.EXTRA_SPKID, data.spkId)
+                intent.putExtra(Constants.EXTRA_ORDERID, data.orderId)
+                intent.putExtra(Constants.EXTRA_VID, data.vehicleId)
+                intent.putExtra(Constants.EXTRA_VBRAND, data.vehicleBrand)
+                intent.putExtra(Constants.EXTRA_VTYPE, data.vehicleType)
+                intent.putExtra(Constants.EXTRA_VVAR, data.vehicleVarian)
+                intent.putExtra(Constants.EXTRA_VYEAR, data.vehicleYear)
+                intent.putExtra(Constants.EXTRA_VLICEN, data.vehicleLicenseNumber)
+                intent.putExtra(Constants.EXTRA_VDIS, data.vehicleDistrict)
+                intent.putExtra(Constants.EXTRA_VLID, data.vehicleLambungId)
+//                if (position ==0 ){
+//                    intent.putExtra(Constanta.EXTRA_STAGEID, "13".toInt())
+//                }else{
+                    intent.putExtra(Constants.EXTRA_STAGEID, data.stageId.toInt())
+//                }
+                intent.putExtra(Constants.EXTRA_STAGENAME, data.stageName)
+                intent.putExtra(Constants.EXTRA_LOCOPTION, data.locationOption)
+                intent.putExtra(Constants.EXTRA_SASSIGN, data.startAssignment)
+                intent.putExtra(Constants.EXTRA_ISSTORING, data.isStoring)
+                intent.putExtra(Constants.EXTRA_NOTESA, data.noteSA)
                 startActivity(intent)
             }
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        callData()
     }
 }

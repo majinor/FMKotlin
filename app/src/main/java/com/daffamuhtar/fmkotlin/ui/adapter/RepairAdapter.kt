@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.daffamuhtar.fmkotlin.databinding.ItemRepairBinding
-import com.daffamuhtar.fmkotlin.model.Repair
+import com.daffamuhtar.fmkotlin.data.Repair
 import com.daffamuhtar.fmkotlin.util.RepairHelper
 import com.daffamuhtar.fmkotlin.util.RepairHelper.Companion.getRepairDate
 import com.daffamuhtar.fmkotlin.util.RepairHelper.Companion.getRepairIcon

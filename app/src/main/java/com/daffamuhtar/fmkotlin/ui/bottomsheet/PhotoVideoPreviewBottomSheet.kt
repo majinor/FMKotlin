@@ -3,7 +3,6 @@ package com.daffamuhtar.fmkotlin.ui.bottomsheet
 import android.app.Dialog
 import android.graphics.Matrix
 import android.graphics.PointF
-import android.media.MediaPlayer.OnPreparedListener
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
@@ -18,8 +17,7 @@ import androidx.media3.datasource.DefaultDataSource
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.source.ProgressiveMediaSource
 import com.bumptech.glide.Glide
-import com.daffamuhtar.fmkotlin.R
-import com.daffamuhtar.fmkotlin.constants.Constanta
+import com.daffamuhtar.fmkotlin.constants.Constants
 import com.daffamuhtar.fmkotlin.databinding.BsDocumentPreviewBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -74,7 +72,7 @@ class PhotoVideoPreviewBottomSheet : BottomSheetDialogFragment() {
 
             // create a media item.
             val mediaItem = MediaItem.Builder()
-                .setUri(arguments?.getString(Constanta.EXTRA_PREVIEW))
+                .setUri(arguments?.getString(Constants.EXTRA_PREVIEW))
                 .setMimeType(MimeTypes.APPLICATION_MP4)
                 .build()
 
@@ -97,7 +95,7 @@ class PhotoVideoPreviewBottomSheet : BottomSheetDialogFragment() {
             binding.videoView.visibility = View.GONE
             binding.ivBsp.visibility = View.VISIBLE
             Glide.with(requireActivity())
-                .load(arguments?.getString(Constanta.EXTRA_PREVIEW))
+                .load(arguments?.getString(Constants.EXTRA_PREVIEW))
                 .into(binding.ivBsp)
         }
 

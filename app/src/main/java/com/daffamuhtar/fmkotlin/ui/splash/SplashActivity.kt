@@ -17,9 +17,9 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.daffamuhtar.fmkotlin.R
 import com.daffamuhtar.fmkotlin.app.Server
-import com.daffamuhtar.fmkotlin.constants.Constanta
-import com.daffamuhtar.fmkotlin.constants.Constanta.TAG
-import com.daffamuhtar.fmkotlin.constants.ConstantaApp
+import com.daffamuhtar.fmkotlin.constants.Constants
+import com.daffamuhtar.fmkotlin.constants.Constants.TAG
+import com.daffamuhtar.fmkotlin.constants.ConstantsApp
 import com.daffamuhtar.fmkotlin.databinding.ActivitySplashBinding
 import com.daffamuhtar.fmkotlin.databinding.DialogErrorRefreshtokenBinding
 import com.daffamuhtar.fmkotlin.ui.main.MainActivity
@@ -74,7 +74,7 @@ class SplashActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
 
-        Server.urlSample(this@SplashActivity, ConstantaApp.BASE_URL_V1_0)
+        Server.urlSample(this@SplashActivity, ConstantsApp.BASE_URL_V1_0)
 //        PushNotifications.start(applicationContext, "6f89a6d7-c899-4cce-b0ad-1547d4259174")
 
         getVersionCode()
@@ -117,9 +117,9 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun updateToken(it: String?, isBindingAdd: Boolean) {
-        val editor = getSharedPreferences(Constanta.my_shared_preferences, MODE_PRIVATE).edit()
-        editor.putString(Constanta.EXTRA_TOKEN, it)
-        editor.putString(Constanta.EXTRA_COMPANYTYPE, "1")
+        val editor = getSharedPreferences(Constants.my_shared_preferences, MODE_PRIVATE).edit()
+        editor.putString(Constants.EXTRA_TOKEN, it)
+        editor.putString(Constants.EXTRA_COMPANYTYPE, "1")
         editor.apply()
     }
 
@@ -161,10 +161,10 @@ class SplashActivity : AppCompatActivity() {
 
     private fun checkId() {
         val sharedpreferences =
-            getSharedPreferences(Constanta.my_shared_preferences, Context.MODE_PRIVATE)
-        userid = sharedpreferences.getString(Constanta.EXTRA_USERID, "UM-BLOG-9999")
-        token = sharedpreferences.getString(Constanta.EXTRA_TOKEN, null)
-        companyType = sharedpreferences.getString(Constanta.EXTRA_COMPANYTYPE, null)
+            getSharedPreferences(Constants.my_shared_preferences, Context.MODE_PRIVATE)
+        userid = sharedpreferences.getString(Constants.EXTRA_USERID, "MEC-MBA-99")
+        token = sharedpreferences.getString(Constants.EXTRA_TOKEN, null)
+        companyType = sharedpreferences.getString(Constants.EXTRA_COMPANYTYPE, null)
     }
 
     override fun onResume() {
@@ -191,7 +191,7 @@ class SplashActivity : AppCompatActivity() {
     private fun refreshToken() {
         userid?.let {
             splashViewModel.postRefreshToken(
-                this, ConstantaApp.BASE_URL_V2_0, it,
+                this, ConstantsApp.BASE_URL_V2_0, it,
                 versionCode.toString(), "mechanic"
             )
         }
@@ -242,7 +242,7 @@ class SplashActivity : AppCompatActivity() {
 
             btnDerTokenClose.setOnClickListener {
                 val sharedPreferences =
-                    getSharedPreferences(Constanta.my_shared_preferences, Context.MODE_PRIVATE)
+                    getSharedPreferences(Constants.my_shared_preferences, Context.MODE_PRIVATE)
                 sharedPreferences.edit().clear().commit()
 //            PushNotifications.stop()
 //            PushNotifications.clearAllState()

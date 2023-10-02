@@ -16,7 +16,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.daffamuhtar.fmkotlin.R
-import com.daffamuhtar.fmkotlin.constants.Constanta
+import com.daffamuhtar.fmkotlin.constants.Constants
 import com.daffamuhtar.fmkotlin.databinding.ActivityMainBinding
 import com.daffamuhtar.fmkotlin.databinding.DialogErrorRefreshtokenBinding
 import com.daffamuhtar.fmkotlin.ui.bottomsheet.NoConnectionBottomSheet
@@ -160,7 +160,7 @@ class MainActivity : AppCompatActivity() {
             val pInfo = packageManager.getPackageInfo(packageName, 0)
             versionName = pInfo.versionName
             versionCode = pInfo.versionCode
-            Log.i(Constanta.TAG, "getVersionCode: $versionName - $versionCode")
+            Log.i(Constants.TAG, "getVersionCode: $versionName - $versionCode")
         } catch (e: PackageManager.NameNotFoundException) {
             e.printStackTrace()
         }

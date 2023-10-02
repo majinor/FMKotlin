@@ -1,18 +1,19 @@
 package com.daffamuhtar.fmkotlin.services
 
-import com.daffamuhtar.fmkotlin.model.response.*
+import com.daffamuhtar.fmkotlin.data.response.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.*
 
 interface RepairServices {
 
     @GET("api/mechanics/open_wo")
-    fun getCheckRepair(
+    suspend fun getCheckRepair(
         @Query("loggedMechanicId") loggedMechanicId: String,
         @Query("stageId") stageId: Int
-    ): Call<List<RepairCheckResponse>>
+    ): Response<List<RepairCheckResponse>>
 
     @GET("api/mechanics/ongoing_order")
     fun getRepairOngoing(
@@ -91,6 +92,13 @@ interface RepairServices {
     fun getRepairDetailAfterRepair(
         @Query("orderId") orderId: String
     ): Call<List<RepairDetailAfterRepairResponse>>
+
+
+    @GET("api/mechanics/inspection_pb")
+    fun getRepairDetailAfterRepairInspection(
+        @Query("orderId") orderId: String,
+        @Query("spkId") spkId: String?,
+    ): Call<List<RepairDetailAfterRepairInspectionResponse>>
 
     @GET("api/mechanics/uploaded_waste_photo")
     fun getRepairDetailAfterRepairWaste(

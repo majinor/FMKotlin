@@ -6,11 +6,12 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.android.volley.VolleyLog
+
 import com.daffamuhtar.fmkotlin.app.ApiConfig
-import com.daffamuhtar.fmkotlin.constants.ConstantaRepair
-import com.daffamuhtar.fmkotlin.model.response.*
+import com.daffamuhtar.fmkotlin.constants.ConstantsRepair
+import com.daffamuhtar.fmkotlin.data.response.*
 import com.daffamuhtar.fmkotlin.services.RepairServices
+import com.daffamuhtar.fmkotlin.services.TireServices
 import com.google.gson.GsonBuilder
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -57,11 +58,11 @@ class RepairDetailViewModel : ViewModel() {
         val services = retrofit.create(RepairServices::class.java)
         var client = services.getRepairProblem(orderId)
         when (orderType){
-            ConstantaRepair.ORDER_TYPE_ADHOC -> client = services.getRepairProblem(orderId)
-            ConstantaRepair.ORDER_TYPE_ADHOC_STORING -> client = services.getRepairProblem(orderId)
-            ConstantaRepair.ORDER_TYPE_MAINTENANCE -> client = services.getRepairProblem(spkId)
-            ConstantaRepair.ORDER_TYPE_NPM -> client = services.getRepairProblemNonperiod(orderId)
-            ConstantaRepair.ORDER_TYPE_TIRE -> client = services.getRepairProblem(orderId)
+            ConstantsRepair.ORDER_TYPE_ADHOC -> client = services.getRepairProblem(orderId)
+            ConstantsRepair.ORDER_TYPE_ADHOC_STORING -> client = services.getRepairProblem(orderId)
+            ConstantsRepair.ORDER_TYPE_MAINTENANCE -> client = services.getRepairProblem(spkId)
+            ConstantsRepair.ORDER_TYPE_NPM -> client = services.getRepairProblemNonperiod(orderId)
+            ConstantsRepair.ORDER_TYPE_TIRE -> client = services.getRepairProblem(orderId)
         }
         client.enqueue(object : Callback<List<RepairDetailProblemResponse>> {
             override fun onResponse(
@@ -108,7 +109,7 @@ class RepairDetailViewModel : ViewModel() {
                                 
                         } catch (e: IOException) {
                             e.printStackTrace()
-                            Log.d(VolleyLog.TAG, "onResponse: $e")
+                            Log.d("TAG", "onResponse: $e")
                         }
                     }
 
@@ -152,11 +153,11 @@ class RepairDetailViewModel : ViewModel() {
         val services = retrofit.create(RepairServices::class.java)
         var client = services.getRepairActiveDriver(orderId)
         when (orderType){
-            ConstantaRepair.ORDER_TYPE_ADHOC -> client = services.getRepairActiveDriver(orderId)
-            ConstantaRepair.ORDER_TYPE_ADHOC_STORING -> client = services.getRepairActiveDriver(orderId)
-            ConstantaRepair.ORDER_TYPE_MAINTENANCE -> client = services.getRepairActiveDriverPeriod(orderId)
-            ConstantaRepair.ORDER_TYPE_NPM -> client = services.getRepairActiveDriverNonperiod(orderId)
-            ConstantaRepair.ORDER_TYPE_TIRE -> client = services.getRepairActiveDriver(orderId)
+            ConstantsRepair.ORDER_TYPE_ADHOC -> client = services.getRepairActiveDriver(orderId)
+            ConstantsRepair.ORDER_TYPE_ADHOC_STORING -> client = services.getRepairActiveDriver(orderId)
+            ConstantsRepair.ORDER_TYPE_MAINTENANCE -> client = services.getRepairActiveDriverPeriod(orderId)
+            ConstantsRepair.ORDER_TYPE_NPM -> client = services.getRepairActiveDriverNonperiod(orderId)
+            ConstantsRepair.ORDER_TYPE_TIRE -> client = services.getRepairActiveDriver(orderId)
         }
         client.enqueue(object : Callback<List<RepairDetailActiveDriverResponse>> {
             override fun onResponse(
@@ -203,7 +204,7 @@ class RepairDetailViewModel : ViewModel() {
                                 
                         } catch (e: IOException) {
                             e.printStackTrace()
-                            Log.d(VolleyLog.TAG, "onResponse: $e")
+                            Log.d("TAG", "onResponse: $e")
                         }
                     }
 
@@ -266,11 +267,11 @@ class RepairDetailViewModel : ViewModel() {
         val services = retrofit.create(RepairServices::class.java)
         var client = services.getRepairWorkshopInfo(orderId)
         when (orderType){
-            ConstantaRepair.ORDER_TYPE_ADHOC -> client = services.getRepairWorkshopInfo(orderId)
-            ConstantaRepair.ORDER_TYPE_ADHOC_STORING -> client = services.getRepairWorkshopInfo(orderId)
-            ConstantaRepair.ORDER_TYPE_MAINTENANCE -> client = services.getRepairWorkshopInfoPeriod(orderId)
-            ConstantaRepair.ORDER_TYPE_NPM -> client = services.getRepairWorkshopInfoNonperiod(orderId)
-            ConstantaRepair.ORDER_TYPE_TIRE -> client = services.getRepairWorkshopInfo(orderId)
+            ConstantsRepair.ORDER_TYPE_ADHOC -> client = services.getRepairWorkshopInfo(orderId)
+            ConstantsRepair.ORDER_TYPE_ADHOC_STORING -> client = services.getRepairWorkshopInfo(orderId)
+            ConstantsRepair.ORDER_TYPE_MAINTENANCE -> client = services.getRepairWorkshopInfoPeriod(orderId)
+            ConstantsRepair.ORDER_TYPE_NPM -> client = services.getRepairWorkshopInfoNonperiod(orderId)
+            ConstantsRepair.ORDER_TYPE_TIRE -> client = services.getRepairWorkshopInfo(orderId)
         }
         client.enqueue(object : Callback<List<RepairDetailWorkshopInfoResponse>> {
             override fun onResponse(
@@ -320,7 +321,7 @@ class RepairDetailViewModel : ViewModel() {
                                 
                         } catch (e: IOException) {
                             e.printStackTrace()
-                            Log.d(VolleyLog.TAG, "onResponse: $e")
+                            Log.d("TAG", "onResponse: $e")
                         }
                     }
 
@@ -351,11 +352,11 @@ class RepairDetailViewModel : ViewModel() {
         val services = retrofit.create(RepairServices::class.java)
         var client = services.getRepairMechanicInfo(orderId)
         when (orderType){
-            ConstantaRepair.ORDER_TYPE_ADHOC -> client = services.getRepairMechanicInfo(orderId)
-            ConstantaRepair.ORDER_TYPE_ADHOC_STORING -> client = services.getRepairMechanicInfo(orderId)
-            ConstantaRepair.ORDER_TYPE_MAINTENANCE -> client = services.getRepairMechanicInfoPeriod(orderId)
-            ConstantaRepair.ORDER_TYPE_NPM -> client = services.getRepairMechanicInfoNonperiod(orderId)
-            ConstantaRepair.ORDER_TYPE_TIRE -> client = services.getRepairMechanicInfo(orderId)
+            ConstantsRepair.ORDER_TYPE_ADHOC -> client = services.getRepairMechanicInfo(orderId)
+            ConstantsRepair.ORDER_TYPE_ADHOC_STORING -> client = services.getRepairMechanicInfo(orderId)
+            ConstantsRepair.ORDER_TYPE_MAINTENANCE -> client = services.getRepairMechanicInfoPeriod(orderId)
+            ConstantsRepair.ORDER_TYPE_NPM -> client = services.getRepairMechanicInfoNonperiod(orderId)
+            ConstantsRepair.ORDER_TYPE_TIRE -> client = services.getRepairMechanicInfo(orderId)
         }
         client.enqueue(object : Callback<List<RepairDetailMechanicInfoResponse>> {
             override fun onResponse(
@@ -405,7 +406,7 @@ class RepairDetailViewModel : ViewModel() {
                                 
                         } catch (e: IOException) {
                             e.printStackTrace()
-                            Log.d(VolleyLog.TAG, "onResponse: $e")
+                            Log.d("TAG", "onResponse: $e")
                         }
                     }
 
@@ -450,11 +451,11 @@ class RepairDetailViewModel : ViewModel() {
         val services = retrofit.create(RepairServices::class.java)
         var client = services.getRepairDetailPart(orderId)
         when (orderType){
-            ConstantaRepair.ORDER_TYPE_ADHOC -> client = services.getRepairDetailPart(orderId)
-            ConstantaRepair.ORDER_TYPE_ADHOC_STORING -> client = services.getRepairDetailPart(orderId)
-            ConstantaRepair.ORDER_TYPE_MAINTENANCE -> client = services.getRepairDetailPartPeriod(spkId!!)
-            ConstantaRepair.ORDER_TYPE_NPM -> client = services.getRepairDetailPartNonperiod(orderId)
-            ConstantaRepair.ORDER_TYPE_TIRE -> client = services.getRepairDetailPart(orderId)
+            ConstantsRepair.ORDER_TYPE_ADHOC -> client = services.getRepairDetailPart(orderId)
+            ConstantsRepair.ORDER_TYPE_ADHOC_STORING -> client = services.getRepairDetailPart(orderId)
+            ConstantsRepair.ORDER_TYPE_MAINTENANCE -> client = services.getRepairDetailPartPeriod(spkId!!)
+            ConstantsRepair.ORDER_TYPE_NPM -> client = services.getRepairDetailPartNonperiod(orderId)
+            ConstantsRepair.ORDER_TYPE_TIRE -> client = services.getRepairDetailPart(orderId)
         }
         client.enqueue(object : Callback<List<RepairDetailPartResponse>> {
             override fun onResponse(
@@ -501,7 +502,7 @@ class RepairDetailViewModel : ViewModel() {
                                 
                         } catch (e: IOException) {
                             e.printStackTrace()
-                            Log.d(VolleyLog.TAG, "onResponse: $e")
+                            Log.d("TAG", "onResponse: $e")
                         }
                     }
 
@@ -545,11 +546,11 @@ class RepairDetailViewModel : ViewModel() {
         val services = retrofit.create(RepairServices::class.java)
         var client = services.getRepairDetailNotes(orderId)
         when (orderType){
-            ConstantaRepair.ORDER_TYPE_ADHOC -> client = services.getRepairDetailNotes(orderId)
-            ConstantaRepair.ORDER_TYPE_ADHOC_STORING -> client = services.getRepairDetailNotes(orderId)
-            ConstantaRepair.ORDER_TYPE_MAINTENANCE -> client = services.getRepairDetailNotesPeriod(spkId)
-            ConstantaRepair.ORDER_TYPE_NPM -> client = services.getRepairDetailNotesNonperiod(orderId)
-            ConstantaRepair.ORDER_TYPE_TIRE -> client = services.getRepairDetailNotes(orderId)
+            ConstantsRepair.ORDER_TYPE_ADHOC -> client = services.getRepairDetailNotes(orderId)
+            ConstantsRepair.ORDER_TYPE_ADHOC_STORING -> client = services.getRepairDetailNotes(orderId)
+            ConstantsRepair.ORDER_TYPE_MAINTENANCE -> client = services.getRepairDetailNotesPeriod(spkId)
+            ConstantsRepair.ORDER_TYPE_NPM -> client = services.getRepairDetailNotesNonperiod(orderId)
+            ConstantsRepair.ORDER_TYPE_TIRE -> client = services.getRepairDetailNotes(orderId)
         }
         client.enqueue(object : Callback<List<RepairDetailNoteResponse>> {
             override fun onResponse(
@@ -596,7 +597,7 @@ class RepairDetailViewModel : ViewModel() {
                                 
                         } catch (e: IOException) {
                             e.printStackTrace()
-                            Log.d(VolleyLog.TAG, "onResponse: $e")
+                            Log.d("TAG", "onResponse: $e")
                         }
                     }
 
@@ -685,7 +686,7 @@ class RepairDetailViewModel : ViewModel() {
                                 
                         } catch (e: IOException) {
                             e.printStackTrace()
-                            Log.d(VolleyLog.TAG, "onResponse: $e")
+                            Log.d("TAG", "onResponse: $e")
                         }
                     }
 
@@ -730,11 +731,11 @@ class RepairDetailViewModel : ViewModel() {
         val services = retrofit.create(RepairServices::class.java)
         var client = services.getRepairDetailAfterRepair(orderId)
         when (orderType){
-            ConstantaRepair.ORDER_TYPE_ADHOC -> client = services.getRepairDetailAfterRepair(orderId)
-            ConstantaRepair.ORDER_TYPE_ADHOC_STORING -> client = services.getRepairDetailAfterRepair(orderId)
-            ConstantaRepair.ORDER_TYPE_MAINTENANCE -> client = services.getRepairDetailAfterRepairPeriod(orderId,pbId!!)
-            ConstantaRepair.ORDER_TYPE_NPM -> client = services.getRepairDetailAfterRepairNonperiod(orderId)
-            ConstantaRepair.ORDER_TYPE_TIRE -> client = services.getRepairDetailAfterRepair(orderId)
+            ConstantsRepair.ORDER_TYPE_ADHOC -> client = services.getRepairDetailAfterRepair(orderId)
+            ConstantsRepair.ORDER_TYPE_ADHOC_STORING -> client = services.getRepairDetailAfterRepair(orderId)
+            ConstantsRepair.ORDER_TYPE_MAINTENANCE -> client = services.getRepairDetailAfterRepairPeriod(orderId,pbId!!)
+            ConstantsRepair.ORDER_TYPE_NPM -> client = services.getRepairDetailAfterRepairNonperiod(orderId)
+            ConstantsRepair.ORDER_TYPE_TIRE -> client = services.getRepairDetailAfterRepair(orderId)
         }
 
         client.enqueue(object : Callback<List<RepairDetailAfterRepairResponse>> {
@@ -779,10 +780,10 @@ class RepairDetailViewModel : ViewModel() {
                             _messageGetRepairDetailAfterRepairList.value = message
 
                             Log.e("Call Failed", "Gagal Mengirim $message")
-                                
+
                         } catch (e: IOException) {
                             e.printStackTrace()
-                            Log.d(VolleyLog.TAG, "onResponse: $e")
+                            Log.d("TAG", "onResponse: $e")
                         }
                     }
 
@@ -794,6 +795,285 @@ class RepairDetailViewModel : ViewModel() {
                 _isLoadingGetRepairDetailAfterRepairList.value = false
                 Log.e(ContentValues.TAG, "onFailure: ${t.message}")
                 _messageGetRepairDetailAfterRepairList.value =
+                    "Gagal terhubung ke server, periksa koneksi Anda dan coba lagi nanti."
+            }
+        })
+    }
+
+    //    AFTER REPAIR INSPECTION =======================================================================
+
+    private val _isLoadingGetRepairDetailAfterRepairInspectionList = MutableLiveData<Boolean>()
+    val isLoadingGetRepairDetailAfterRepairInspectionList: LiveData<Boolean> = _isLoadingGetRepairDetailAfterRepairInspectionList
+
+    private val _isSuccessGetRepairDetailAfterRepairInspectionList = MutableLiveData<Boolean>()
+    val isSuccessGetRepairDetailAfterRepairInspectionList: LiveData<Boolean> = _isSuccessGetRepairDetailAfterRepairInspectionList
+
+    private val _messageGetRepairDetailAfterRepairInspectionList = MutableLiveData<String>()
+    val messageGetRepairDetailAfterRepairInspectionList: LiveData<String> = _messageGetRepairDetailAfterRepairInspectionList
+
+    private val _afterRepairInspectionList = MutableLiveData<List<RepairDetailAfterRepairInspectionResponse>>()
+    val afterRepairInspectionList: MutableLiveData<List<RepairDetailAfterRepairInspectionResponse>> = _afterRepairInspectionList
+
+    fun getRepairDetailAfterRepairInspectionList(
+        context: Context,
+        apiVersion: String,
+        orderType: String?,
+        orderId: String,
+        spkId: String?,
+        pbId: String?,
+    ) {
+        _isLoadingGetRepairDetailAfterRepairInspectionList.value = true
+
+        val retrofit = ApiConfig.getRetrofit(context, apiVersion)!!
+        val services = retrofit.create(RepairServices::class.java)
+        var client = services.getRepairDetailAfterRepairInspection(orderId,spkId)
+        when (orderType){
+            ConstantsRepair.ORDER_TYPE_ADHOC -> client = services.getRepairDetailAfterRepairInspection(orderId,spkId)
+            ConstantsRepair.ORDER_TYPE_ADHOC_STORING -> client = services.getRepairDetailAfterRepairInspection(orderId,spkId)
+            ConstantsRepair.ORDER_TYPE_MAINTENANCE -> client = services.getRepairDetailAfterRepairInspection(orderId,spkId)
+            ConstantsRepair.ORDER_TYPE_NPM -> client = services.getRepairDetailAfterRepairInspection(orderId,spkId)
+            ConstantsRepair.ORDER_TYPE_TIRE -> client = services.getRepairDetailAfterRepairInspection(orderId,spkId)
+        }
+
+        client.enqueue(object : Callback<List<RepairDetailAfterRepairInspectionResponse>> {
+            override fun onResponse(
+                call: Call<List<RepairDetailAfterRepairInspectionResponse>>,
+                response: Response<List<RepairDetailAfterRepairInspectionResponse>>
+            ) {
+                _isLoadingGetRepairDetailAfterRepairInspectionList.value = false
+
+                if (response.isSuccessful) {
+                    val responseBody = response.body()
+                    Log.w(
+                        "RESULT:",
+                        GsonBuilder().setPrettyPrinting().create().toJson(response.body())
+                    )
+
+                    val data: List<RepairDetailAfterRepairInspectionResponse>? = response.body()
+                    if (responseBody != null) {
+                        _afterRepairInspectionList.value = data!!
+                    }
+
+                } else {
+                    val responseErrorBody = response.errorBody()
+                    if (responseErrorBody != null) {
+                        Log.w(
+                            "RESULT:",
+                            "onResponse: Not Success " + response.code() + GsonBuilder().setPrettyPrinting()
+                                .create().toJson(responseErrorBody)
+                        )
+                        val converter: Converter<ResponseBody?, ErrorResponse> =
+                            retrofit.responseBodyConverter(
+                                ErrorResponse::class.java,
+                                arrayOfNulls<Annotation>(0)
+                            )
+                        var errorModel: ErrorResponse? = null
+                        try {
+                            errorModel = converter.convert(responseErrorBody)
+                            val status: Boolean = errorModel?.status ?: false
+                            val message: String = errorModel?.message ?: "no message"
+
+                            _isSuccessGetRepairDetailAfterRepairInspectionList.value = status
+                            _messageGetRepairDetailAfterRepairInspectionList.value = message
+
+                            Log.e("Call Failed", "Gagal Mengirim $message")
+
+                        } catch (e: IOException) {
+                            e.printStackTrace()
+                            Log.d("TAG", "onResponse: $e")
+                        }
+                    }
+
+                }
+
+            }
+
+            override fun onFailure(call: Call<List<RepairDetailAfterRepairInspectionResponse>>, t: Throwable) {
+                _isLoadingGetRepairDetailAfterRepairInspectionList.value = false
+                Log.e(ContentValues.TAG, "onFailure: ${t.message}")
+                _messageGetRepairDetailAfterRepairInspectionList.value =
+                    "Gagal terhubung ke server, periksa koneksi Anda dan coba lagi nanti."
+            }
+        })
+    }
+
+    //    REPAIR DETAIL TIRE CONDITION CATEGORY =======================================================================
+
+    private val _isLoadingGetRepairDetailTireConditionCategoryList = MutableLiveData<Boolean>()
+    val isLoadingGetRepairDetailTireConditionCategoryList: LiveData<Boolean> = _isLoadingGetRepairDetailTireConditionCategoryList
+
+    private val _isSuccessGetRepairDetailTireConditionCategoryList = MutableLiveData<Boolean>()
+    val isSuccessGetRepairDetailTireConditionCategoryList: LiveData<Boolean> = _isSuccessGetRepairDetailTireConditionCategoryList
+
+    private val _messageGetRepairDetailTireConditionCategoryList = MutableLiveData<String>()
+    val messageGetRepairDetailTireConditionCategoryList: LiveData<String> = _messageGetRepairDetailTireConditionCategoryList
+
+    private val _tireConditionCategoryList = MutableLiveData<List<TireConditionCategoryResponse>>()
+    val tireConditionCategoryList: MutableLiveData<List<TireConditionCategoryResponse>> = _tireConditionCategoryList
+
+    fun getRepairDetailTireConditionCategoryList(
+        context: Context,
+        apiVersion: String,
+        vehicleId: String,
+    ) {
+        _isLoadingGetRepairDetailTireConditionCategoryList.value = true
+
+        val retrofit = ApiConfig.getRetrofit(context, apiVersion)!!
+        val services = retrofit.create(TireServices::class.java)
+        val client = services.getTireConditionCategory(vehicleId)
+
+        client.enqueue(object : Callback<List<TireConditionCategoryResponse>> {
+            override fun onResponse(
+                call: Call<List<TireConditionCategoryResponse>>,
+                response: Response<List<TireConditionCategoryResponse>>
+            ) {
+                _isLoadingGetRepairDetailTireConditionCategoryList.value = false
+
+                if (response.isSuccessful) {
+                    _isSuccessGetRepairDetailTireConditionCategoryList.value = true
+
+                    val responseBody = response.body()
+                    Log.w(
+                        "RESULT:",
+                        GsonBuilder().setPrettyPrinting().create().toJson(response.body())
+                    )
+
+                    val data: List<TireConditionCategoryResponse>? = response.body()
+                    if (responseBody != null) {
+                        _tireConditionCategoryList.value = data!!
+                    }
+
+                } else {
+                    val responseErrorBody = response.errorBody()
+                    if (responseErrorBody != null) {
+                        Log.w(
+                            "RESULT:",
+                            "onResponse: Not Success " + response.code() + GsonBuilder().setPrettyPrinting()
+                                .create().toJson(responseErrorBody)
+                        )
+                        val converter: Converter<ResponseBody?, ErrorResponse> =
+                            retrofit.responseBodyConverter(
+                                ErrorResponse::class.java,
+                                arrayOfNulls<Annotation>(0)
+                            )
+                        var errorModel: ErrorResponse? = null
+                        try {
+                            errorModel = converter.convert(responseErrorBody)
+                            val status: Boolean = errorModel?.status ?: false
+                            val message: String = errorModel?.message ?: "no message"
+
+                            _isSuccessGetRepairDetailTireConditionCategoryList.value = status
+                            _messageGetRepairDetailTireConditionCategoryList.value = message
+
+                            Log.e("Call Failed", "Gagal Mengirim $message")
+
+                        } catch (e: IOException) {
+                            e.printStackTrace()
+                            Log.d("TAG", "onResponse: $e")
+                        }
+                    }
+
+                }
+
+            }
+
+            override fun onFailure(call: Call<List<TireConditionCategoryResponse>>, t: Throwable) {
+                _isLoadingGetRepairDetailTireConditionCategoryList.value = false
+                Log.e(ContentValues.TAG, "onFailure: ${t.message}")
+                _messageGetRepairDetailTireConditionCategoryList.value =
+                    "Gagal terhubung ke server, periksa koneksi Anda dan coba lagi nanti."
+            }
+        })
+    }
+
+
+//    AFTER REPAIR TIRE INSPECTION =======================================================================
+
+    private val _isLoadingGetRepairDetailAfterRepairTireInspectionList = MutableLiveData<Boolean>()
+    val isLoadingGetRepairDetailAfterRepairTireInspectionList: LiveData<Boolean> = _isLoadingGetRepairDetailAfterRepairTireInspectionList
+
+    private val _isSuccessGetRepairDetailAfterRepairTireInspectionList = MutableLiveData<Boolean>()
+    val isSuccessGetRepairDetailAfterRepairTireInspectionList: LiveData<Boolean> = _isSuccessGetRepairDetailAfterRepairTireInspectionList
+
+    private val _messageGetRepairDetailAfterRepairTireInspectionList = MutableLiveData<String>()
+    val messageGetRepairDetailAfterRepairTireInspectionList: LiveData<String> = _messageGetRepairDetailAfterRepairTireInspectionList
+
+    private val _afterRepairTireInspectionList = MutableLiveData<List<TireInspectionItemResponse>>()
+    val afterRepairTireInspectionList: MutableLiveData<List<TireInspectionItemResponse>> = _afterRepairTireInspectionList
+
+    fun getRepairDetailAfterRepairTireInspectionList(
+        context: Context,
+        apiVersion: String,
+        orderType: String?,
+        orderId: String,
+        spkId: String?,
+        vehicleId: String?,
+    ) {
+        _isLoadingGetRepairDetailAfterRepairTireInspectionList.value = true
+
+        val retrofit = ApiConfig.getRetrofit(context, apiVersion)!!
+        val services = retrofit.create(TireServices::class.java)
+        val client = services.getTireInspectionItemResultOnRepair(spkId,vehicleId)
+
+        client.enqueue(object : Callback<List<TireInspectionItemResponse>> {
+            override fun onResponse(
+                call: Call<List<TireInspectionItemResponse>>,
+                response: Response<List<TireInspectionItemResponse>>
+            ) {
+                _isLoadingGetRepairDetailAfterRepairTireInspectionList.value = false
+
+                if (response.isSuccessful) {
+                    _isSuccessGetRepairDetailAfterRepairTireInspectionList.value = true
+
+                    val responseBody = response.body()
+                    Log.w(
+                        "RESULT:",
+                        GsonBuilder().setPrettyPrinting().create().toJson(response.body())
+                    )
+
+                    val data: List<TireInspectionItemResponse>? = response.body()
+                    if (responseBody != null) {
+                        _afterRepairTireInspectionList.value = data!!
+                    }
+
+                } else {
+                    val responseErrorBody = response.errorBody()
+                    if (responseErrorBody != null) {
+                        Log.w(
+                            "RESULT:",
+                            "onResponse: Not Success " + response.code() + GsonBuilder().setPrettyPrinting()
+                                .create().toJson(responseErrorBody)
+                        )
+                        val converter: Converter<ResponseBody?, ErrorResponse> =
+                            retrofit.responseBodyConverter(
+                                ErrorResponse::class.java,
+                                arrayOfNulls<Annotation>(0)
+                            )
+                        var errorModel: ErrorResponse? = null
+                        try {
+                            errorModel = converter.convert(responseErrorBody)
+                            val status: Boolean = errorModel?.status ?: false
+                            val message: String = errorModel?.message ?: "no message"
+
+                            _isSuccessGetRepairDetailAfterRepairTireInspectionList.value = status
+                            _messageGetRepairDetailAfterRepairTireInspectionList.value = message
+
+                            Log.e("Call Failed", "Gagal Mengirim $message")
+
+                        } catch (e: IOException) {
+                            e.printStackTrace()
+                            Log.d("TAG", "onResponse: $e")
+                        }
+                    }
+
+                }
+
+            }
+
+            override fun onFailure(call: Call<List<TireInspectionItemResponse>>, t: Throwable) {
+                _isLoadingGetRepairDetailAfterRepairTireInspectionList.value = false
+                Log.e(ContentValues.TAG, "onFailure: ${t.message}")
+                _messageGetRepairDetailAfterRepairTireInspectionList.value =
                     "Gagal terhubung ke server, periksa koneksi Anda dan coba lagi nanti."
             }
         })
@@ -826,11 +1106,11 @@ class RepairDetailViewModel : ViewModel() {
         var client = services.getRepairDetailAfterRepairWaste(spkId)
 
         when (orderType){
-            ConstantaRepair.ORDER_TYPE_ADHOC -> client = services.getRepairDetailAfterRepairWaste(spkId)
-            ConstantaRepair.ORDER_TYPE_ADHOC_STORING -> client = services.getRepairDetailAfterRepairWaste(spkId)
-            ConstantaRepair.ORDER_TYPE_MAINTENANCE -> client = services.getRepairDetailAfterRepairWastePeriod(spkId)
-            ConstantaRepair.ORDER_TYPE_NPM -> client = services.getRepairDetailAfterRepairWasteNonperiod(spkId)
-            ConstantaRepair.ORDER_TYPE_TIRE -> client = services.getRepairDetailAfterRepairWaste(spkId)
+            ConstantsRepair.ORDER_TYPE_ADHOC -> client = services.getRepairDetailAfterRepairWaste(spkId)
+            ConstantsRepair.ORDER_TYPE_ADHOC_STORING -> client = services.getRepairDetailAfterRepairWaste(spkId)
+            ConstantsRepair.ORDER_TYPE_MAINTENANCE -> client = services.getRepairDetailAfterRepairWastePeriod(spkId)
+            ConstantsRepair.ORDER_TYPE_NPM -> client = services.getRepairDetailAfterRepairWasteNonperiod(spkId)
+            ConstantsRepair.ORDER_TYPE_TIRE -> client = services.getRepairDetailAfterRepairWaste(spkId)
         }
 
         client.enqueue(object : Callback<List<RepairDetailAfterRepairWasteResponse>> {
@@ -878,7 +1158,7 @@ class RepairDetailViewModel : ViewModel() {
                                 
                         } catch (e: IOException) {
                             e.printStackTrace()
-                            Log.d(VolleyLog.TAG, "onResponse: $e")
+                            Log.d("TAG", "onResponse: $e")
                         }
                     }
                 }
@@ -920,11 +1200,11 @@ class RepairDetailViewModel : ViewModel() {
         var client = services.getRepairDetailAfterRepairComplain(orderId)
 
         when (orderType){
-            ConstantaRepair.ORDER_TYPE_ADHOC -> client = services.getRepairDetailAfterRepairComplain(orderId)
-            ConstantaRepair.ORDER_TYPE_ADHOC_STORING -> client = services.getRepairDetailAfterRepairComplain(orderId)
-            ConstantaRepair.ORDER_TYPE_MAINTENANCE -> client = services.getRepairDetailAfterRepairComplainPeriod(orderId)
-            ConstantaRepair.ORDER_TYPE_NPM -> client = services.getRepairDetailAfterRepairComplainNonperiod(orderId)
-            ConstantaRepair.ORDER_TYPE_TIRE -> client = services.getRepairDetailAfterRepairComplain(orderId)
+            ConstantsRepair.ORDER_TYPE_ADHOC -> client = services.getRepairDetailAfterRepairComplain(orderId)
+            ConstantsRepair.ORDER_TYPE_ADHOC_STORING -> client = services.getRepairDetailAfterRepairComplain(orderId)
+            ConstantsRepair.ORDER_TYPE_MAINTENANCE -> client = services.getRepairDetailAfterRepairComplainPeriod(orderId)
+            ConstantsRepair.ORDER_TYPE_NPM -> client = services.getRepairDetailAfterRepairComplainNonperiod(orderId)
+            ConstantsRepair.ORDER_TYPE_TIRE -> client = services.getRepairDetailAfterRepairComplain(orderId)
         }
 
         client.enqueue(object : Callback<List<RepairDetailAfterRepairComplainResponse>> {
@@ -972,7 +1252,7 @@ class RepairDetailViewModel : ViewModel() {
                                 
                         } catch (e: IOException) {
                             e.printStackTrace()
-                            Log.d(VolleyLog.TAG, "onResponse: $e")
+                            Log.d("TAG", "onResponse: $e")
                         }
                     }
                 }

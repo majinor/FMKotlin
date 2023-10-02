@@ -11,7 +11,7 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.daffamuhtar.fmkotlin.R
-import com.daffamuhtar.fmkotlin.constants.ConstantaRepair
+import com.daffamuhtar.fmkotlin.constants.ConstantsRepair
 import com.google.android.material.imageview.ShapeableImageView
 import java.text.SimpleDateFormat
 import java.util.*
@@ -24,20 +24,20 @@ class RepairHelper {
 
             when (suborder) {
                 "PB" -> {
-                    orderType = ConstantaRepair.ORDER_TYPE_MAINTENANCE
+                    orderType = ConstantsRepair.ORDER_TYPE_MAINTENANCE
                 }
                 "PN" -> {
-                    orderType = ConstantaRepair.ORDER_TYPE_NPM
+                    orderType = ConstantsRepair.ORDER_TYPE_NPM
                 }
                 "TI" -> {
-                    orderType = ConstantaRepair.ORDER_TYPE_TIRE
+                    orderType = ConstantsRepair.ORDER_TYPE_TIRE
                 }
                 else -> {
                     orderType = if (isStoring == "1") {
-                        ConstantaRepair.ORDER_TYPE_ADHOC
+                        ConstantsRepair.ORDER_TYPE_ADHOC
 
                     } else {
-                        ConstantaRepair.ORDER_TYPE_ADHOC
+                        ConstantsRepair.ORDER_TYPE_ADHOC
                     }
                 }
             }
@@ -559,6 +559,18 @@ class RepairHelper {
 
         }
 
+        fun setViewAfterRepairInspection(
+            context: Context,
+            isEditable: Boolean,
+            isRequired: Int,
+            tvLabelOptional: TextView,
+        ) {
+            when (isRequired) {
+                1 -> {tvLabelOptional.visibility = View.VISIBLE}
+                else -> {tvLabelOptional.visibility = View.GONE}
+            }
+        }
+
         fun setRepairDetailLayout(
             context: Context,
             stageId: Int,
@@ -569,6 +581,7 @@ class RepairHelper {
             cvCheck: CardView,
             cvParts: CardView,
             cvReportv: CardView,
+            cvAfterRepairInspection: CardView,
             cvReportx: CardView,
             cvComplain: CardView,
             btnAddPhotoCheck: ImageButton,
@@ -595,6 +608,7 @@ class RepairHelper {
                     cvParts.visibility = View.GONE
                     cvReportv.visibility = View.GONE
                     cvReportx.visibility = View.GONE
+                    cvAfterRepairInspection.visibility = View.GONE
                     cvComplain.visibility = View.GONE
                     btnAddPhotoCheck.visibility = View.GONE
                     btnAddPhotoWaste.visibility = View.GONE
@@ -614,6 +628,7 @@ class RepairHelper {
                     cvCheck.visibility = View.VISIBLE
                     cvParts.visibility = View.GONE
                     cvReportv.visibility = View.GONE
+                    cvAfterRepairInspection.visibility = View.GONE
                     cvReportx.visibility = View.GONE
                     cvComplain.visibility = View.GONE
                     btnAddPhotoCheck.visibility = View.VISIBLE
@@ -633,6 +648,7 @@ class RepairHelper {
                     cvCheck.visibility = View.VISIBLE
                     cvParts.visibility = View.GONE
                     cvReportv.visibility = View.GONE
+                    cvAfterRepairInspection.visibility = View.GONE
                     cvReportx.visibility = View.GONE
                     cvComplain.visibility = View.GONE
                     btnAddPhotoCheck.visibility = View.VISIBLE
@@ -652,6 +668,7 @@ class RepairHelper {
                     cvCheck.visibility = View.VISIBLE
                     cvParts.visibility = View.GONE
                     cvReportv.visibility = View.GONE
+                    cvAfterRepairInspection.visibility = View.GONE
                     cvReportx.visibility = View.GONE
                     cvComplain.visibility = View.GONE
                     btnAddPhotoCheck.visibility = View.GONE
@@ -671,6 +688,7 @@ class RepairHelper {
                     cvCheck.visibility = View.VISIBLE
                     cvParts.visibility = View.VISIBLE
                     cvReportv.visibility = View.GONE
+                    cvAfterRepairInspection.visibility = View.GONE
                     cvReportx.visibility = View.GONE
                     cvComplain.visibility = View.GONE
                     btnAddPhotoCheck.visibility = View.GONE
@@ -691,6 +709,7 @@ class RepairHelper {
                     cvCheck.visibility = View.VISIBLE
                     cvParts.visibility = View.VISIBLE
                     cvReportv.visibility = View.VISIBLE
+                    cvAfterRepairInspection.visibility = View.GONE
                     cvReportx.visibility = if (noteAfterRepairFromMechanic!=null) View.VISIBLE else View.GONE
                     cvComplain.visibility = View.GONE
                     btnAddPhotoCheck.visibility = View.GONE
@@ -710,6 +729,7 @@ class RepairHelper {
                     cvCheck.visibility = View.VISIBLE
                     cvParts.visibility = View.VISIBLE
                     cvReportv.visibility = View.VISIBLE
+                    cvAfterRepairInspection.visibility = View.VISIBLE
                     cvReportx.visibility = View.VISIBLE
                     cvComplain.visibility = View.GONE
                     btnAddPhotoCheck.visibility = View.GONE
@@ -729,6 +749,7 @@ class RepairHelper {
                     cvCheck.visibility = View.VISIBLE
                     cvParts.visibility = View.VISIBLE
                     cvReportv.visibility = View.VISIBLE
+                    cvAfterRepairInspection.visibility = View.VISIBLE
                     cvReportx.visibility = View.VISIBLE
                     cvComplain.visibility = View.VISIBLE
                     btnAddPhotoCheck.visibility = View.GONE
@@ -748,6 +769,7 @@ class RepairHelper {
                     cvCheck.visibility = View.VISIBLE
                     cvParts.visibility = View.VISIBLE
                     cvReportv.visibility = View.VISIBLE
+                    cvAfterRepairInspection.visibility = View.VISIBLE
                     cvReportx.visibility = View.VISIBLE
                     cvComplain.visibility = View.GONE
                     btnAddPhotoCheck.visibility = View.GONE
@@ -767,6 +789,7 @@ class RepairHelper {
                     cvCheck.visibility = View.VISIBLE
                     cvParts.visibility = View.GONE
                     cvReportv.visibility = View.GONE
+                    cvAfterRepairInspection.visibility = View.GONE
                     cvReportx.visibility = View.GONE
                     cvComplain.visibility = View.GONE
                     btnAddPhotoCheck.visibility = View.GONE
@@ -786,6 +809,7 @@ class RepairHelper {
                     cvCheck.visibility = View.VISIBLE
                     cvParts.visibility = View.VISIBLE
                     cvReportv.visibility = View.VISIBLE
+                    cvAfterRepairInspection.visibility = View.VISIBLE
                     cvReportx.visibility = View.VISIBLE
                     cvComplain.visibility = View.GONE
                     btnAddPhotoCheck.visibility = View.GONE
@@ -805,6 +829,7 @@ class RepairHelper {
                     cvCheck.visibility = View.VISIBLE
                     cvParts.visibility = View.VISIBLE
                     cvReportv.visibility = View.GONE
+                    cvAfterRepairInspection.visibility = View.GONE
                     cvReportx.visibility = View.GONE
                     cvComplain.visibility = View.GONE
                     btnAddPhotoCheck.visibility = View.GONE
@@ -824,6 +849,7 @@ class RepairHelper {
                     cvCheck.visibility = View.VISIBLE
                     cvParts.visibility = View.GONE
                     cvReportv.visibility = View.GONE
+                    cvAfterRepairInspection.visibility = View.GONE
                     cvReportx.visibility = View.GONE
                     cvComplain.visibility = View.GONE
                     btnAddPhotoCheck.visibility = View.GONE
@@ -843,6 +869,7 @@ class RepairHelper {
                     cvCheck.visibility = View.VISIBLE
                     cvParts.visibility = View.VISIBLE
                     cvReportv.visibility = View.GONE
+                    cvAfterRepairInspection.visibility = View.GONE
                     cvReportx.visibility = View.GONE
                     cvComplain.visibility = View.GONE
                     btnAddPhotoCheck.visibility = View.GONE

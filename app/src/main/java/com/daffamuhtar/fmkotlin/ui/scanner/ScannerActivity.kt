@@ -8,16 +8,14 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.DialogFragment
 import com.bumptech.glide.Glide
 import com.daffamuhtar.fmkotlin.app.Server
-import com.daffamuhtar.fmkotlin.constants.Constanta
-import com.daffamuhtar.fmkotlin.constants.ConstantaDialog
+import com.daffamuhtar.fmkotlin.constants.Constants
+import com.daffamuhtar.fmkotlin.constants.ConstantsDialog
 import com.daffamuhtar.fmkotlin.databinding.ActivityScannerBinding
 import com.daffamuhtar.fmkotlin.ui.dialog.DialogBig
-import com.fleetify.fleetifydriverum.cons.ConstantaTire
+import com.fleetify.fleetifydriverum.cons.ConstantsTire
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.gson.JsonObject
 import com.google.zxing.ResultPoint
 import com.journeyapps.barcodescanner.BarcodeCallback
 import com.journeyapps.barcodescanner.BarcodeResult
@@ -70,7 +68,7 @@ class ScannerActivity : AppCompatActivity() {
             "umtirereposition_target_tirescan",
             "umtirereposition_plugged_tirescan",
             "umtirelostreportsolving_scantire",
-            ConstantaTire.TIREREPOSITION_NEW_PLUGGED_TIRESCAN -> scannerTarget = 2
+            ConstantsTire.TIREREPOSITION_NEW_PLUGGED_TIRESCAN -> scannerTarget = 2
         }
 
 
@@ -97,21 +95,21 @@ class ScannerActivity : AppCompatActivity() {
 
     private fun getData() {
         reqcode = "umCheckIn"
-        sourceid = intent.getStringExtra(Constanta.EXTRA_SOURCEID)
-        correctVehicleId = intent.getStringExtra(Constanta.EXTRA_VID)
-        vehiclePhoto = intent.getStringExtra(Constanta.EXTRA_VPHOTO)
-        vehicleName = intent.getStringExtra(Constanta.EXTRA_VNAME)
-        vehicleLicenseNumber = intent.getStringExtra(Constanta.EXTRA_VLICEN)
-        vehicleLambungId = intent.getStringExtra(Constanta.EXTRA_VLID)
-        vehicleDistrict = intent.getStringExtra(Constanta.EXTRA_VDIS)
-        vehicleChassisType = intent.getStringExtra(Constanta.EXTRA_VCHASSISTYPE)
-        targetTirePositionId = intent.getStringExtra(Constanta.EXTRA_TIREPOSITIONID)
-        targetTirePositionName = intent.getStringExtra(Constanta.EXTRA_TIREPOSITIONNAME)
-        odometer = intent.getStringExtra(Constanta.EXTRA_ODO)
-        stickerRequestId = intent.getStringExtra(Constanta.EXTRA_SR_ID)
-        currentTireId = intent.getStringExtra(Constanta.EXTRA_REQUIREDTIREID)
+        sourceid = intent.getStringExtra(Constants.EXTRA_SOURCEID)
+        correctVehicleId = intent.getStringExtra(Constants.EXTRA_VID)
+        vehiclePhoto = intent.getStringExtra(Constants.EXTRA_VPHOTO)
+        vehicleName = intent.getStringExtra(Constants.EXTRA_VNAME)
+        vehicleLicenseNumber = intent.getStringExtra(Constants.EXTRA_VLICEN)
+        vehicleLambungId = intent.getStringExtra(Constants.EXTRA_VLID)
+        vehicleDistrict = intent.getStringExtra(Constants.EXTRA_VDIS)
+        vehicleChassisType = intent.getStringExtra(Constants.EXTRA_VCHASSISTYPE)
+        targetTirePositionId = intent.getStringExtra(Constants.EXTRA_TIREPOSITIONID)
+        targetTirePositionName = intent.getStringExtra(Constants.EXTRA_TIREPOSITIONNAME)
+        odometer = intent.getStringExtra(Constants.EXTRA_ODO)
+        stickerRequestId = intent.getStringExtra(Constants.EXTRA_SR_ID)
+        currentTireId = intent.getStringExtra(Constants.EXTRA_REQUIREDTIREID)
         vehicleDistrictRequiredToScanTire =
-            intent.getStringExtra(Constanta.EXTRA_VEHICLE_DISTRICT_TIRE_SCAN)
+            intent.getStringExtra(Constants.EXTRA_VEHICLE_DISTRICT_TIRE_SCAN)
 
     }
 
@@ -146,7 +144,7 @@ class ScannerActivity : AppCompatActivity() {
                     }
                 }
             }
-            "umtirereposition_plugged_tirescan", "umtirereposition_target_tirescan", "umtireproblem_tirescan", "umtirelostreportsolving_scantire", ConstantaTire.TIREREPOSITION_NEW_PLUGGED_TIRESCAN -> {
+            "umtirereposition_plugged_tirescan", "umtirereposition_target_tirescan", "umtireproblem_tirescan", "umtirelostreportsolving_scantire", ConstantsTire.TIREREPOSITION_NEW_PLUGGED_TIRESCAN -> {
                 binding.btnScannerManualinput.setVisibility(View.VISIBLE)
                 binding.lyScannerBottomsheetBaseVehicleInfo.setVisibility(View.GONE)
                 binding.lyScannerBottomsheetVehicleInfo.setVisibility(View.GONE)
@@ -170,7 +168,7 @@ class ScannerActivity : AppCompatActivity() {
                     }
                 }
             }
-            "umreport", "tire_report_um", "tire_reposition_um", "customOrder_scanVehicle", "umtirereposition_target_scanvehicle", "postDoneReportSticker", ConstantaTire.TIRE_REPOSITION_CHANGE_VEHICLE_UM -> {
+            "umreport", "tire_report_um", "tire_reposition_um", "customOrder_scanVehicle", "umtirereposition_target_scanvehicle", "postDoneReportSticker", ConstantsTire.TIRE_REPOSITION_CHANGE_VEHICLE_UM -> {
                 binding.btnScannerManualinput.setVisibility(View.GONE)
                 binding.lyScannerBottomsheetBaseVehicleInfo.setVisibility(View.GONE)
                 binding.lyScannerBottomsheetVehicleInfo.setVisibility(View.GONE)
@@ -212,8 +210,8 @@ class ScannerActivity : AppCompatActivity() {
 //            if(vehicleChassisType!=null){
             binding.btnScannerTireShowChassis.setOnClickListener(View.OnClickListener {
                 val bundle = Bundle()
-                bundle.putString(Constanta.EXTRA_VCHASSISTYPE, vehicleChassisType)
-                bundle.putString(Constanta.EXTRA_TIREPOSITIONID, targetTirePositionId)
+                bundle.putString(Constants.EXTRA_VCHASSISTYPE, vehicleChassisType)
+                bundle.putString(Constants.EXTRA_TIREPOSITIONID, targetTirePositionId)
 //                val preview = VehicleChassisPreviewBottomSheet()
 //                preview.setArguments(bundle)
 //                preview.show(
@@ -324,7 +322,7 @@ class ScannerActivity : AppCompatActivity() {
 
     private fun openDialogSubmitConfirmation(title :String) {
         val dialogBig = DialogBig(this)
-        dialogBig.setDialogType(ConstantaDialog.DIALOG_TYPE_CONFIRMATION)
+        dialogBig.setDialogType(ConstantsDialog.DIALOG_TYPE_CONFIRMATION)
         dialogBig.setDialogTitle(title)
         dialogBig.setDialogMessage("Part yang disetujui akan diperoses lebih lanjut oleh SA")
         dialogBig.setOclPositive("Kirim") { v ->

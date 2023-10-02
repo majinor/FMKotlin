@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.daffamuhtar.fmkotlin.databinding.ItemRepairDetailAfterRepairBinding
-import com.daffamuhtar.fmkotlin.model.RepairDetailAfterRepair
+import com.daffamuhtar.fmkotlin.data.RepairDetailAfterRepair
 import com.daffamuhtar.fmkotlin.util.RepairHelper
 
 class RepairDetailAfterRepairAdapter() :
@@ -45,7 +45,7 @@ class RepairDetailAfterRepairAdapter() :
                 tvParts.text = item.partName
 
                 val photoAdapter = PhotoAdapter()
-                photoAdapter.setItems(item.photos)
+                photoAdapter.setItems(item.photos, 3)
                 rvPhoto.adapter = photoAdapter
 
                 val isEditable = (RepairHelper.isEdistable(

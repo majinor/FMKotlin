@@ -8,16 +8,13 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.android.volley.RequestQueue
-import com.daffamuhtar.fmkotlin.constants.Constanta
-import com.daffamuhtar.fmkotlin.constants.ConstantaApp
+import com.daffamuhtar.fmkotlin.constants.Constants
+import com.daffamuhtar.fmkotlin.constants.ConstantsApp
 import com.daffamuhtar.fmkotlin.databinding.ActivityRepairOngoingBinding
-import com.daffamuhtar.fmkotlin.model.Filter
-import com.daffamuhtar.fmkotlin.model.Repair
-import com.daffamuhtar.fmkotlin.model.response.RepairOnAdhocResponse
+import com.daffamuhtar.fmkotlin.data.Filter
+import com.daffamuhtar.fmkotlin.data.Repair
+import com.daffamuhtar.fmkotlin.data.response.RepairOnAdhocResponse
 import com.daffamuhtar.fmkotlin.ui.Ongoing.RepairOngoingViewModel
-import com.daffamuhtar.fmkotlin.ui.adapter.CheckAdapter
 import com.daffamuhtar.fmkotlin.ui.adapter.FilterAdapter
 import com.daffamuhtar.fmkotlin.ui.adapter.RepairAdapter
 import com.daffamuhtar.fmkotlin.ui.repair_detail.RepairDetailActivity
@@ -50,7 +47,7 @@ class RepairOngoingActivity : AppCompatActivity() {
 
     private fun callData() {
 //        checkViewModel.getRepairOngoing(this, ConstantaApp.BASE_URL_V2_0, "MEC-MBA-99")
-        repairOngoingViewModel.getRepairOngoing(this, ConstantaApp.BASE_URL_V2_0, "MEC-MBA-99")
+        repairOngoingViewModel.getRepairOngoing(this, ConstantsApp.BASE_URL_V2_0, "MEC-MBA-99")
 
     }
 
@@ -68,7 +65,7 @@ class RepairOngoingActivity : AppCompatActivity() {
         }
 
         binding.srCheck.setOnRefreshListener {
-            repairOngoingViewModel.getRepairOngoing(this, ConstantaApp.BASE_URL_V2_0, "MEC-MBA-99")
+            repairOngoingViewModel.getRepairOngoing(this, ConstantsApp.BASE_URL_V2_0, "MEC-MBA-99")
 
         }
     }
@@ -183,27 +180,27 @@ class RepairOngoingActivity : AppCompatActivity() {
             override fun onItemClicked(data: Repair, position: Int) {
                 Toast.makeText(context, data.orderId, Toast.LENGTH_SHORT).show()
                 val intent = Intent(context, RepairDetailActivity::class.java)
-                intent.putExtra(Constanta.EXTRA_SPKID, data.spkId)
-                intent.putExtra(Constanta.EXTRA_ORDERID, data.orderId)
-                intent.putExtra(Constanta.EXTRA_PBID, data.pbId)
-                intent.putExtra(Constanta.EXTRA_VID, data.vehicleId)
-                intent.putExtra(Constanta.EXTRA_VBRAND, data.vehicleBrand)
-                intent.putExtra(Constanta.EXTRA_VTYPE, data.vehicleType)
-                intent.putExtra(Constanta.EXTRA_VVAR, data.vehicleVarian)
-                intent.putExtra(Constanta.EXTRA_VYEAR, data.vehicleYear)
-                intent.putExtra(Constanta.EXTRA_VLICEN, data.vehicleLicenseNumber)
-                intent.putExtra(Constanta.EXTRA_VDIS, data.vehicleDistrict)
-                intent.putExtra(Constanta.EXTRA_VLID, data.vehicleLambungId)
+                intent.putExtra(Constants.EXTRA_SPKID, data.spkId)
+                intent.putExtra(Constants.EXTRA_ORDERID, data.orderId)
+                intent.putExtra(Constants.EXTRA_PBID, data.pbId)
+                intent.putExtra(Constants.EXTRA_VID, data.vehicleId)
+                intent.putExtra(Constants.EXTRA_VBRAND, data.vehicleBrand)
+                intent.putExtra(Constants.EXTRA_VTYPE, data.vehicleType)
+                intent.putExtra(Constants.EXTRA_VVAR, data.vehicleVarian)
+                intent.putExtra(Constants.EXTRA_VYEAR, data.vehicleYear)
+                intent.putExtra(Constants.EXTRA_VLICEN, data.vehicleLicenseNumber)
+                intent.putExtra(Constants.EXTRA_VDIS, data.vehicleDistrict)
+                intent.putExtra(Constants.EXTRA_VLID, data.vehicleLambungId)
                 if (position ==0 ){
-                    intent.putExtra(Constanta.EXTRA_STAGEID, "13")
+                    intent.putExtra(Constants.EXTRA_STAGEID, "13")
                 }else{
-                    intent.putExtra(Constanta.EXTRA_STAGEID, data.stageId.toInt())
+                    intent.putExtra(Constants.EXTRA_STAGEID, data.stageId.toInt())
                 }
-                intent.putExtra(Constanta.EXTRA_STAGENAME, data.stageName)
-                intent.putExtra(Constanta.EXTRA_LOCOPTION, data.locationOption)
-                intent.putExtra(Constanta.EXTRA_SASSIGN, data.startAssignment)
-                intent.putExtra(Constanta.EXTRA_ISSTORING, data.isStoring)
-                intent.putExtra(Constanta.EXTRA_NOTESA, data.noteSA)
+                intent.putExtra(Constants.EXTRA_STAGENAME, data.stageName)
+                intent.putExtra(Constants.EXTRA_LOCOPTION, data.locationOption)
+                intent.putExtra(Constants.EXTRA_SASSIGN, data.startAssignment)
+                intent.putExtra(Constants.EXTRA_ISSTORING, data.isStoring)
+                intent.putExtra(Constants.EXTRA_NOTESA, data.noteSA)
                 startActivity(intent)
             }
         })
