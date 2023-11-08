@@ -54,12 +54,10 @@ class ScannerActivity : AppCompatActivity() {
     }
 
 
-
-
     private fun prepareView() {
-        
+
         checkReqCodeForBottomSheet()
-        
+
         // scannerTarget 1 = vehicle, 2 = tire
         var scannerTarget = 1
 
@@ -122,6 +120,7 @@ class ScannerActivity : AppCompatActivity() {
                 binding.btnScannerBottomsheetLookVehicleList.setVisibility(View.GONE)
                 binding.btnScannerBottomsheetReportStickerIssue.setVisibility(View.GONE)
             }
+
             "drvreport", "tire_report_driver", "umtirelostreportsolving_scanvehicle", "drvinspectend" -> {
                 binding.btnScannerManualinput.setVisibility(View.GONE)
                 binding.lyScannerBottomsheetBaseVehicleInfo.setVisibility(View.VISIBLE)
@@ -144,6 +143,7 @@ class ScannerActivity : AppCompatActivity() {
                     }
                 }
             }
+
             "umtirereposition_plugged_tirescan", "umtirereposition_target_tirescan", "umtireproblem_tirescan", "umtirelostreportsolving_scantire", ConstantsTire.TIREREPOSITION_NEW_PLUGGED_TIRESCAN -> {
                 binding.btnScannerManualinput.setVisibility(View.VISIBLE)
                 binding.lyScannerBottomsheetBaseVehicleInfo.setVisibility(View.GONE)
@@ -168,6 +168,7 @@ class ScannerActivity : AppCompatActivity() {
                     }
                 }
             }
+
             "umreport", "tire_report_um", "tire_reposition_um", "customOrder_scanVehicle", "umtirereposition_target_scanvehicle", "postDoneReportSticker", ConstantsTire.TIRE_REPOSITION_CHANGE_VEHICLE_UM -> {
                 binding.btnScannerManualinput.setVisibility(View.GONE)
                 binding.lyScannerBottomsheetBaseVehicleInfo.setVisibility(View.GONE)
@@ -320,16 +321,19 @@ class ScannerActivity : AppCompatActivity() {
 
     }
 
-    private fun openDialogSubmitConfirmation(title :String) {
+    private fun openDialogSubmitConfirmation(title: String) {
         val dialogBig = DialogBig(this)
         dialogBig.setDialogType(ConstantsDialog.DIALOG_TYPE_CONFIRMATION)
         dialogBig.setDialogTitle(title)
-        dialogBig.setDialogMessage("Part yang disetujui akan diperoses lebih lanjut oleh SA")
+        dialogBig.setDialogMessage("Part yang disetujui akan diproses lebih lanjut oleh SA")
         dialogBig.setOclPositive("Kirim") { v ->
 //            postRegisterUsedPartCustomOrder(parentInformation)
             dialogBig.dismiss()
         }
-        dialogBig.setOclClose("Periksa Kembali") { v -> dialogBig.cancel() }
+        dialogBig.setOclClose("Periksa Kembali") { v ->
+            dialogBig.cancel()
+            binding.zxingScanner.resume()
+        }
         dialogBig.show()
     }
 }

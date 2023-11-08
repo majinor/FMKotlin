@@ -39,9 +39,25 @@ class PhotoAdapter() : RecyclerView.Adapter<PhotoAdapter.LaporanViewHolder>() {
 
                 PhotoHelper.setPhotoOrVideo(view.root.context, item.file, ivPhoto)
 
-
-                btnAddPhoto.visibility = if (position == items.size && position <= maxItem) View.VISIBLE else View.GONE
-
+                if (item.file == "add") {
+                    if (item.isEditable) {
+                        if (position + 1 <= maxItem) {
+                            ivPhoto.visibility = View.GONE
+                            btnAddPhoto.visibility = View.VISIBLE
+                        } else {
+                            ivPhoto.visibility = View.GONE
+                            btnAddPhoto.visibility = View.GONE
+                        }
+                        btnAddPhoto.setOnClickListener {
+                            onItemClickCallback.onItemClicked(item, position)
+                        }
+                    } else {
+                        ivPhoto.visibility = View.GONE
+                        btnAddPhoto.visibility = View.GONE
+                    }
+                } else {
+                    btnAddPhoto.visibility = View.GONE
+                }
             }
         }
     }
@@ -57,8 +73,10 @@ class PhotoAdapter() : RecyclerView.Adapter<PhotoAdapter.LaporanViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: LaporanViewHolder, position: Int) {
-        holder.bind(items[position],position)
+//        if (position<=maxItem) {
+        holder.bind(items[position], position)
 
+//        }
 //        if (!items[position].isEditable) {
 //            holder.itemView.setOnClickListener {
 //                onItemClickCallback.onItemClicked(items[holder.adapterPosition], position)

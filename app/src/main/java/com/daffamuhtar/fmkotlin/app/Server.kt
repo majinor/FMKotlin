@@ -1,6 +1,7 @@
 package com.daffamuhtar.fmkotlin.app
 
 import android.content.Context
+import android.util.Log
 import com.daffamuhtar.fmkotlin.constants.Constants
 import com.daffamuhtar.fmkotlin.constants.ConstantsApp
 
@@ -13,9 +14,9 @@ class Server {
         var userId: String? = null
         var token: String? = null
         var companyType: String? = null
+        var apiVersion: String? = null
 
-        var URL: String? = null
-        var URL_V20: String? = null
+        var BASEURL: String? = null
 
 //    ========================PRODUCTION===============
 //    public static final String URL = "https://api-v10.fleetify.id/";
@@ -133,12 +134,40 @@ class Server {
             return URL
         }
 
+        fun setBaseUrl(context: Context, apiVersion: String?) : String {
+            checkId(context)
+            var URL = URL1
+            Log.d("TAG", "checkId ss: " + companyType + apiVersion)
+
+            URL = if (companyType != null) {
+                if (companyType == "1") {
+                    when (apiVersion) {
+                        ConstantsApp.BASE_URL_V2_0 -> URL1_V20
+                        ConstantsApp.BASE_URL_V2_0_REP -> URL1_V20_REP
+                        else -> URL1 //ConstantaApp.BASE_URL_V1_0
+                    }
+                } else {
+                    URL2
+                }
+            } else {
+                URL1
+            }
+
+            BASEURL = URL
+
+            return URL
+        }
+
+
         fun checkId(context: Context) {
             val sharedpreferences =
                 context.getSharedPreferences(Constants.my_shared_preferences, Context.MODE_PRIVATE)
             userId = sharedpreferences.getString(Constants.EXTRA_USERID, null)
             token = sharedpreferences.getString(Constants.EXTRA_TOKEN, null)
             companyType = sharedpreferences.getString(Constants.EXTRA_COMPANYTYPE, null)
+            apiVersion = sharedpreferences.getString("API_VERSION", null)
+
+
         }
 
     }

@@ -1,4 +1,4 @@
-package com.daffamuhtar.fmkotlin.ui.check
+package com.daffamuhtar.fmkotlin.ui.repair_check
 
 import android.content.Context
 import android.content.Intent
@@ -6,27 +6,27 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.PackageManagerCompat
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.daffamuhtar.fmkotlin.app.ApiConfig
 import com.daffamuhtar.fmkotlin.constants.Constants
 import com.daffamuhtar.fmkotlin.constants.ConstantsApp
 import com.daffamuhtar.fmkotlin.databinding.ActivityRepairCheckBinding
 import com.daffamuhtar.fmkotlin.data.Filter
 import com.daffamuhtar.fmkotlin.data.Repair
 import com.daffamuhtar.fmkotlin.data.response.RepairCheckResponse
-import com.daffamuhtar.fmkotlin.ui.adapter.CheckAdapter
 import com.daffamuhtar.fmkotlin.ui.adapter.FilterAdapter
 import com.daffamuhtar.fmkotlin.ui.adapter.RepairAdapter
-import com.daffamuhtar.fmkotlin.ui.main.MainViewModel
 import com.daffamuhtar.fmkotlin.ui.repair_detail.RepairDetailActivity
 import com.daffamuhtar.fmkotlin.util.Status
+import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import retrofit2.Retrofit
 
 class RepairCheckActivity : AppCompatActivity() {
 
-    private val repairCheckViewModel : RepairCheckViewModel by viewModel()
+    private val repairCheckViewModel: RepairCheckViewModel by viewModel()
 
     private lateinit var binding: ActivityRepairCheckBinding
 
@@ -37,6 +37,8 @@ class RepairCheckActivity : AppCompatActivity() {
 
     private val repairAdapter: RepairAdapter = RepairAdapter()
     private val filterAdapter: FilterAdapter = FilterAdapter()
+
+    private lateinit var retrofit: Retrofit
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,18 +51,81 @@ class RepairCheckActivity : AppCompatActivity() {
         prepareFilter()
         prepareView()
         callData()
+
+
     }
 
     private fun prepareView() {
+        binding.btnBack.setOnClickListener {
+            finish()
+//            repairCheckViewModel.postRefreshToken(
+//                this, ConstantsApp.BASE_URL_V2_0, "MEC-MBA-99",
+//                packageManager.getPackageInfo(packageName, 0).versionCode.toString(), "mechanic"
+//            )
+        }
         binding.srCheck.setOnRefreshListener {
-            repairCheckViewModel.getAllCheckRepair("MEC-MBA-99")
 
+            updateApiVersion(ConstantsApp.BASE_URL_V2_0)
+
+            repairCheckViewModel.getAllCheckRepair(
+                context,
+                ConstantsApp.BASE_URL_V2_0,
+                "MEC-MBA-99"
+            )
+        }
+
+
+        repairCheckViewModel.isLoadingRefreshToken.observe(this) {
+//            loadingAdd(it)
+            Toast.makeText(this, "loading", Toast.LENGTH_SHORT).show()
+        }
+
+        repairCheckViewModel.messageRefreshToken.observe(this) {
+            showMessage(it, isBindingAdd = true)
+        }
+
+        repairCheckViewModel.token.observe(this) {
+            updateToken(it, isBindingAdd = true)
+        }
+
+        repairCheckViewModel.isSuccessRefreshToken.observe(this) {
+
+            Toast.makeText(context, "suksess coi", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun updateToken(it: String?, isBindingAdd: Boolean) {
+        val editor = getSharedPreferences(Constants.my_shared_preferences, MODE_PRIVATE).edit()
+        editor.putString(Constants.EXTRA_TOKEN, it)
+        editor.putString(Constants.EXTRA_COMPANYTYPE, "1")
+        editor.apply()
+    }
+
+    private fun updateApiVersion(it: String) {
+        val editor = getSharedPreferences(Constants.my_shared_preferences, MODE_PRIVATE).edit()
+        editor.putString("API_VERSION", it)
+        editor.apply()
+    }
+
+    private fun showMessage(value: String = "Cant get data!", isBindingAdd: Boolean = false) {
+        if (!isBindingAdd) {
+            Snackbar.make(
+                binding.root, value, Snackbar.LENGTH_SHORT
+            ).show()
+        } else {
+            Toast.makeText(this, value, Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun callData() {
-        repairCheckViewModel.getAllCheckRepair("MEC-MBA-99")
 
+        updateApiVersion(ConstantsApp.BASE_URL_V2_0)
+
+        repairCheckViewModel.getAllCheckRepair(
+            context,
+            ConstantsApp.BASE_URL_V2_0,
+            "MEC-MBA-99"
+        )
     }
 
     private fun initViewModelObserver() {
@@ -70,19 +135,26 @@ class RepairCheckActivity : AppCompatActivity() {
                     binding.srCheck.isRefreshing = false
                     it.data?.let { users -> setReportResults(users) }
                 }
+
                 Status.LOADING -> {
                     binding.srCheck.isRefreshing = true
-                    Toast.makeText(this, "loading", Toast.LENGTH_LONG).show()
                 }
+
                 Status.ERROR -> {
                     binding.srCheck.isRefreshing = false
-                    Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        this,
+                        "" + it.responseCode + " - " + it.message,
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             }
         })
     }
 
     private fun declare() {
+
+        retrofit = ApiConfig.getRetrofit(context, ConstantsApp.BASE_URL_V1_0)!!
 
     }
 
@@ -167,7 +239,8 @@ class RepairCheckActivity : AppCompatActivity() {
 
         filterAdapter.setAllFilter(filterList)
 
-        binding.rvCoFilter.layoutManager = LinearLayoutManager(this@RepairCheckActivity,LinearLayoutManager.HORIZONTAL,false)
+        binding.rvCoFilter.layoutManager =
+            LinearLayoutManager(this@RepairCheckActivity, LinearLayoutManager.HORIZONTAL, false)
         binding.rvCoFilter.adapter = filterAdapter
         filterAdapter.setOnItemClickCallback(object : FilterAdapter.OnItemClickCallback {
             override fun onItemClicked(data: Filter, position: Int) {
@@ -189,7 +262,7 @@ class RepairCheckActivity : AppCompatActivity() {
 
         repairAdapter.setOnItemClickCallback(object : RepairAdapter.OnItemClickCallback {
             override fun onItemClicked(data: Repair, position: Int) {
-                Toast.makeText(context, data.orderId, Toast.LENGTH_SHORT).show()
+//                Toast.makeText(context, data.orderId, Toast.LENGTH_SHORT).show()
                 val intent = Intent(context, RepairDetailActivity::class.java)
                 intent.putExtra(Constants.EXTRA_SPKID, data.spkId)
                 intent.putExtra(Constants.EXTRA_ORDERID, data.orderId)
@@ -204,7 +277,7 @@ class RepairCheckActivity : AppCompatActivity() {
 //                if (position ==0 ){
 //                    intent.putExtra(Constanta.EXTRA_STAGEID, "13".toInt())
 //                }else{
-                    intent.putExtra(Constants.EXTRA_STAGEID, data.stageId.toInt())
+                intent.putExtra(Constants.EXTRA_STAGEID, data.stageId.toInt())
 //                }
                 intent.putExtra(Constants.EXTRA_STAGENAME, data.stageName)
                 intent.putExtra(Constants.EXTRA_LOCOPTION, data.locationOption)
@@ -218,6 +291,6 @@ class RepairCheckActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        callData()
+//        callData()
     }
 }

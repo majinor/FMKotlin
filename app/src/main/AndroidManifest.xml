@@ -30,7 +30,7 @@
             android:name=".ui.scanner.ScannerActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.check.RepairOngoingActivity"
+            android:name=".ui.repair_check.RepairOngoingActivity"
             android:exported="false" />
         <activity
             android:name=".ui.repair_on.RepairOnActivity"
@@ -39,7 +39,7 @@
             android:name=".ui.repair_detail.RepairDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.check.RepairCheckActivity"
+            android:name=".ui.repair_check.RepairCheckActivity"
             android:exported="false" />
         <activity
             android:name=".ui.splash.SplashActivity"

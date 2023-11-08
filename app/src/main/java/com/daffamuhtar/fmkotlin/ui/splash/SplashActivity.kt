@@ -186,6 +186,7 @@ class SplashActivity : AppCompatActivity() {
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         startActivity(intent)
         overridePendingTransition(R.anim.do_not_move, R.anim.do_not_move)
+        finish()
     }
 
     private fun refreshToken() {

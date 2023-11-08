@@ -5,14 +5,18 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.text.Editable
+import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.activity.ComponentActivity
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.daffamuhtar.fmkotlin.R
 import com.daffamuhtar.fmkotlin.constants.ConstantsRepair
+import com.daffamuhtar.fmkotlin.data.response.ErrorResponse
 import com.google.android.material.imageview.ShapeableImageView
+import com.google.gson.Gson
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -26,12 +30,15 @@ class RepairHelper {
                 "PB" -> {
                     orderType = ConstantsRepair.ORDER_TYPE_MAINTENANCE
                 }
+
                 "PN" -> {
                     orderType = ConstantsRepair.ORDER_TYPE_NPM
                 }
+
                 "TI" -> {
                     orderType = ConstantsRepair.ORDER_TYPE_TIRE
                 }
+
                 else -> {
                     orderType = if (isStoring == "1") {
                         ConstantsRepair.ORDER_TYPE_ADHOC
@@ -53,12 +60,15 @@ class RepairHelper {
                 "PB" -> {
                     repairTitle = "Perbaikan Berkala"
                 }
+
                 "PN" -> {
                     repairTitle = "Perbaikan Non Berkala"
                 }
+
                 "TI" -> {
                     repairTitle = "Perbaikan Ban"
                 }
+
                 else -> {
                     repairTitle = if (isStoring == "1") {
                         "Perbaikan Darurat"
@@ -123,17 +133,21 @@ class RepairHelper {
                 "PB" -> {
                     resource = R.drawable.bg_circle_repair_pb
                 }
+
                 "PN" -> {
                     resource = R.drawable.bg_circle_repair_pnb
                 }
+
                 "TI" -> {
                     resource = R.drawable.bg_circle_repair_tire
                 }
+
                 else -> {
                     resource = when (isStoring) {
                         "1" -> {
                             R.drawable.bg_circle_repair_storing
                         }
+
                         else -> {
                             R.drawable.bg_circle_repair_adhoc
                         }
@@ -154,57 +168,75 @@ class RepairHelper {
                     12 -> {
                         stageName = "Menunggu diperiksa"
                     }
+
                     13 -> {
                         stageName = "Sedang diperiksa"
                     }
+
                     14 -> {
                         stageName = "Menunggu verifikasi hasil pemeriksaan"
                     }
+
                     15 -> {
                         stageName = "Menunggu konfirmasi penawaran"
                     }
+
                     16 -> {
                         stageName = "Menunggu Surat Penawaran diperbarui"
                     }
+
                     17 -> {
                         stageName = "Penawaran disetujui"
                     }
+
                     18 -> {
                         stageName = "Lakukan perbaikan"
                     }
+
                     19 -> {
                         stageName = "WO sedang diproses"
                     }
+
                     20 -> {
                         stageName = "Menunggu approval hasil perbaikan"
                     }
+
                     21 -> {
                         stageName = "Menunggu verifikasi hasil perbaikan"
                     }
+
                     22 -> {
                         stageName = "Perbaikan selesai"
                     }
+
                     23 -> {
                         stageName = "Dikomplain"
                     }
+
                     24 -> {
                         stageName = "WO selesai"
                     }
+
                     26, 27, 28 -> {
                         stageName = "Menunggu konfirmasi penawaran"
                     }
+
                     29 -> {
                         stageName = "Order pending"
                     }
+
                     31 -> {
                         stageName = "Penambahan part segera diproses"
                     }
+
                     32 -> {
                         stageName = "Surat penawaran sedang diperbarui"
                     }
+
                     33 -> {
                         stageName = "Revisi Surat Penawaran (penambahan part) Ditolak"
                     }
+
                     else -> {
 
                     }
@@ -229,91 +261,109 @@ class RepairHelper {
                         stageIcon = R.drawable.ic_stage_repair_check
                         stageBackgroundColor = R.color.orangesoft
                     }
+
                     13 -> {
                         stageName = "Sedang diperiksa"
                         stageIcon = R.drawable.ic_stage_repair_check
                         stageBackgroundColor = R.color.orangesoft
                     }
+
                     14 -> {
                         stageName = "Menunggu verifikasi hasil pemeriksaan"
                         stageIcon = R.drawable.ic_stage_repair_ongoing
                         stageBackgroundColor = R.color.bluesoft
                     }
+
                     15 -> {
                         stageName = "Menunggu konfirmasi penawaran"
                         stageIcon = R.drawable.ic_stage_repair_ongoing
                         stageBackgroundColor = R.color.bluesoft
                     }
+
                     16 -> {
                         stageName = "Menunggu Surat Penawaran diperbarui"
                         stageIcon = R.drawable.ic_stage_repair_ongoing
                         stageBackgroundColor = R.color.bluesoft
                     }
+
                     17 -> {
                         stageName = "Penawaran disetujui"
                         stageIcon = R.drawable.ic_stage_repair_ongoing
                         stageBackgroundColor = R.color.bluesoft
                     }
+
                     18 -> {
                         stageName = "Lakukan perbaikan"
                         stageIcon = R.drawable.ic_stage_repair_onrepair
                         stageBackgroundColor = R.color.orangesoft
                     }
+
                     19 -> {
                         stageName = "WO sedang diproses"
                         stageIcon = R.drawable.ic_stage_repair_onrepair
                         stageBackgroundColor = R.color.orangesoft
                     }
+
                     20 -> {
                         stageName = "Menunggu approval hasil perbaikan"
                         stageIcon = R.drawable.ic_stage_repair_ongoing
                         stageBackgroundColor = R.color.bluesoft
                     }
+
                     21 -> {
                         stageName = "Menunggu verifikasi hasil perbaikan"
                         stageIcon = R.drawable.ic_stage_repair_ongoing
                         stageBackgroundColor = R.color.bluesoft
                     }
+
                     22 -> {
                         stageName = "Perbaikan selesai"
                         stageIcon = R.drawable.ic_stage_repair_done
                         stageBackgroundColor = R.color.green
                     }
+
                     23 -> {
                         stageName = "Dikomplain"
                         stageIcon = R.drawable.ic_stage_repair_complain
                         stageBackgroundColor = R.color.bluesoft
                     }
+
                     24 -> {
                         stageName = "WO selesai"
                         stageIcon = R.drawable.ic_stage_repair_done
                         stageBackgroundColor = R.color.green
                     }
+
                     26, 27, 28 -> {
                         stageName = "Menunggu konfirmasi penawaran"
                         stageIcon = R.drawable.ic_stage_repair_ongoing
                         stageBackgroundColor = R.color.bluesoft
                     }
+
                     29 -> {
                         stageName = "Order pending"
                         stageIcon = R.drawable.ic_stage_repair_ongoing
                         stageBackgroundColor = R.color.bluesoft
                     }
+
                     31 -> {
                         stageName = "Penambahan part segera diproses"
                         stageIcon = R.drawable.ic_stage_repair_ongoing
                         stageBackgroundColor = R.color.bluesoft
                     }
+
                     32 -> {
                         stageName = "Surat penawaran sedang diperbarui"
                         stageIcon = R.drawable.ic_stage_repair_ongoing
                         stageBackgroundColor = R.color.bluesoft
                     }
+
                     33 -> {
                         stageName = "Revisi Surat Penawaran (penambahan part) Ditolak"
                         stageIcon = R.drawable.ic_stage_repair_ongoing
                         stageBackgroundColor = R.color.bluesoft
                     }
+
                     else -> {
                         stageIcon = R.drawable.ic_stage_repair_ongoing
                         stageBackgroundColor = R.color.bluesoft
@@ -348,57 +398,79 @@ class RepairHelper {
                     12 -> {
                         stageName = "Menunggu diperiksa"
                     }
+
                     13 -> {
                         stageName = "Sedang diperiksa"
                     }
+
                     14 -> {
                         stageName = "Menunggu verifikasi hasil pemeriksaan"
                     }
+
                     15 -> {
                         stageName = "Menunggu konfirmasi penawaran"
                     }
+
                     16 -> {
                         stageName = "Menunggu Surat Penawaran diperbarui"
                     }
+
                     17 -> {
                         stageName = "Penawaran disetujui"
                     }
+
                     18 -> {
                         stageName = "Lakukan perbaikan"
                     }
+
                     19 -> {
-                        stageName = "WO sedang diproses"
+                        stageName = "Sedang diperbaiki"
                     }
+
                     20 -> {
                         stageName = "Menunggu approval hasil perbaikan"
                     }
+
                     21 -> {
                         stageName = "Menunggu verifikasi hasil perbaikan"
                     }
+
                     22 -> {
                         stageName = "Perbaikan selesai"
                     }
+
                     23 -> {
-                        stageName = "Dikomplain"
+                        stageName = "Perbaikan dikomplain"
                     }
+
                     24 -> {
-                        stageName = "WO selesai"
+                        stageName = "Perbaikan selesai"
                     }
+
+                    25 -> {
+                        stageName = "Perbaikan selesai"
+                    }
+
                     26, 27, 28 -> {
                         stageName = "Menunggu konfirmasi penawaran"
                     }
+
                     29 -> {
                         stageName = "Order pending"
                     }
+
                     31 -> {
                         stageName = "Penambahan part segera diproses"
                     }
+
                     32 -> {
                         stageName = "Surat penawaran sedang diperbarui"
                     }
+
                     33 -> {
                         stageName = "Revisi Surat Penawaran (penambahan part) Ditolak"
                     }
+
                     else -> {
 
                     }
@@ -412,26 +484,31 @@ class RepairHelper {
                     stageBackgroundColor = R.color.orangesoft
                     stageTextColor = R.color.orange
                 }
+
                 14, 15, 16, 17, 20, 21 -> {
                     stageIcon = R.drawable.ic_stage_repair_ongoing
                     stageBackgroundColor = R.color.bluesoft
                     stageTextColor = R.color.blue
                 }
+
                 18, 19 -> {
                     stageIcon = R.drawable.ic_stage_repair_onrepair
                     stageBackgroundColor = R.color.orangesoft
                     stageTextColor = R.color.orange
                 }
+
                 23 -> {
                     stageIcon = R.drawable.ic_stage_repair_complain
                     stageBackgroundColor = R.color.redsoft
                     stageTextColor = R.color.red
                 }
+
                 22, 24 -> {
                     stageIcon = R.drawable.ic_stage_repair_done
                     stageBackgroundColor = R.color.greensoft
                     stageTextColor = R.color.green
                 }
+
                 26, 27, 28, 29, 31, 32, 33 -> {
                     stageIcon = R.drawable.ic_stage_repair_ongoing
                     stageBackgroundColor = R.color.bluesoft
@@ -485,17 +562,21 @@ class RepairHelper {
             context: Context,
             stageId: Int,
             totalPhoto: Int,
+            actionType: String,
         ): Boolean {
-
             var isEditable = false
-            if (stageId == 12) {
-                if (totalPhoto < 3) {
-                    isEditable = true
+
+            when (actionType) {
+                ConstantsRepair.REPAIR_SECTION_CHECK -> {
+                    if (stageId == 13) {
+                        isEditable = true
+                    }
                 }
-            }
-            if (stageId == 19) {
-                if (totalPhoto < 3) {
-                    isEditable = true
+
+                ConstantsRepair.REPAIR_SECTION_AFTER_REPAIR -> {
+                    if (stageId == 19) {
+                        isEditable = true
+                    }
                 }
             }
 
@@ -532,6 +613,7 @@ class RepairHelper {
                         lyPhoto.setVisibility(View.INVISIBLE)
                     }
                 }
+
                 4 -> {
                     btnScanSecondPart.setText("Scan Part - [${totalUsedPart}/${partQuantity}]")
                     //                btnScan.visibility = View.VISIBLE;
@@ -566,8 +648,13 @@ class RepairHelper {
             tvLabelOptional: TextView,
         ) {
             when (isRequired) {
-                1 -> {tvLabelOptional.visibility = View.VISIBLE}
-                else -> {tvLabelOptional.visibility = View.GONE}
+                1 -> {
+                    tvLabelOptional.visibility = View.VISIBLE
+                }
+
+                else -> {
+                    tvLabelOptional.visibility = View.GONE
+                }
             }
         }
 
@@ -580,12 +667,11 @@ class RepairHelper {
             cvDriver: CardView,
             cvCheck: CardView,
             cvParts: CardView,
-            cvReportv: CardView,
+            cvAfterRepair: CardView,
             cvAfterRepairInspection: CardView,
-            cvReportx: CardView,
+            cvAfterRepairTireInspection: CardView,
+            cvAfterRepairWaste: CardView,
             cvComplain: CardView,
-            btnAddPhotoCheck: ImageButton,
-            btnAddPhotoWaste: ImageButton,
             lyAfterCheckNote: LinearLayout,
             lyAfterRepairNote: LinearLayout,
             etAfterCheckNote: EditText,
@@ -606,14 +692,13 @@ class RepairHelper {
                     cvDriver.visibility = View.VISIBLE
                     cvCheck.visibility = View.GONE
                     cvParts.visibility = View.GONE
-                    cvReportv.visibility = View.GONE
-                    cvReportx.visibility = View.GONE
+                    cvAfterRepair.visibility = View.GONE
+                    cvAfterRepairWaste.visibility = View.GONE
                     cvAfterRepairInspection.visibility = View.GONE
+                    cvAfterRepairTireInspection.visibility = View.GONE
                     cvComplain.visibility = View.GONE
-                    btnAddPhotoCheck.visibility = View.GONE
-                    btnAddPhotoWaste.visibility = View.GONE
-                    setEditTextEnabled(context,lyAfterCheckNote,etAfterCheckNote,false)
-                    setEditTextEnabled(context,lyAfterRepairNote,etAfterRepairNote,false)
+                    setEditTextEnabled(context, lyAfterCheckNote, etAfterCheckNote, false)
+                    setEditTextEnabled(context, lyAfterRepairNote, etAfterRepairNote, false)
                     lyAdditionalPartRequest.visibility = View.GONE
                     btnCheckStart.visibility = View.VISIBLE
                     btnCheckDone.visibility = View.GONE
@@ -622,19 +707,19 @@ class RepairHelper {
                     btnRepairDone.visibility = View.GONE
 
                 }
+
                 13 -> {
                     cvProblem.visibility = View.VISIBLE
                     cvDriver.visibility = View.VISIBLE
                     cvCheck.visibility = View.VISIBLE
                     cvParts.visibility = View.GONE
-                    cvReportv.visibility = View.GONE
+                    cvAfterRepair.visibility = View.GONE
                     cvAfterRepairInspection.visibility = View.GONE
-                    cvReportx.visibility = View.GONE
+                    cvAfterRepairTireInspection.visibility = View.GONE
+                    cvAfterRepairWaste.visibility = View.GONE
                     cvComplain.visibility = View.GONE
-                    btnAddPhotoCheck.visibility = View.VISIBLE
-                    btnAddPhotoWaste.visibility = View.GONE
-                    setEditTextEnabled(context,lyAfterCheckNote,etAfterCheckNote,true)
-                    setEditTextEnabled(context,lyAfterRepairNote,etAfterRepairNote,false)
+                    setEditTextEnabled(context, lyAfterCheckNote, etAfterCheckNote, true)
+                    setEditTextEnabled(context, lyAfterRepairNote, etAfterRepairNote, false)
                     lyAdditionalPartRequest.visibility = View.GONE
                     btnCheckStart.visibility = View.VISIBLE
                     btnCheckDone.visibility = View.GONE
@@ -642,19 +727,19 @@ class RepairHelper {
                     btnRepairNext.visibility = View.GONE
                     btnRepairDone.visibility = View.GONE
                 }
-                14-> {
+
+                14 -> {
                     cvProblem.visibility = View.VISIBLE
                     cvDriver.visibility = View.VISIBLE
                     cvCheck.visibility = View.VISIBLE
                     cvParts.visibility = View.GONE
-                    cvReportv.visibility = View.GONE
+                    cvAfterRepair.visibility = View.GONE
                     cvAfterRepairInspection.visibility = View.GONE
-                    cvReportx.visibility = View.GONE
+                    cvAfterRepairTireInspection.visibility = View.GONE
+                    cvAfterRepairWaste.visibility = View.GONE
                     cvComplain.visibility = View.GONE
-                    btnAddPhotoCheck.visibility = View.VISIBLE
-                    btnAddPhotoWaste.visibility = View.GONE
-                    setEditTextEnabled(context,lyAfterCheckNote,etAfterCheckNote,false)
-                    setEditTextEnabled(context,lyAfterRepairNote,etAfterRepairNote,false)
+                    setEditTextEnabled(context, lyAfterCheckNote, etAfterCheckNote, false)
+                    setEditTextEnabled(context, lyAfterRepairNote, etAfterRepairNote, false)
                     lyAdditionalPartRequest.visibility = View.GONE
                     btnCheckStart.visibility = View.GONE
                     btnCheckDone.visibility = View.GONE
@@ -662,19 +747,19 @@ class RepairHelper {
                     btnRepairNext.visibility = View.GONE
                     btnRepairDone.visibility = View.GONE
                 }
-                15 ,16 ,17-> {
+
+                15, 16, 17 -> {
                     cvProblem.visibility = View.VISIBLE
                     cvDriver.visibility = View.VISIBLE
                     cvCheck.visibility = View.VISIBLE
                     cvParts.visibility = View.GONE
-                    cvReportv.visibility = View.GONE
+                    cvAfterRepair.visibility = View.GONE
                     cvAfterRepairInspection.visibility = View.GONE
-                    cvReportx.visibility = View.GONE
+                    cvAfterRepairTireInspection.visibility = View.GONE
+                    cvAfterRepairWaste.visibility = View.GONE
                     cvComplain.visibility = View.GONE
-                    btnAddPhotoCheck.visibility = View.GONE
-                    btnAddPhotoWaste.visibility = View.GONE
-                    setEditTextEnabled(context,lyAfterCheckNote,etAfterCheckNote,false)
-                    setEditTextEnabled(context,lyAfterRepairNote,etAfterRepairNote,false)
+                    setEditTextEnabled(context, lyAfterCheckNote, etAfterCheckNote, false)
+                    setEditTextEnabled(context, lyAfterRepairNote, etAfterRepairNote, false)
                     lyAdditionalPartRequest.visibility = View.GONE
                     btnCheckStart.visibility = View.GONE
                     btnCheckDone.visibility = View.GONE
@@ -682,19 +767,19 @@ class RepairHelper {
                     btnRepairNext.visibility = View.GONE
                     btnRepairDone.visibility = View.GONE
                 }
+
                 18 -> {
                     cvProblem.visibility = View.VISIBLE
                     cvDriver.visibility = View.VISIBLE
                     cvCheck.visibility = View.VISIBLE
                     cvParts.visibility = View.VISIBLE
-                    cvReportv.visibility = View.GONE
+                    cvAfterRepair.visibility = View.GONE
                     cvAfterRepairInspection.visibility = View.GONE
-                    cvReportx.visibility = View.GONE
+                    cvAfterRepairTireInspection.visibility = View.GONE
+                    cvAfterRepairWaste.visibility = View.GONE
                     cvComplain.visibility = View.GONE
-                    btnAddPhotoCheck.visibility = View.GONE
-                    btnAddPhotoWaste.visibility = View.GONE
-                    setEditTextEnabled(context,lyAfterCheckNote,etAfterCheckNote,false)
-                    setEditTextEnabled(context,lyAfterRepairNote,etAfterRepairNote,false)
+                    setEditTextEnabled(context, lyAfterCheckNote, etAfterCheckNote, false)
+                    setEditTextEnabled(context, lyAfterRepairNote, etAfterRepairNote, false)
                     lyAdditionalPartRequest.visibility = View.GONE
                     btnCheckStart.visibility = View.GONE
                     btnCheckDone.visibility = View.GONE
@@ -702,40 +787,43 @@ class RepairHelper {
                     btnRepairNext.visibility = View.GONE
                     btnRepairDone.visibility = View.GONE
                 }
+
                 19 -> {
 
                     cvProblem.visibility = View.VISIBLE
                     cvDriver.visibility = View.VISIBLE
                     cvCheck.visibility = View.VISIBLE
                     cvParts.visibility = View.VISIBLE
-                    cvReportv.visibility = View.VISIBLE
+                    cvAfterRepair.visibility = View.VISIBLE
                     cvAfterRepairInspection.visibility = View.GONE
-                    cvReportx.visibility = if (noteAfterRepairFromMechanic!=null) View.VISIBLE else View.GONE
+                    cvAfterRepairTireInspection.visibility = View.GONE
+                    cvAfterRepairWaste.visibility =
+                        if (noteAfterRepairFromMechanic != null) View.VISIBLE else View.GONE
                     cvComplain.visibility = View.GONE
-                    btnAddPhotoCheck.visibility = View.GONE
-                    btnAddPhotoWaste.visibility = if (noteAfterRepairFromMechanic!=null) View.VISIBLE else View.GONE
-                    setEditTextEnabled(context,lyAfterCheckNote,etAfterCheckNote,false)
-                    setEditTextEnabled(context,lyAfterRepairNote,etAfterRepairNote,true)
+                    setEditTextEnabled(context, lyAfterCheckNote, etAfterCheckNote, false)
+                    setEditTextEnabled(context, lyAfterRepairNote, etAfterRepairNote, true)
                     lyAdditionalPartRequest.visibility = View.VISIBLE
                     btnCheckStart.visibility = View.GONE
                     btnCheckDone.visibility = View.GONE
                     btnRepairStart.visibility = View.GONE
-                    btnRepairNext.visibility = if (noteAfterRepairFromMechanic!=null) View.GONE else View.VISIBLE
-                    btnRepairDone.visibility = if (noteAfterRepairFromMechanic!=null) View.VISIBLE else View.GONE
+                    btnRepairNext.visibility =
+                        if (noteAfterRepairFromMechanic != null) View.GONE else View.VISIBLE
+                    btnRepairDone.visibility =
+                        if (noteAfterRepairFromMechanic != null) View.VISIBLE else View.GONE
                 }
-                20 ,21 ,22 -> {
+
+                20, 21, 22 -> {
                     cvProblem.visibility = View.VISIBLE
                     cvDriver.visibility = View.VISIBLE
                     cvCheck.visibility = View.VISIBLE
                     cvParts.visibility = View.VISIBLE
-                    cvReportv.visibility = View.VISIBLE
+                    cvAfterRepair.visibility = View.VISIBLE
                     cvAfterRepairInspection.visibility = View.VISIBLE
-                    cvReportx.visibility = View.VISIBLE
+                    cvAfterRepairTireInspection.visibility = View.VISIBLE
+                    cvAfterRepairWaste.visibility = View.VISIBLE
                     cvComplain.visibility = View.GONE
-                    btnAddPhotoCheck.visibility = View.GONE
-                    btnAddPhotoWaste.visibility = View.GONE
-                    setEditTextEnabled(context,lyAfterCheckNote,etAfterCheckNote,false)
-                    setEditTextEnabled(context,lyAfterRepairNote,etAfterRepairNote,false)
+                    setEditTextEnabled(context, lyAfterCheckNote, etAfterCheckNote, false)
+                    setEditTextEnabled(context, lyAfterRepairNote, etAfterRepairNote, false)
                     lyAdditionalPartRequest.visibility = View.GONE
                     btnCheckStart.visibility = View.GONE
                     btnCheckDone.visibility = View.GONE
@@ -743,19 +831,19 @@ class RepairHelper {
                     btnRepairNext.visibility = View.GONE
                     btnRepairDone.visibility = View.GONE
                 }
+
                 23 -> {
                     cvProblem.visibility = View.VISIBLE
                     cvDriver.visibility = View.VISIBLE
                     cvCheck.visibility = View.VISIBLE
                     cvParts.visibility = View.VISIBLE
-                    cvReportv.visibility = View.VISIBLE
+                    cvAfterRepair.visibility = View.VISIBLE
                     cvAfterRepairInspection.visibility = View.VISIBLE
-                    cvReportx.visibility = View.VISIBLE
+                    cvAfterRepairTireInspection.visibility = View.VISIBLE
+                    cvAfterRepairWaste.visibility = View.VISIBLE
                     cvComplain.visibility = View.VISIBLE
-                    btnAddPhotoCheck.visibility = View.GONE
-                    btnAddPhotoWaste.visibility = View.GONE
-                    setEditTextEnabled(context,lyAfterCheckNote,etAfterCheckNote,false)
-                    setEditTextEnabled(context,lyAfterRepairNote,etAfterRepairNote,false)
+                    setEditTextEnabled(context, lyAfterCheckNote, etAfterCheckNote, false)
+                    setEditTextEnabled(context, lyAfterRepairNote, etAfterRepairNote, false)
                     lyAdditionalPartRequest.visibility = View.GONE
                     btnCheckStart.visibility = View.GONE
                     btnCheckDone.visibility = View.GONE
@@ -763,19 +851,19 @@ class RepairHelper {
                     btnRepairNext.visibility = View.GONE
                     btnRepairDone.visibility = View.GONE
                 }
+
                 24, 25 -> {
                     cvProblem.visibility = View.VISIBLE
                     cvDriver.visibility = View.VISIBLE
                     cvCheck.visibility = View.VISIBLE
                     cvParts.visibility = View.VISIBLE
-                    cvReportv.visibility = View.VISIBLE
+                    cvAfterRepair.visibility = View.VISIBLE
                     cvAfterRepairInspection.visibility = View.VISIBLE
-                    cvReportx.visibility = View.VISIBLE
+                    cvAfterRepairTireInspection.visibility = View.VISIBLE
+                    cvAfterRepairWaste.visibility = View.VISIBLE
                     cvComplain.visibility = View.GONE
-                    btnAddPhotoCheck.visibility = View.GONE
-                    btnAddPhotoWaste.visibility = View.GONE
-                    setEditTextEnabled(context,lyAfterCheckNote,etAfterCheckNote,false)
-                    setEditTextEnabled(context,lyAfterRepairNote,etAfterRepairNote,false)
+                    setEditTextEnabled(context, lyAfterCheckNote, etAfterCheckNote, false)
+                    setEditTextEnabled(context, lyAfterRepairNote, etAfterRepairNote, false)
                     lyAdditionalPartRequest.visibility = View.GONE
                     btnCheckStart.visibility = View.GONE
                     btnCheckDone.visibility = View.GONE
@@ -783,19 +871,19 @@ class RepairHelper {
                     btnRepairNext.visibility = View.GONE
                     btnRepairDone.visibility = View.GONE
                 }
+
                 26, 27, 28 -> {
                     cvProblem.visibility = View.VISIBLE
                     cvDriver.visibility = View.VISIBLE
                     cvCheck.visibility = View.VISIBLE
                     cvParts.visibility = View.GONE
-                    cvReportv.visibility = View.GONE
+                    cvAfterRepair.visibility = View.GONE
                     cvAfterRepairInspection.visibility = View.GONE
-                    cvReportx.visibility = View.GONE
+                    cvAfterRepairTireInspection.visibility = View.GONE
+                    cvAfterRepairWaste.visibility = View.GONE
                     cvComplain.visibility = View.GONE
-                    btnAddPhotoCheck.visibility = View.GONE
-                    btnAddPhotoWaste.visibility = View.GONE
-                    setEditTextEnabled(context,lyAfterCheckNote,etAfterCheckNote,false)
-                    setEditTextEnabled(context,lyAfterRepairNote,etAfterRepairNote,false)
+                    setEditTextEnabled(context, lyAfterCheckNote, etAfterCheckNote, false)
+                    setEditTextEnabled(context, lyAfterRepairNote, etAfterRepairNote, false)
                     lyAdditionalPartRequest.visibility = View.GONE
                     btnCheckStart.visibility = View.GONE
                     btnCheckDone.visibility = View.GONE
@@ -803,19 +891,19 @@ class RepairHelper {
                     btnRepairNext.visibility = View.GONE
                     btnRepairDone.visibility = View.GONE
                 }
+
                 29 -> {
                     cvProblem.visibility = View.VISIBLE
                     cvDriver.visibility = View.VISIBLE
                     cvCheck.visibility = View.VISIBLE
                     cvParts.visibility = View.VISIBLE
-                    cvReportv.visibility = View.VISIBLE
+                    cvAfterRepair.visibility = View.VISIBLE
                     cvAfterRepairInspection.visibility = View.VISIBLE
-                    cvReportx.visibility = View.VISIBLE
+                    cvAfterRepairTireInspection.visibility = View.VISIBLE
+                    cvAfterRepairWaste.visibility = View.VISIBLE
                     cvComplain.visibility = View.GONE
-                    btnAddPhotoCheck.visibility = View.GONE
-                    btnAddPhotoWaste.visibility = View.GONE
-                    setEditTextEnabled(context,lyAfterCheckNote,etAfterCheckNote,false)
-                    setEditTextEnabled(context,lyAfterRepairNote,etAfterRepairNote,false)
+                    setEditTextEnabled(context, lyAfterCheckNote, etAfterCheckNote, false)
+                    setEditTextEnabled(context, lyAfterRepairNote, etAfterRepairNote, false)
                     lyAdditionalPartRequest.visibility = View.GONE
                     btnCheckStart.visibility = View.GONE
                     btnCheckDone.visibility = View.GONE
@@ -823,19 +911,19 @@ class RepairHelper {
                     btnRepairNext.visibility = View.GONE
                     btnRepairDone.visibility = View.GONE
                 }
+
                 31 -> {
                     cvProblem.visibility = View.VISIBLE
                     cvDriver.visibility = View.VISIBLE
                     cvCheck.visibility = View.VISIBLE
                     cvParts.visibility = View.VISIBLE
-                    cvReportv.visibility = View.GONE
+                    cvAfterRepair.visibility = View.GONE
                     cvAfterRepairInspection.visibility = View.GONE
-                    cvReportx.visibility = View.GONE
+                    cvAfterRepairTireInspection.visibility = View.GONE
+                    cvAfterRepairWaste.visibility = View.GONE
                     cvComplain.visibility = View.GONE
-                    btnAddPhotoCheck.visibility = View.GONE
-                    btnAddPhotoWaste.visibility = View.GONE
-                    setEditTextEnabled(context,lyAfterCheckNote,etAfterCheckNote,false)
-                    setEditTextEnabled(context,lyAfterRepairNote,etAfterRepairNote,false)
+                    setEditTextEnabled(context, lyAfterCheckNote, etAfterCheckNote, false)
+                    setEditTextEnabled(context, lyAfterRepairNote, etAfterRepairNote, false)
                     lyAdditionalPartRequest.visibility = View.GONE
                     btnCheckStart.visibility = View.GONE
                     btnCheckDone.visibility = View.GONE
@@ -843,19 +931,19 @@ class RepairHelper {
                     btnRepairNext.visibility = View.GONE
                     btnRepairDone.visibility = View.GONE
                 }
+
                 32 -> {
                     cvProblem.visibility = View.VISIBLE
                     cvDriver.visibility = View.VISIBLE
                     cvCheck.visibility = View.VISIBLE
                     cvParts.visibility = View.GONE
-                    cvReportv.visibility = View.GONE
+                    cvAfterRepair.visibility = View.GONE
                     cvAfterRepairInspection.visibility = View.GONE
-                    cvReportx.visibility = View.GONE
+                    cvAfterRepairTireInspection.visibility = View.GONE
+                    cvAfterRepairWaste.visibility = View.GONE
                     cvComplain.visibility = View.GONE
-                    btnAddPhotoCheck.visibility = View.GONE
-                    btnAddPhotoWaste.visibility = View.GONE
-                    setEditTextEnabled(context,lyAfterCheckNote,etAfterCheckNote,false)
-                    setEditTextEnabled(context,lyAfterRepairNote,etAfterRepairNote,false)
+                    setEditTextEnabled(context, lyAfterCheckNote, etAfterCheckNote, false)
+                    setEditTextEnabled(context, lyAfterRepairNote, etAfterRepairNote, false)
                     lyAdditionalPartRequest.visibility = View.GONE
                     btnCheckStart.visibility = View.GONE
                     btnCheckDone.visibility = View.GONE
@@ -863,19 +951,19 @@ class RepairHelper {
                     btnRepairNext.visibility = View.GONE
                     btnRepairDone.visibility = View.GONE
                 }
+
                 33 -> {
                     cvProblem.visibility = View.VISIBLE
                     cvDriver.visibility = View.VISIBLE
                     cvCheck.visibility = View.VISIBLE
                     cvParts.visibility = View.VISIBLE
-                    cvReportv.visibility = View.GONE
+                    cvAfterRepair.visibility = View.GONE
                     cvAfterRepairInspection.visibility = View.GONE
-                    cvReportx.visibility = View.GONE
+                    cvAfterRepairTireInspection.visibility = View.GONE
+                    cvAfterRepairWaste.visibility = View.GONE
                     cvComplain.visibility = View.GONE
-                    btnAddPhotoCheck.visibility = View.GONE
-                    btnAddPhotoWaste.visibility = View.GONE
-                    setEditTextEnabled(context,lyAfterCheckNote,etAfterCheckNote,false)
-                    setEditTextEnabled(context,lyAfterRepairNote,etAfterRepairNote,false)
+                    setEditTextEnabled(context, lyAfterCheckNote, etAfterCheckNote, false)
+                    setEditTextEnabled(context, lyAfterRepairNote, etAfterRepairNote, false)
                     lyAdditionalPartRequest.visibility = View.GONE
                     btnCheckStart.visibility = View.GONE
                     btnCheckDone.visibility = View.GONE
@@ -883,18 +971,19 @@ class RepairHelper {
                     btnRepairNext.visibility = View.GONE
                     btnRepairDone.visibility = View.GONE
                 }
+
                 else -> {
                     cvProblem.visibility = View.VISIBLE
                     cvDriver.visibility = View.VISIBLE
                     cvCheck.visibility = View.VISIBLE
                     cvParts.visibility = View.VISIBLE
-                    cvReportv.visibility = View.VISIBLE
-                    cvReportx.visibility = View.VISIBLE
+                    cvAfterRepair.visibility = View.VISIBLE
+                    cvAfterRepairInspection.visibility = View.VISIBLE
+                    cvAfterRepairTireInspection.visibility = View.VISIBLE
+                    cvAfterRepairWaste.visibility = View.VISIBLE
                     cvComplain.visibility = View.GONE
-                    btnAddPhotoCheck.visibility = View.GONE
-                    btnAddPhotoWaste.visibility = View.GONE
-                    setEditTextEnabled(context,lyAfterCheckNote,etAfterCheckNote,false)
-                    setEditTextEnabled(context,lyAfterRepairNote,etAfterRepairNote,false)
+                    setEditTextEnabled(context, lyAfterCheckNote, etAfterCheckNote, false)
+                    setEditTextEnabled(context, lyAfterRepairNote, etAfterRepairNote, false)
                     lyAdditionalPartRequest.visibility = View.GONE
                     btnCheckStart.visibility = View.GONE
                     btnCheckDone.visibility = View.GONE
@@ -906,28 +995,41 @@ class RepairHelper {
 
         }
 
-        fun setEditTextEnabled (
+        fun setEditTextEnabled(
             context: Context,
             lyEdit: LinearLayout,
             editText: EditText,
-            isEnabled : Boolean
-        ){
-            if (isEnabled){
+            isEnabled: Boolean
+        ) {
+            if (isEnabled) {
                 lyEdit.setBackgroundResource(R.drawable.bg_button_rounded_outline_grey)
                 editText.isFocusableInTouchMode = true
                 editText.isFocusable = true
                 editText.isLongClickable = true
                 lyEdit.setOnClickListener { editText.requestFocus() }
-            }else {
+            } else {
                 lyEdit.setBackgroundResource(R.drawable.bg_rounded_textview_greysoft)
                 editText.isFocusableInTouchMode = false
                 editText.isFocusable = false
                 editText.isLongClickable = false
-                lyEdit.setOnClickListener {  }
+                lyEdit.setOnClickListener { }
             }
         }
 
-        fun String.toEditable(): Editable =  Editable.Factory.getInstance().newEditable(this)
+        fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
 
+
+        fun parseErrorMessageFromJson(message : String): ErrorResponse? {
+
+            val gson = Gson()
+            var obj: ErrorResponse? = null
+            obj = gson.fromJson(message, ErrorResponse::class.java)
+
+            return obj
+
+
+        }
     }
+
+
 }

@@ -1,4 +1,4 @@
-package com.daffamuhtar.fmkotlin.ui.check
+package com.daffamuhtar.fmkotlin.ui.repair_check
 
 import android.content.Context
 import android.content.Intent

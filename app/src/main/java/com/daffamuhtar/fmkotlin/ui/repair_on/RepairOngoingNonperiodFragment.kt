@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.daffamuhtar.fmkotlin.constants.Constants
@@ -19,10 +20,12 @@ import com.daffamuhtar.fmkotlin.data.response.RepairOnNonperiodResponse
 import com.daffamuhtar.fmkotlin.ui.adapter.FilterAdapter
 import com.daffamuhtar.fmkotlin.ui.adapter.RepairAdapter
 import com.daffamuhtar.fmkotlin.ui.repair_detail.RepairDetailActivity
+import com.daffamuhtar.fmkotlin.util.Status
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class RepairOngoingNonperiodFragment : Fragment() {
 
-    private lateinit var repairOngoingNonperiodViewModel: RepairOngoingNonperiodViewModel
+    private val repairOngoingNonperiodViewModel: RepairOngoingNonperiodViewModel by viewModel()
 
     private lateinit var binding: FragmentRepairOnNonperiodBinding
     private lateinit var context: Context
@@ -48,36 +51,42 @@ class RepairOngoingNonperiodFragment : Fragment() {
         declare()
         initViewModel()
         prepareFilter()
+        prepareView()
         callData()
+    }
+
+    private fun prepareView() {
+        binding.srCheck.setOnRefreshListener {
+            repairOngoingNonperiodViewModel.getRepairNonperiod(context, ConstantsApp.BASE_URL_V2_0, "MEC-MBA-99")
+        }
     }
 
     private fun callData() {
         repairOngoingNonperiodViewModel.getRepairNonperiod(context, ConstantsApp.BASE_URL_V2_0, "MEC-MBA-99")
-
     }
 
     private fun initViewModel() {
+
         repairOngoingNonperiodViewModel.repairList.observe(requireActivity()) {
-            if (it.isNotEmpty()) {
-                setReportResults(it)
-            } else {
-                binding.lyNotFound.visibility = View.VISIBLE
+            when (it.status) {
+                Status.SUCCESS -> {
+                    binding.srCheck.isRefreshing = false
+                    it.data?.let { repair -> setReportResults(repair)}
+                }
+                Status.LOADING -> {
+                    binding.srCheck.isRefreshing = true
+                }
+                Status.ERROR -> {
+                    binding.srCheck.isRefreshing = false
+                    Toast.makeText(context, ""+it.responseCode + " - "+it.message, Toast.LENGTH_LONG).show()
+                }
             }
         }
 
-        repairOngoingNonperiodViewModel.isLoadingGetRepair.observe(requireActivity()) {
-            loading(it)
-        }
-
-        binding.srCheck.setOnRefreshListener {
-            repairOngoingNonperiodViewModel.getRepairNonperiod(context, ConstantsApp.BASE_URL_V2_0, "MEC-MBA-99")
-
-        }
     }
 
     private fun declare() {
         context = requireActivity()
-        repairOngoingNonperiodViewModel = ViewModelProvider(this)[RepairOngoingNonperiodViewModel::class.java]
     }
 
     private fun loading(value: Boolean) {

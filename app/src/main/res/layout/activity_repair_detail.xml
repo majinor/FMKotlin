@@ -654,7 +654,8 @@
                                         android:layout_height="50dp"
                                         android:layout_centerHorizontal="true"
                                         android:layout_marginRight="10dp"
-                                        android:background="@drawable/bg_circle_lightgrey" />
+                                        android:background="@drawable/bg_circle_lightgrey"
+                                        app:shapeAppearance="@style/customCircleImageView" />
 
                                     <LinearLayout
                                         android:layout_width="wrap_content"
@@ -1364,14 +1365,6 @@
                                     tools:itemCount="2"
                                     tools:listitem="@layout/item_photo" />
 
-                                <ImageButton
-                                    android:id="@+id/btn_add_photo"
-                                    android:layout_width="50dp"
-                                    android:layout_height="50dp"
-                                    android:layout_margin="10dp"
-                                    android:background="@drawable/ic_add_circle_outline_black_24dp"
-                                    android:visibility="gone" />
-
 
                             </LinearLayout>
 
@@ -2071,7 +2064,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cv_rd_tire_inspection"
+                android:id="@+id/cv_after_repair_tire_inspection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -2171,13 +2164,13 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginTop="30dp"
-                                android:paddingHorizontal="10dp"
-                                android:paddingVertical="5dp"
                                 android:background="@drawable/background_rounded"
                                 android:backgroundTint="@color/yellowsoft"
                                 android:gravity="center"
+                                android:paddingHorizontal="10dp"
+                                android:paddingVertical="5dp"
                                 android:text="Depan"
-                                android:textStyle="bold"/>
+                                android:textStyle="bold" />
 
                             <LinearLayout
                                 android:id="@+id/ly_rd_cde"
@@ -2727,8 +2720,7 @@
                                             android:id="@+id/iv_rd_cdd_rlo"
                                             android:layout_width="40dp"
                                             android:layout_height="match_parent"
-                                            android:background="@drawable/background_rounded_tire_grey"
-                                            />
+                                            android:background="@drawable/background_rounded_tire_grey" />
 
                                         <ImageView
                                             android:layout_width="5dp"
@@ -2740,8 +2732,7 @@
                                             android:id="@+id/iv_rd_cdd_rli"
                                             android:layout_width="40dp"
                                             android:layout_height="match_parent"
-                                            android:background="@drawable/background_rounded_tire_grey"
-                                            />
+                                            android:background="@drawable/background_rounded_tire_grey" />
 
                                         <ImageView
                                             android:layout_width="50dp"
@@ -3145,8 +3136,7 @@
                                             android:id="@+id/iv_rd_trn_rlo"
                                             android:layout_width="40dp"
                                             android:layout_height="match_parent"
-                                            android:background="@drawable/background_rounded_tire_grey"
-                                            />
+                                            android:background="@drawable/background_rounded_tire_grey" />
 
                                         <ImageView
                                             android:layout_width="5dp"
@@ -3158,8 +3148,7 @@
                                             android:id="@+id/iv_rd_trn_rli"
                                             android:layout_width="40dp"
                                             android:layout_height="match_parent"
-                                            android:background="@drawable/background_rounded_tire_grey"
-                                            />
+                                            android:background="@drawable/background_rounded_tire_grey" />
 
                                         <ImageView
                                             android:layout_width="50dp"
@@ -3373,8 +3362,7 @@
                                             android:id="@+id/iv_rd_trn_2rlo"
                                             android:layout_width="40dp"
                                             android:layout_height="match_parent"
-                                            android:background="@drawable/background_rounded_tire_grey"
-                                            />
+                                            android:background="@drawable/background_rounded_tire_grey" />
 
                                         <ImageView
                                             android:layout_width="5dp"
@@ -3386,8 +3374,7 @@
                                             android:id="@+id/iv_rd_trn_2rli"
                                             android:layout_width="40dp"
                                             android:layout_height="match_parent"
-                                            android:background="@drawable/background_rounded_tire_grey"
-                                            />
+                                            android:background="@drawable/background_rounded_tire_grey" />
 
                                         <ImageView
                                             android:layout_width="50dp"
@@ -3574,10 +3561,10 @@
 
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/rv_rd_tire_inspection"
-                                android:visibility="gone"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical"
+                                android:visibility="gone"
                                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
                         </RelativeLayout>
 
@@ -3684,13 +3671,6 @@
                                     tools:itemCount="2"
                                     tools:listitem="@layout/item_photo" />
 
-                                <ImageButton
-                                    android:id="@+id/btn_add_photo_waste"
-                                    android:layout_width="50dp"
-                                    android:layout_height="50dp"
-                                    android:layout_margin="10dp"
-                                    android:background="@drawable/ic_add_circle_outline_black_24dp"
-                                    android:visibility="gone" />
 
                             </RelativeLayout>
                         </LinearLayout>

@@ -7,8 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.daffamuhtar.fmkotlin.databinding.FragmentHomeBinding
-import com.daffamuhtar.fmkotlin.ui.check.RepairCheckActivity
-import com.daffamuhtar.fmkotlin.ui.check.RepairOngoingActivity
+import com.daffamuhtar.fmkotlin.ui.repair_check.RepairCheckActivity
+import com.daffamuhtar.fmkotlin.ui.repair_check.RepairOngoingActivity
 import com.daffamuhtar.fmkotlin.ui.repair_on.RepairOnActivity
 import com.daffamuhtar.fmkotlin.ui.scanner.ScannerActivity
 

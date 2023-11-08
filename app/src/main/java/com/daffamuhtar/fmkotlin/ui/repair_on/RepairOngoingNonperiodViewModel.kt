@@ -7,104 +7,102 @@ import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.daffamuhtar.fmkotlin.app.Server
+import com.daffamuhtar.fmkotlin.constants.ConstantsApp
+import com.daffamuhtar.fmkotlin.data.repository.RepairCheckRepository
 
-import com.daffamuhtar.fmkotlin.app.ApiConfig
+import com.daffamuhtar.fmkotlin.data.repository.RepairOnNonperiodRepository
 import com.daffamuhtar.fmkotlin.data.response.RepairOnNonperiodResponse
 import com.daffamuhtar.fmkotlin.data.response.ErrorResponse
 import com.daffamuhtar.fmkotlin.services.RepairServices
+import com.daffamuhtar.fmkotlin.util.NetworkHelper
+import com.daffamuhtar.fmkotlin.util.Resource
+import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
-import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.Converter
-import retrofit2.Response
+import retrofit2.Retrofit
 import java.io.IOException
 
-class RepairOngoingNonperiodViewModel : ViewModel() {
+class RepairOngoingNonperiodViewModel(
+    private val repairOnNonperiodRepository: RepairOnNonperiodRepository,
+    private val networkHelper: NetworkHelper,
+    private val retrofitBlogV1: Retrofit,
+    private val retrofitBlogV2: Retrofit,
+    private val retrofitBlogV2Rep: Retrofit,
+    private val retrofitInternalVendorV1: Retrofit,
+) : ViewModel() {
 
-    private val _isLoadingGetRepair = MutableLiveData<Boolean>()
-    val isLoadingGetRepair: LiveData<Boolean> = _isLoadingGetRepair
-
-    private val _isSuccessGetRepair = MutableLiveData<Boolean>()
-    val isSuccessGetRepair: LiveData<Boolean> = _isSuccessGetRepair
-
-    private val _messageGetRepair = MutableLiveData<String>()
-    val messageGetRepair: LiveData<String> = _messageGetRepair
-
-    private val _repairList = MutableLiveData<List<RepairOnNonperiodResponse>>()
-    val repairList: LiveData<List<RepairOnNonperiodResponse>> = _repairList
+    private val _repairList = MutableLiveData<Resource<List<RepairOnNonperiodResponse>>>()
+    val repairList: LiveData<Resource<List<RepairOnNonperiodResponse>>> get() = _repairList
 
     fun getRepairNonperiod(
         context: Context,
         apiVersion: String,
         userId: String,
     ) {
-        _isLoadingGetRepair.value = true
+        viewModelScope.launch {
 
-        val retrofit = ApiConfig.getRetrofit(context, apiVersion)
-        val services = retrofit?.create(RepairServices::class.java)
-        val client = services?.getRepairNonperiod(userId, 0)
-
-        client?.enqueue(object : Callback<List<RepairOnNonperiodResponse>> {
-            override fun onResponse(
-                call: Call<List<RepairOnNonperiodResponse>>,
-                response: Response<List<RepairOnNonperiodResponse>>
-            ) {
-                _isLoadingGetRepair.value = false
-
-                if (response.isSuccessful) {
-                    val responseBody = response.body()
-                    Log.w(
-                        "RESULT:",
-                        GsonBuilder().setPrettyPrinting().create().toJson(response.body())
-                    )
-
-                    val repair: List<RepairOnNonperiodResponse>? = response.body()
-                    if (responseBody != null) {
-                        _repairList.value = repair!!
+            val retrofit =
+                when (apiVersion) {
+                    ConstantsApp.BASE_URL_V1_0 -> {
+                        retrofitBlogV1
                     }
+                    ConstantsApp.BASE_URL_V2_0 -> {
+                        retrofitBlogV2
+                    }
+                    ConstantsApp.BASE_URL_V2_0_REP -> {
+                        retrofitBlogV2Rep
+                    }
+                    ConstantsApp.BASE_URL2 -> {
+                        retrofitInternalVendorV1
+                    }
+                    else -> {
+                        retrofitBlogV1
+                    }
+            }
+            val services = retrofitBlogV2.create(RepairServices::class.java)
 
-                } else {
-                    val responseErrorBody = response.errorBody()
-                    if (responseErrorBody != null) {
-                        Log.w(
-                            "RESULT:",
-                            "onResponse: Not Success " + response.code() + GsonBuilder().setPrettyPrinting()
-                                .create().toJson(responseErrorBody)
-                        )
-                        val converter: Converter<ResponseBody?, ErrorResponse> =
-                            retrofit.responseBodyConverter(
-                                ErrorResponse::class.java,
-                                arrayOfNulls<Annotation>(0)
-                            )
+            _repairList.postValue(Resource.loading(null))
+            if (networkHelper.isNetworkConnected()) {
+                repairOnNonperiodRepository.getRepairOnNonperiod(services,userId).let {
+                    if (it.isSuccessful) {
+                        _repairList.postValue(Resource.success(it.body(), it.code()))
+                    } else {
+
+                        val responseErrorBody = it.errorBody()
                         var errorModel: ErrorResponse? = null
-                        try {
-                            errorModel = converter.convert(responseErrorBody)
-                            val status: Boolean = errorModel?.status ?: false
-                            val message: String = errorModel?.message ?: "no message"
 
-                            _isSuccessGetRepair.value = status
-                            _messageGetRepair.value = message
-
-                            Toast.makeText(context, "Gagal Mengirim $message", Toast.LENGTH_SHORT)
-                                .show()
-                        } catch (e: IOException) {
-                            e.printStackTrace()
-                            Log.d("TAG", "onResponse: $e")
+                        if (responseErrorBody != null) {
+                            Log.w(
+                                "RESULT:",
+                                "onResponse: Not Success HEHE" + it.code() + GsonBuilder().setPrettyPrinting()
+                                    .create().toJson(responseErrorBody)
+                            )
+                            val converter: Converter<ResponseBody?, ErrorResponse> =
+                                retrofit.responseBodyConverter(
+                                    ErrorResponse::class.java,
+                                    arrayOfNulls<Annotation>(0)
+                                )
+                            try {
+                                errorModel = converter.convert(responseErrorBody)
+                            } catch (e: IOException) {
+                                e.printStackTrace()
+                                Log.d("TAG", "onResponse: $e")
+                            }
                         }
+
+                        _repairList.postValue(
+                            Resource.error(
+                                Gson().toJson(errorModel).toString(), null, it.code()
+                            )
+                        )
                     }
-
                 }
-
-            }
-
-            override fun onFailure(call: Call<List<RepairOnNonperiodResponse>>, t: Throwable) {
-                _isLoadingGetRepair.value = false
-                Log.e(ContentValues.TAG, "onFailure: ${t.message}")
-                _messageGetRepair.value =
-                    "Gagal terhubung ke server, periksa koneksi Anda dan coba lagi nanti."
-            }
-        })
+            } else _repairList.postValue(Resource.error("No internet connection", null, 0))
+        }
     }
-    
+
 }

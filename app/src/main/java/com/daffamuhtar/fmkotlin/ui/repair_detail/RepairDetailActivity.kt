@@ -1,18 +1,39 @@
 package com.daffamuhtar.fmkotlin.ui.repair_detail
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.daffamuhtar.fmkotlin.R
 import com.daffamuhtar.fmkotlin.constants.Constants
 import com.daffamuhtar.fmkotlin.constants.ConstantsApp
+import com.daffamuhtar.fmkotlin.constants.ConstantsRepair
+import com.daffamuhtar.fmkotlin.data.Photo
+import com.daffamuhtar.fmkotlin.data.RepairDetailAfterRepair
+import com.daffamuhtar.fmkotlin.data.RepairDetailAfterRepairInspection
+import com.daffamuhtar.fmkotlin.data.RepairDetailAfterRepairTireInspection
+import com.daffamuhtar.fmkotlin.data.RepairDetailPart
+import com.daffamuhtar.fmkotlin.data.RepairDetailProblem
+import com.daffamuhtar.fmkotlin.data.TireConditionCategory
+import com.daffamuhtar.fmkotlin.data.response.RepairDetailActiveDriverResponse
+import com.daffamuhtar.fmkotlin.data.response.RepairDetailAfterCheckResponse
+import com.daffamuhtar.fmkotlin.data.response.RepairDetailAfterRepairComplainResponse
+import com.daffamuhtar.fmkotlin.data.response.RepairDetailAfterRepairInspectionResponse
+import com.daffamuhtar.fmkotlin.data.response.RepairDetailAfterRepairResponse
+import com.daffamuhtar.fmkotlin.data.response.RepairDetailAfterRepairWasteResponse
+import com.daffamuhtar.fmkotlin.data.response.RepairDetailMechanicInfoResponse
+import com.daffamuhtar.fmkotlin.data.response.RepairDetailNoteResponse
+import com.daffamuhtar.fmkotlin.data.response.RepairDetailPartResponse
+import com.daffamuhtar.fmkotlin.data.response.RepairDetailProblemResponse
+import com.daffamuhtar.fmkotlin.data.response.RepairDetailWorkshopInfoResponse
+import com.daffamuhtar.fmkotlin.data.response.TireConditionCategoryResponse
 import com.daffamuhtar.fmkotlin.databinding.ActivityRepairDetailBinding
-import com.daffamuhtar.fmkotlin.data.*
-import com.daffamuhtar.fmkotlin.data.response.*
 import com.daffamuhtar.fmkotlin.ui.adapter.PhotoAdapter
 import com.daffamuhtar.fmkotlin.ui.adapter.RepairDetailAfterRepairAdapter
 import com.daffamuhtar.fmkotlin.ui.adapter.RepairDetailAfterRepairInspectionAdapter
@@ -22,11 +43,14 @@ import com.daffamuhtar.fmkotlin.ui.bottomsheet.AdditionalPartRequestBottomSheet
 import com.daffamuhtar.fmkotlin.util.RepairHelper
 import com.daffamuhtar.fmkotlin.util.RepairHelper.Companion.toEditable
 import com.daffamuhtar.fmkotlin.util.VehicleHelper
+import com.fleetify.fleetifydriverum.cons.ConstantsTire
 
 class RepairDetailActivity : AppCompatActivity() {
 
     private lateinit var repairDetailViewModel: RepairDetailViewModel
     private lateinit var binding: ActivityRepairDetailBinding
+
+    private val context: Context = this
 
     private var reqType: String? = null
     private var actionType: String? = null
@@ -71,7 +95,11 @@ class RepairDetailActivity : AppCompatActivity() {
 
     private val repairDetailAfterRepairInspectionAdapter: RepairDetailAfterRepairInspectionAdapter =
         RepairDetailAfterRepairInspectionAdapter()
+
     private val repairDetailAfterRepairInspectionList: ArrayList<RepairDetailAfterRepairInspection> =
+        ArrayList()
+
+    private val repairDetailAfterRepairTireInspectionList: ArrayList<RepairDetailAfterRepairTireInspection> =
         ArrayList()
 
     private val tireConditionCategoryList: ArrayList<TireConditionCategory> =
@@ -96,10 +124,39 @@ class RepairDetailActivity : AppCompatActivity() {
 //    private val mRepairDetailWasteTireList: ArrayList<RepairDetailWasteTireModel>? = null
 //
 //    private val tireInspectionItemAdapter: TireInspectionItemAdapter? = null
-//    private val tireInspectionItemModels: ArrayList<TireInspectionItemModel>? = null
+//    private val repairDetailAfterRepairTireInspections: ArrayList<repairDetailAfterRepairTireInspection>? = null
 //
 //    private val tireConditionCategoryModels: ArrayList<TireConditionCategoryModel>? = null
 
+    private lateinit var ivTireFR: ImageView
+    private lateinit var ivTireFL: ImageView
+    private lateinit var ivTireRL: ImageView
+    private lateinit var ivTireRR: ImageView
+    private lateinit var ivTireRLO: ImageView
+    private lateinit var ivTireRLI: ImageView
+    private lateinit var ivTireRRI: ImageView
+    private lateinit var ivTireRRO: ImageView
+    private lateinit var ivTire2RLO: ImageView
+    private lateinit var ivTire2RLI: ImageView
+    private lateinit var ivTire2RRI: ImageView
+    private lateinit var ivTire2RRO: ImageView
+    private lateinit var ivTireS: ImageView
+
+    private lateinit var ivTireConditionFL: ImageView
+    private lateinit var ivTireConditionFR: ImageView
+    private lateinit var ivTireConditionRL: ImageView
+    private lateinit var ivTireConditionRR: ImageView
+    private lateinit var ivTireConditionRLI: ImageView
+    private lateinit var ivTireConditionRLO: ImageView
+    private lateinit var ivTireConditionRRI: ImageView
+    private lateinit var ivTireConditionRRO: ImageView
+    private lateinit var ivTireCondition2RLI: ImageView
+    private lateinit var ivTireCondition2RLO: ImageView
+    private lateinit var ivTireCondition2RRI: ImageView
+    private lateinit var ivTireCondition2RRO: ImageView
+    private lateinit var ivTireConditionS: ImageView
+
+    private lateinit var tireInspectionId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -173,10 +230,9 @@ class RepairDetailActivity : AppCompatActivity() {
                 binding.cvParts,
                 binding.cvReportv,
                 binding.cvAfterRepairInspection,
+                binding.cvAfterRepairTireInspection,
                 binding.cvReportx,
                 binding.cvComplain,
-                binding.btnAddPhoto,
-                binding.btnAddPhotoWaste,
                 binding.lyAfterCheckNote,
                 binding.lyAfterRepairNote,
                 binding.etAfterCheckNote,
@@ -286,7 +342,6 @@ class RepairDetailActivity : AppCompatActivity() {
                     Toast.makeText(this, "kosong", Toast.LENGTH_SHORT).show()
                 }
             } else {
-                binding.btnAddPhotoWaste.visibility = View.VISIBLE
             }
         }
 
@@ -341,6 +396,112 @@ class RepairDetailActivity : AppCompatActivity() {
 
     }
 
+    private fun loadAfterRepairTireInspection(it: Boolean?) {
+
+    }
+
+    private fun setTireInspectionResultIntoChassis() {
+        for (repairDetailAfterRepairTireInspection in repairDetailAfterRepairTireInspectionList) {
+            when (repairDetailAfterRepairTireInspection.tirePositionId) {
+                ConstantsTire.TIRE_POSITION_FR -> setConditionResult(
+                    repairDetailAfterRepairTireInspection.tireConditionId,
+                    ivTireFR,
+                    ivTireConditionFR
+                )
+
+                ConstantsTire.TIRE_POSITION_FL -> setConditionResult(
+                    repairDetailAfterRepairTireInspection.tireConditionId,
+                    ivTireFL,
+                    ivTireConditionFL
+                )
+
+                ConstantsTire.TIRE_POSITION_RR -> setConditionResult(
+                    repairDetailAfterRepairTireInspection.tireConditionId,
+                    ivTireRR,
+                    ivTireConditionRR
+                )
+
+                ConstantsTire.TIRE_POSITION_RL -> setConditionResult(
+                    repairDetailAfterRepairTireInspection.tireConditionId,
+                    ivTireRL,
+                    ivTireConditionRL
+                )
+
+                ConstantsTire.TIRE_POSITION_RRI -> setConditionResult(
+                    repairDetailAfterRepairTireInspection.tireConditionId,
+                    ivTireRRI,
+                    ivTireConditionRRI
+                )
+
+                ConstantsTire.TIRE_POSITION_RRO -> setConditionResult(
+                    repairDetailAfterRepairTireInspection.tireConditionId,
+                    ivTireRRO,
+                    ivTireConditionRRO
+                )
+
+                ConstantsTire.TIRE_POSITION_RLI -> setConditionResult(
+                    repairDetailAfterRepairTireInspection.tireConditionId,
+                    ivTireRLI,
+                    ivTireConditionRLI
+                )
+
+                ConstantsTire.TIRE_POSITION_RLO -> setConditionResult(
+                    repairDetailAfterRepairTireInspection.tireConditionId,
+                    ivTireRLO,
+                    ivTireConditionRLO
+                )
+
+                ConstantsTire.TIRE_POSITION_2RRI -> setConditionResult(
+                    repairDetailAfterRepairTireInspection.tireConditionId,
+                    ivTire2RRI,
+                    ivTireCondition2RRI
+                )
+
+                ConstantsTire.TIRE_POSITION_2RRO -> setConditionResult(
+                    repairDetailAfterRepairTireInspection.tireConditionId,
+                    ivTire2RRO,
+                    ivTireCondition2RRO
+                )
+
+                ConstantsTire.TIRE_POSITION_2RLI -> setConditionResult(
+                    repairDetailAfterRepairTireInspection.tireConditionId,
+                    ivTire2RLI,
+                    ivTireCondition2RLI
+                )
+
+                ConstantsTire.TIRE_POSITION_2RLO -> setConditionResult(
+                    repairDetailAfterRepairTireInspection.tireConditionId,
+                    ivTire2RLO,
+                    ivTireCondition2RLO
+                )
+
+                ConstantsTire.TIRE_POSITION_S -> setConditionResult(
+                    repairDetailAfterRepairTireInspection.tireConditionId,
+                    ivTireS,
+                    ivTireConditionS
+                )
+            }
+        }
+        for (repairDetailAfterRepairTireInspection in repairDetailAfterRepairTireInspectionList) {
+            tireInspectionId = repairDetailAfterRepairTireInspection.inspectionId
+        }
+    }
+
+    private fun setConditionResult(
+        tireConditionCategory: Int,
+        ivSelelectedTire: ImageView,
+        ivSelelectedTireCondition: ImageView
+    ) {
+
+        if (tireConditionCategory == 0) {
+            ivSelelectedTire.setBackgroundResource(R.drawable.background_rounded_tire_grey)
+        } else if (tireConditionCategory == 1) {
+            ivSelelectedTire.setBackgroundResource(R.drawable.background_rounded_tire_green)
+        } else {
+            ivSelelectedTire.setBackgroundResource(R.drawable.background_rounded_tire_red)
+        }
+    }
+
     private fun initViewModelIsLoading() {
         repairDetailViewModel.isLoadingGetAllRepairProblem.observe(this) {
             loadAllRepairProblem(it)
@@ -367,6 +528,10 @@ class RepairDetailActivity : AppCompatActivity() {
 
         repairDetailViewModel.isLoadingGetRepairDetailAfterRepairInspectionList.observe(this) {
             loadAfterRepairInspection(it)
+        }
+
+        repairDetailViewModel.isLoadingGetRepairDetailAfterRepairTireInspectionList.observe(this) {
+            loadAfterRepairTireInspection(it)
         }
 
         repairDetailViewModel.isLoadingGetRepairDetailAfterRepairWaste.observe(this) {
@@ -446,14 +611,13 @@ class RepairDetailActivity : AppCompatActivity() {
     }
 
     private fun setIsSuccessGetRepairDetailAfterRepairInspectionList(it: Boolean) {
-        if (stageId != 18 && stageId != 19) {
-
+        if (ConstantsRepair.repairOrderStageAfterRepair.contains(stageId)) {
+            binding.cvAfterRepairInspection.visibility = if (it) View.VISIBLE else View.GONE
         }
     }
 
     private fun setIsSuccessGetRepairDetailTireConditionCategoryList(it: Boolean) {
         if (stageId != 18 && stageId != 19) {
-            binding.cvAfterRepairInspection.visibility = if (it) View.VISIBLE else View.GONE
         } else {
             repairDetailViewModel.getRepairDetailAfterRepairTireInspectionList(
                 this, ConstantsApp.BASE_URL_V1_0, orderType, orderId, spkId, vehicleId
@@ -498,7 +662,6 @@ class RepairDetailActivity : AppCompatActivity() {
                 }
                 item.photo3?.let {
                     items.add(Photo(item.photo3, photo3, "photo", false))
-                    binding.btnAddPhotoWaste.visibility = View.VISIBLE
                 }
             }
             repairDetailAfterRepairWastePhoto.addAll(items)
@@ -529,7 +692,7 @@ class RepairDetailActivity : AppCompatActivity() {
     }
 
     private fun setToViewAfterRepairWaste() {
-        repairDetailAfterRepairWasteAdapter.setItems(repairDetailAfterRepairWastePhoto,3)
+        repairDetailAfterRepairWasteAdapter.setItems(repairDetailAfterRepairWastePhoto, 3)
 
         binding.rvAfterRepairWaste.layoutManager = (GridLayoutManager(this, 3))
         binding.rvAfterRepairWaste.adapter = repairDetailAfterRepairWasteAdapter
@@ -538,11 +701,11 @@ class RepairDetailActivity : AppCompatActivity() {
 
         }
 
-        if (repairDetailAfterRepairWastePhoto.size < 3) {
-            binding.btnAddPhoto.visibility = View.VISIBLE
-        } else {
-            binding.btnAddPhoto.visibility = View.GONE
-        }
+//        if (repairDetailAfterRepairWastePhoto.size < 3) {
+//            binding.btnAddPhoto.visibility = View.VISIBLE
+//        } else {
+//            binding.btnAddPhoto.visibility = View.GONE
+//        }
     }
 
     private fun setAfterRepair(it: List<RepairDetailAfterRepairResponse>) {
@@ -706,7 +869,7 @@ class RepairDetailActivity : AppCompatActivity() {
             binding.lyAfterRepairInspection.visibility = View.VISIBLE
         }
 
-        if(repairDetailAfterRepairInspectionList.isNotEmpty()){
+        if (repairDetailAfterRepairInspectionList.isNotEmpty()) {
             binding.cvAfterRepairInspection.visibility = if (it) View.VISIBLE else View.GONE
         }
     }
@@ -738,27 +901,93 @@ class RepairDetailActivity : AppCompatActivity() {
         for (item in it) {
             item.apply {
                 item.problemPhoto1?.let {
-                    items.add(Photo(item.problemPhoto1, problemPhoto1, "photo", false))
+                    items.add(
+                        Photo(
+                            item.problemPhoto1,
+                            problemPhoto1,
+                            "photo",
+                            RepairHelper.isEdistable(
+                                context,
+                                stageId,
+                                6,
+                                ConstantsRepair.REPAIR_SECTION_CHECK
+                            )
+                        )
+                    )
                 }
                 item.problemPhoto2?.let {
-                    items.add(Photo(item.problemPhoto2, problemPhoto2, "photo", false))
+                    items.add(
+                        Photo(
+                            item.problemPhoto2, problemPhoto2, "photo", RepairHelper.isEdistable(
+                                context,
+                                stageId,
+                                6,
+                                ConstantsRepair.REPAIR_SECTION_CHECK
+                            )
+                        )
+                    )
                 }
                 item.problemPhoto3?.let {
-                    items.add(Photo(item.problemPhoto3, problemPhoto3, "photo", false))
+                    items.add(
+                        Photo(
+                            item.problemPhoto3, problemPhoto3, "photo", RepairHelper.isEdistable(
+                                context,
+                                stageId,
+                                6,
+                                ConstantsRepair.REPAIR_SECTION_CHECK
+                            )
+                        )
+                    )
                 }
                 item.problemPhoto4?.let {
-                    items.add(Photo(item.problemPhoto4, problemPhoto4, "photo", false))
+                    items.add(
+                        Photo(
+                            item.problemPhoto4, problemPhoto4, "photo", RepairHelper.isEdistable(
+                                context,
+                                stageId,
+                                6,
+                                ConstantsRepair.REPAIR_SECTION_CHECK
+                            )
+                        )
+                    )
                 }
                 item.problemPhoto5?.let {
-                    items.add(Photo(item.problemPhoto5, problemPhoto5, "photo", false))
+                    items.add(
+                        Photo(
+                            item.problemPhoto5, problemPhoto5, "photo", RepairHelper.isEdistable(
+                                context,
+                                stageId,
+                                6,
+                                ConstantsRepair.REPAIR_SECTION_CHECK
+                            )
+                        )
+                    )
                 }
                 item.problemPhoto6?.let {
-                    items.add(Photo(item.problemPhoto6, problemPhoto6, "photo", false))
+                    items.add(
+                        Photo(
+                            item.problemPhoto6, problemPhoto6, "photo", RepairHelper.isEdistable(
+                                context,
+                                stageId,
+                                6,
+                                ConstantsRepair.REPAIR_SECTION_CHECK
+                            )
+                        )
+                    )
                 }
             }
         }
 
-        items.add(Photo("add", "add", "add", true))
+        items.add(
+            Photo(
+                "add", "add", "add", RepairHelper.isEdistable(
+                    context,
+                    stageId,
+                    6,
+                    ConstantsRepair.REPAIR_SECTION_CHECK
+                )
+            )
+        )
 
         repairDetailAfterCheckPhoto.addAll(items)
 
@@ -767,9 +996,17 @@ class RepairDetailActivity : AppCompatActivity() {
 
     private fun setToViewAfterCheck() {
         repairDetailAfterCheckAdapter.setItems(repairDetailAfterCheckPhoto, 6)
+        repairDetailAfterCheckAdapter.setOnItemClickCallback(object :
+            PhotoAdapter.OnItemClickCallback {
+            override fun onItemClicked(data: Photo, position: Int) {
+                Toast.makeText(context, "Add photo after check", Toast.LENGTH_SHORT).show()
+            }
+
+        })
 
         binding.rvAfterCheckPhoto.layoutManager = (GridLayoutManager(this, 3))
         binding.rvAfterCheckPhoto.adapter = repairDetailAfterCheckAdapter
+
     }
 
     private fun setNote(it: List<RepairDetailNoteResponse>) {
@@ -834,19 +1071,88 @@ class RepairDetailActivity : AppCompatActivity() {
                 this, ConstantsApp.BASE_URL_V1_0, vehicleId
             )
 
-            binding.cvRdTireInspection.visibility =
+            binding.cvAfterRepairTireInspection.visibility =
                 if (isRequiredTireInspection) View.VISIBLE else View.GONE
 
             it[0].vehicleChassisTypeId?.let { vehicleChassisTypeId ->
-
-                when (vehicleChassisTypeId) {
-                    Constants.VEHICLE_CHASSIS_TYPE_CDE -> binding.lyRdCde.visibility = View.VISIBLE
-                    Constants.VEHICLE_CHASSIS_TYPE_CDD -> binding.lyRdCdd.visibility = View.VISIBLE
-                    Constants.VEHICLE_CHASSIS_TYPE_TRN -> binding.lyRdTrn.visibility = View.VISIBLE
-                }
+                declareTirePosition(vehicleChassisTypeId)
 
             }
         }
+    }
+
+    private fun declareTirePosition(vehicleChassisTypeId: String) {
+
+        when (vehicleChassisTypeId) {
+            Constants.VEHICLE_CHASSIS_TYPE_CDE -> {
+                binding.lyRdCde.visibility = View.VISIBLE
+
+                ivTireFR = binding.ivRdCdeFr
+                ivTireFL = binding.ivRdCdeFl
+                ivTireRR = binding.ivRdCdeRr
+                ivTireRL = binding.ivRdCdeRl
+                ivTireS = binding.ivRdCdeS
+
+
+                ivTireConditionFR = binding.ivRdCdeFrcondition
+                ivTireConditionFL = binding.ivRdCdeFlcondition
+                ivTireConditionRR = binding.ivRdCdeRrcondition
+                ivTireConditionRL = binding.ivRdCdeRlcondition
+                ivTireConditionS = binding.ivRdCdeScondition
+
+
+            }
+
+            Constants.VEHICLE_CHASSIS_TYPE_CDD -> {
+                binding.lyRdCdd.visibility = View.VISIBLE
+
+                ivTireFR = binding.ivRdCddFr
+                ivTireFL = binding.ivRdCddFl
+                ivTireRRI = binding.ivRdCddRri
+                ivTireRRO = binding.ivRdCddRro
+                ivTireRLI = binding.ivRdCddRli
+                ivTireRLO = binding.ivRdCddRlo
+                ivTireS = binding.ivRdCddS
+
+
+                ivTireConditionFR = binding.ivRdCddFrcondition
+                ivTireConditionFL = binding.ivRdCddFlcondition
+                ivTireConditionRRI = binding.ivRdCddRricondition
+                ivTireConditionRRO = binding.ivRdCddRrocondition
+                ivTireConditionRLI = binding.ivRdCddRlicondition
+                ivTireConditionRLO = binding.ivRdCddRlocondition
+                ivTireConditionS = binding.ivRdCddScondition
+            }
+
+            Constants.VEHICLE_CHASSIS_TYPE_TRN -> {
+                binding.lyRdTrn.visibility = View.VISIBLE
+
+                ivTireFR = binding.ivRdTrnFr
+                ivTireFL = binding.ivRdTrnFl
+                ivTireRRI = binding.ivRdTrnRri
+                ivTireRRO = binding.ivRdTrnRro
+                ivTireRLI = binding.ivRdTrnRli
+                ivTireRLO = binding.ivRdTrnRlo
+                ivTire2RRI = binding.ivRdTrn2rri
+                ivTire2RRO = binding.ivRdTrn2rro
+                ivTire2RLI = binding.ivRdTrn2rli
+                ivTire2RLO = binding.ivRdTrn2rlo
+                ivTireS = binding.ivRdTrnS
+
+                ivTireConditionFR = binding.ivRdTrnFrcondition
+                ivTireConditionFL = binding.ivRdTrnFlcondition
+                ivTireConditionRRI = binding.ivRdTrnRricondition
+                ivTireConditionRRO = binding.ivRdTrnRrocondition
+                ivTireConditionRLI = binding.ivRdTrnRlicondition
+                ivTireConditionRLO = binding.ivRdTrnRlocondition
+                ivTireCondition2RRI = binding.ivRdTrn2rricondition
+                ivTireCondition2RRO = binding.ivRdTrn2rrocondition
+                ivTire2RLI = binding.ivRdTrn2rlicondition
+                ivTire2RLO = binding.ivRdTrn2rlocondition
+                ivTireS = binding.ivRdTrnScondition
+            }
+        }
+
     }
 
     private fun setMechanicInfo(it: List<RepairDetailMechanicInfoResponse>) {
@@ -956,8 +1262,8 @@ class RepairDetailActivity : AppCompatActivity() {
         setClickListener()
 
         when (stageId) {
-            13 -> binding.btnAddPhoto.visibility = View.VISIBLE
-            19 -> binding.btnAddPhotoWaste.visibility = View.VISIBLE
+//            13 -> binding.btnAddPhoto.visibility = View.VISIBLE
+//            19 -> binding.btnAddPhotoWaste.visibility = View.VISIBLE
         }
     }
 

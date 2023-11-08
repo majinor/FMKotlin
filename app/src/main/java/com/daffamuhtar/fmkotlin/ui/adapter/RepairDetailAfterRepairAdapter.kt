@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.daffamuhtar.fmkotlin.constants.ConstantsRepair
 import com.daffamuhtar.fmkotlin.databinding.ItemRepairDetailAfterRepairBinding
 import com.daffamuhtar.fmkotlin.data.RepairDetailAfterRepair
 import com.daffamuhtar.fmkotlin.util.RepairHelper
@@ -51,7 +52,8 @@ class RepairDetailAfterRepairAdapter() :
                 val isEditable = (RepairHelper.isEdistable(
                     view.root.context,
                     repairStageId,
-                    item.photos.size
+                    item.photos.size,
+                    ConstantsRepair.REPAIR_SECTION_AFTER_REPAIR
                 ))
 
                 RepairHelper.setViewAfterRepair(

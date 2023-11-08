@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.check.RepairCheckActivity">
+    tools:context=".ui.repair_check.RepairCheckActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="15dp"
+            android:padding="15dp"
             android:background="@color/white"
             android:minHeight="?attr/actionBarSize">
 

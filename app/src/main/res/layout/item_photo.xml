@@ -21,6 +21,6 @@
         android:layout_height="50dp"
         android:layout_margin="10dp"
         android:background="@drawable/ic_add_circle_outline_black_24dp"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
 </LinearLayout>

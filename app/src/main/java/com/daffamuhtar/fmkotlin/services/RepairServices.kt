@@ -34,10 +34,10 @@ interface RepairServices {
     ): Call<List<RepairOnPeriodResponse>>
 
     @GET("api/mechanics/open_npm_wo")
-    fun getRepairNonperiod(
+    suspend fun getRepairNonperiod(
         @Query("loggedMechanicId") loggedMechanicId: String,
         @Query("stageId") stageId: Int
-    ): Call<List<RepairOnNonperiodResponse>>
+    ): Response<List<RepairOnNonperiodResponse>>
 
     @GET("api/mechanics/open_tire_wo")
     fun getRepairTire(

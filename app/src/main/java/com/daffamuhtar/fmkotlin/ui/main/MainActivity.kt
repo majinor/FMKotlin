@@ -23,6 +23,7 @@ import com.daffamuhtar.fmkotlin.ui.bottomsheet.NoConnectionBottomSheet
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
 
@@ -80,21 +81,6 @@ class MainActivity : AppCompatActivity() {
         getData();
         prepareView()
 
-        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (doubleBackToExitPressedOnce) {
-                    finish()
-                }
-                doubleBackToExitPressedOnce = true
-                Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
-//                showSnackBar(
-//                    context = mContext,
-//                    layout = binding.layoutMain,
-//                    type = Constants.SnackBarTypes.Warn,
-//                    message = mContext.getString(R.string.tap_twice_to_terminate)
-//                )
-            }
-        })
     }
 
     private fun prepareView() {
@@ -139,6 +125,30 @@ class MainActivity : AppCompatActivity() {
 
     private fun declare() {
         mainActivity = this
+
+        setOnBackPressed()
+    }
+
+    private fun setOnBackPressed() {
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+
+                if (doubleBackToExitPressedOnce) {
+                    finish()
+                }else{
+                    Toast.makeText(applicationContext, "Tekan lagi untuk keluar", Toast.LENGTH_SHORT).show()
+                }
+                doubleBackToExitPressedOnce = true
+                Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
+//                showSnackBar(
+//                    context = mContext,
+//                    layout = binding.layoutMain,
+//                    type = Constants.SnackBarTypes.Warn,
+//                    message = mContext.getString(R.string.tap_twice_to_terminate)
+//                )
+            }
+        })
+
     }
 
     private fun checkInternetConnection() {
