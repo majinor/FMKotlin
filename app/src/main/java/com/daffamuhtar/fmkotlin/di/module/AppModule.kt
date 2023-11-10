@@ -1,8 +1,11 @@
 package com.daffamuhtar.fmkotlin.di.module
 
+import android.app.Application
 import android.content.Context
+import android.content.SharedPreferences
 import com.daffamuhtar.fmkotlin.BuildConfig
 import com.daffamuhtar.fmkotlin.app.Server
+import com.daffamuhtar.fmkotlin.constants.Constants
 import com.daffamuhtar.fmkotlin.constants.ConstantsApp
 import com.daffamuhtar.fmkotlin.data.api.RepairCheckApiHelper
 import com.daffamuhtar.fmkotlin.data.api.RepairCheckApiHelperImpl
@@ -12,6 +15,7 @@ import com.daffamuhtar.fmkotlin.util.NetworkHelper
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -26,8 +30,18 @@ val appModule = module {
 
     single(named(ConstantsApp.BASE_URL_V1_0)) { provideRetrofitBlogV1(androidContext(), get()) }
     single(named(ConstantsApp.BASE_URL_V2_0)) { provideRetrofitBlogV2(androidContext(), get()) }
-    single(named(ConstantsApp.BASE_URL_V2_0_REP)) { provideRetrofitBlogV2Rep(androidContext(), get()) }
-    single(named(ConstantsApp.BASE_URL2)) { provideRetrofitInternalVendorV1(androidContext(), get()) }
+    single(named(ConstantsApp.BASE_URL_V2_0_REP)) {
+        provideRetrofitBlogV2Rep(
+            androidContext(),
+            get()
+        )
+    }
+    single(named(ConstantsApp.BASE_URL2)) {
+        provideRetrofitInternalVendorV1(
+            androidContext(),
+            get()
+        )
+    }
 
     single { provideNetworkHelper(androidContext()) }
 
@@ -38,8 +52,23 @@ val appModule = module {
     single<RepairOnNonperiodApiHelper> {
         return@single RepairOnNonperiodApiHelperImpl()
     }
+
+    single {
+        getSharedPrefs(androidApplication())
+    }
+
+    single<SharedPreferences.Editor> {
+        getSharedPrefs(androidApplication()).edit()
+    }
 }
 
+
+fun getSharedPrefs(androidApplication: Application): SharedPreferences {
+    return androidApplication.getSharedPreferences(
+        Constants.my_shared_preferences,
+        Context.MODE_PRIVATE
+    )
+}
 
 private fun provideNetworkHelper(context: Context) = NetworkHelper(context)
 

@@ -2,6 +2,7 @@ package com.daffamuhtar.fmkotlin.ui.repair_check
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -21,12 +22,14 @@ import com.daffamuhtar.fmkotlin.ui.adapter.RepairAdapter
 import com.daffamuhtar.fmkotlin.ui.repair_detail.RepairDetailActivity
 import com.daffamuhtar.fmkotlin.util.Status
 import com.google.android.material.snackbar.Snackbar
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import retrofit2.Retrofit
 
 class RepairCheckActivity : AppCompatActivity() {
 
     private val repairCheckViewModel: RepairCheckViewModel by viewModel()
+    val sharedpreferences: SharedPreferences by inject()
 
     private lateinit var binding: ActivityRepairCheckBinding
 
