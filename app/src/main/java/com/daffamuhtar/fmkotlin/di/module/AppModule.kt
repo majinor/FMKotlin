@@ -28,22 +28,22 @@ val appModule = module {
 
     single { provideOkHttpClient() }
 
-    single(named(ConstantsApp.BASE_URL_V1_0)) { provideRetrofitBlogV1(androidContext(), get()) }
-    single(named(ConstantsApp.BASE_URL_V2_0)) { provideRetrofitBlogV2(androidContext(), get()) }
+    single(named(ConstantsApp.BASE_URL_V1_0)) { provideRetrofitBlogV1(get(), get()) }
+    single(named(ConstantsApp.BASE_URL_V2_0)) { provideRetrofitBlogV2(get(), get()) }
     single(named(ConstantsApp.BASE_URL_V2_0_REP)) {
         provideRetrofitBlogV2Rep(
-            androidContext(),
+            get(),
             get()
         )
     }
     single(named(ConstantsApp.BASE_URL2)) {
         provideRetrofitInternalVendorV1(
-            androidContext(),
+            get(),
             get()
         )
     }
 
-    single { provideNetworkHelper(androidContext()) }
+    single { provideNetworkHelper(get()) }
 
     single<RepairCheckApiHelper> {
         return@single RepairCheckApiHelperImpl()

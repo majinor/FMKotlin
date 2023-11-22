@@ -13,9 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.daffamuhtar.fmkotlin.constants.Constants
 import com.daffamuhtar.fmkotlin.constants.ConstantsApp
 import com.daffamuhtar.fmkotlin.databinding.FragmentRepairOnTireBinding
-import com.daffamuhtar.fmkotlin.data.Filter
-import com.daffamuhtar.fmkotlin.data.Repair
-import com.daffamuhtar.fmkotlin.data.response.RepairOnTireResponse
+import com.daffamuhtar.fmkotlin.data.model.Filter
+import com.daffamuhtar.fmkotlin.domain.model.Repair
 import com.daffamuhtar.fmkotlin.ui.adapter.FilterAdapter
 import com.daffamuhtar.fmkotlin.ui.adapter.RepairAdapter
 import com.daffamuhtar.fmkotlin.ui.repair_detail.RepairDetailActivity
@@ -84,7 +83,7 @@ class RepairOngoingTireFragment : Fragment() {
         binding.srCheck.isRefreshing = value
     }
 
-    private fun setReportResults(repairs: List<RepairOnTireResponse>) {
+    private fun setReportResults(repairs: List<com.daffamuhtar.fmkotlin.data.remote.response.RepairOnTireResponse>) {
         repairList.clear()
         val listReport = ArrayList<Repair>()
 
@@ -204,7 +203,7 @@ class RepairOngoingTireFragment : Fragment() {
                 intent.putExtra(Constants.EXTRA_SASSIGN, data.startAssignment)
                 intent.putExtra(Constants.EXTRA_ODO, data.startRepairOdometer)
                 intent.putExtra(Constants.EXTRA_ISSTORING, data.isStoring)
-                intent.putExtra(Constants.EXTRA_NOTESA, data.noteSA)
+                intent.putExtra(Constants.EXTRA_NOTESA, data.noteFromSA)
                 startActivity(intent)
             }
         })

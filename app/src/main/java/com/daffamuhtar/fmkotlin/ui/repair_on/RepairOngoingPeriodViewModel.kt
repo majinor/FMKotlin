@@ -9,8 +9,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 import com.daffamuhtar.fmkotlin.app.ApiConfig
-import com.daffamuhtar.fmkotlin.data.response.RepairOnPeriodResponse
-import com.daffamuhtar.fmkotlin.data.response.ErrorResponse
+import com.daffamuhtar.fmkotlin.data.remote.response.RepairOnPeriodResponse
+import com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse
 import com.daffamuhtar.fmkotlin.services.RepairServices
 import com.google.gson.GsonBuilder
 import okhttp3.ResponseBody
@@ -31,8 +31,8 @@ class RepairOngoingPeriodViewModel : ViewModel() {
     private val _messageGetRepair = MutableLiveData<String>()
     val messageGetRepair: LiveData<String> = _messageGetRepair
 
-    private val _repairList = MutableLiveData<List<RepairOnPeriodResponse>>()
-    val repairList: LiveData<List<RepairOnPeriodResponse>> = _repairList
+    private val _repairList = MutableLiveData<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairOnPeriodResponse>>()
+    val repairList: LiveData<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairOnPeriodResponse>> = _repairList
 
     fun getRepairPeriod(
         context: Context,
@@ -45,10 +45,10 @@ class RepairOngoingPeriodViewModel : ViewModel() {
         val services = retrofit?.create(RepairServices::class.java)
         val client = services?.getRepairPeriod(userId, 0)
 
-        client?.enqueue(object : Callback<List<RepairOnPeriodResponse>> {
+        client?.enqueue(object : Callback<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairOnPeriodResponse>> {
             override fun onResponse(
-                call: Call<List<RepairOnPeriodResponse>>,
-                response: Response<List<RepairOnPeriodResponse>>
+                call: Call<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairOnPeriodResponse>>,
+                response: Response<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairOnPeriodResponse>>
             ) {
                 _isLoadingGetRepair.value = false
 
@@ -59,7 +59,7 @@ class RepairOngoingPeriodViewModel : ViewModel() {
                         GsonBuilder().setPrettyPrinting().create().toJson(response.body())
                     )
 
-                    val repair: List<RepairOnPeriodResponse>? = response.body()
+                    val repair: List<com.daffamuhtar.fmkotlin.data.remote.response.RepairOnPeriodResponse>? = response.body()
                     if (responseBody != null) {
                         _repairList.value = repair!!
                     }
@@ -72,12 +72,12 @@ class RepairOngoingPeriodViewModel : ViewModel() {
                             "onResponse: Not Success " + response.code() + GsonBuilder().setPrettyPrinting()
                                 .create().toJson(responseErrorBody)
                         )
-                        val converter: Converter<ResponseBody?, ErrorResponse> =
+                        val converter: Converter<ResponseBody?, com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse> =
                             retrofit.responseBodyConverter(
-                                ErrorResponse::class.java,
+                                com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse::class.java,
                                 arrayOfNulls<Annotation>(0)
                             )
-                        var errorModel: ErrorResponse? = null
+                        var errorModel: com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse? = null
                         try {
                             errorModel = converter.convert(responseErrorBody)
                             val status: Boolean = errorModel?.status ?: false
@@ -98,7 +98,7 @@ class RepairOngoingPeriodViewModel : ViewModel() {
 
             }
 
-            override fun onFailure(call: Call<List<RepairOnPeriodResponse>>, t: Throwable) {
+            override fun onFailure(call: Call<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairOnPeriodResponse>>, t: Throwable) {
                 _isLoadingGetRepair.value = false
                 Log.e(ContentValues.TAG, "onFailure: ${t.message}")
                 _messageGetRepair.value =

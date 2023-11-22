@@ -7,28 +7,25 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.PackageManagerCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.daffamuhtar.fmkotlin.app.ApiConfig
 import com.daffamuhtar.fmkotlin.constants.Constants
 import com.daffamuhtar.fmkotlin.constants.ConstantsApp
 import com.daffamuhtar.fmkotlin.databinding.ActivityRepairCheckBinding
-import com.daffamuhtar.fmkotlin.data.Filter
-import com.daffamuhtar.fmkotlin.data.Repair
-import com.daffamuhtar.fmkotlin.data.response.RepairCheckResponse
+import com.daffamuhtar.fmkotlin.data.model.Filter
+import com.daffamuhtar.fmkotlin.domain.model.Repair
 import com.daffamuhtar.fmkotlin.ui.adapter.FilterAdapter
 import com.daffamuhtar.fmkotlin.ui.adapter.RepairAdapter
 import com.daffamuhtar.fmkotlin.ui.repair_detail.RepairDetailActivity
 import com.daffamuhtar.fmkotlin.util.Status
 import com.google.android.material.snackbar.Snackbar
 import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import retrofit2.Retrofit
 
 class RepairCheckActivity : AppCompatActivity() {
 
-    private val repairCheckViewModel: RepairCheckViewModel by viewModel()
+    private val repairCheckViewModel: RepairCheckViewModel by inject()
     val sharedpreferences: SharedPreferences by inject()
 
     private lateinit var binding: ActivityRepairCheckBinding
@@ -165,7 +162,7 @@ class RepairCheckActivity : AppCompatActivity() {
         binding.srCheck.isRefreshing = value
     }
 
-    private fun setReportResults(repairs: List<RepairCheckResponse>) {
+    private fun setReportResults(repairs: List<com.daffamuhtar.fmkotlin.data.remote.response.RepairCheckResponse>) {
         repairList.clear()
         val listReport = ArrayList<Repair>()
 
@@ -286,7 +283,7 @@ class RepairCheckActivity : AppCompatActivity() {
                 intent.putExtra(Constants.EXTRA_LOCOPTION, data.locationOption)
                 intent.putExtra(Constants.EXTRA_SASSIGN, data.startAssignment)
                 intent.putExtra(Constants.EXTRA_ISSTORING, data.isStoring)
-                intent.putExtra(Constants.EXTRA_NOTESA, data.noteSA)
+                intent.putExtra(Constants.EXTRA_NOTESA, data.noteFromSA)
                 startActivity(intent)
             }
         })

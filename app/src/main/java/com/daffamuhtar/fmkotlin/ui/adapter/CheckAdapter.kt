@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.daffamuhtar.fmkotlin.R
-import com.daffamuhtar.fmkotlin.data.Repair
+import com.daffamuhtar.fmkotlin.domain.model.Repair
 
 class CheckAdapter(
     private val mContext: Context,
@@ -50,7 +50,7 @@ class CheckAdapter(
         val vlicen = currentItem.vehicleLicenseNumber
         val vlid = currentItem.vehicleLambungId
         val vdis = currentItem.vehicleDistrict
-        val nsa = currentItem.noteSA
+        val nsa = currentItem.noteFromSA
         val sass = currentItem.startAssignment
         val locationOption = currentItem.locationOption
         val isstoring = currentItem.isStoring

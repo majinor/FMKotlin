@@ -11,14 +11,11 @@ import androidx.lifecycle.viewModelScope
 import com.daffamuhtar.fmkotlin.app.ApiConfig
 import com.daffamuhtar.fmkotlin.constants.ConstantsApp
 
-import com.daffamuhtar.fmkotlin.data.repository.RepairCheckRepository
-import com.daffamuhtar.fmkotlin.data.response.RepairCheckResponse
-import com.daffamuhtar.fmkotlin.data.response.ErrorResponse
-import com.daffamuhtar.fmkotlin.data.response.RefreshTokenResponse
+import com.daffamuhtar.fmkotlin.data.repository_old.RepairCheckRepository
 import com.daffamuhtar.fmkotlin.services.AccountServices
 import com.daffamuhtar.fmkotlin.services.RepairServices
 import com.daffamuhtar.fmkotlin.util.NetworkHelper
-import com.daffamuhtar.fmkotlin.util.Resource
+import com.daffamuhtar.fmkotlin.util.OldResource
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.launch
@@ -39,8 +36,8 @@ class RepairCheckViewModel(
     private val retrofitInternalVendorV1: Retrofit,
 ) : ViewModel() {
 
-    private val _repairList = MutableLiveData<Resource<List<RepairCheckResponse>>>()
-    val repairList: LiveData<Resource<List<RepairCheckResponse>>> get() = _repairList
+    private val _repairList = MutableLiveData<OldResource<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairCheckResponse>>>()
+    val repairList: LiveData<OldResource<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairCheckResponse>>> get() = _repairList
 
 
 //    private val _isLoadingGetAllCheckRepair = MutableLiveData<Boolean>()
@@ -81,16 +78,16 @@ class RepairCheckViewModel(
 
             val services = retrofit.create(RepairServices::class.java)
 
-            _repairList.postValue(Resource.loading(null))
+            _repairList.postValue(OldResource.loading(null))
             if (networkHelper.isNetworkConnected()) {
 
                 repairCheckRepository.getCheckRepair(services,userId).let {
                     if (it.isSuccessful) {
-                        _repairList.postValue(Resource.success(it.body(), it.code()))
+                        _repairList.postValue(OldResource.success(it.body(), it.code()))
                     } else {
 
                         val responseErrorBody = it.errorBody()
-                        var errorModel: ErrorResponse? = null
+                        var errorModel: com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse? = null
 
                         if (responseErrorBody != null) {
                             Log.w(
@@ -98,9 +95,9 @@ class RepairCheckViewModel(
                                 "onResponse: Not Success HEHE" + it.code() + GsonBuilder().setPrettyPrinting()
                                     .create().toJson(responseErrorBody)
                             )
-                            val converter: Converter<ResponseBody?, ErrorResponse> =
+                            val converter: Converter<ResponseBody?, com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse> =
                                 this@RepairCheckViewModel.retrofitBlogV1.responseBodyConverter(
-                                    ErrorResponse::class.java,
+                                    com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse::class.java,
                                     arrayOfNulls<Annotation>(0)
                                 )
                             try {
@@ -112,13 +109,13 @@ class RepairCheckViewModel(
                         }
 
                         _repairList.postValue(
-                            Resource.error(
+                            OldResource.error(
                                 Gson().toJson(errorModel).toString(), null, it.code()
                             )
                         )
                     }
                 }
-            } else _repairList.postValue(Resource.error("No internet connection", null, 0))
+            } else _repairList.postValue(OldResource.error("No internet connection", null, 0))
         }
     }
 
@@ -221,10 +218,10 @@ class RepairCheckViewModel(
         val accountServices = retrofit?.create(AccountServices::class.java)
         val client = accountServices?.postRefreshToken(userId, currentAppVersion, appType)
 
-        client?.enqueue(object : Callback<RefreshTokenResponse> {
+        client?.enqueue(object : Callback<com.daffamuhtar.fmkotlin.data.remote.response.RefreshTokenResponse> {
             override fun onResponse(
-                call: Call<RefreshTokenResponse>,
-                response: Response<RefreshTokenResponse>
+                call: Call<com.daffamuhtar.fmkotlin.data.remote.response.RefreshTokenResponse>,
+                response: Response<com.daffamuhtar.fmkotlin.data.remote.response.RefreshTokenResponse>
             ) {
                 _isLoadingRefreshToken.value = false
 
@@ -242,12 +239,12 @@ class RepairCheckViewModel(
                             "onResponse: Not Success " + response.code() + GsonBuilder().setPrettyPrinting()
                                 .create().toJson(responseErrorBody)
                         )
-                        val converter: Converter<ResponseBody?, RefreshTokenResponse> =
+                        val converter: Converter<ResponseBody?, com.daffamuhtar.fmkotlin.data.remote.response.RefreshTokenResponse> =
                             retrofit.responseBodyConverter(
-                                RefreshTokenResponse::class.java,
+                                com.daffamuhtar.fmkotlin.data.remote.response.RefreshTokenResponse::class.java,
                                 arrayOfNulls<Annotation>(0)
                             )
-                        var errorModel: RefreshTokenResponse? = null
+                        var errorModel: com.daffamuhtar.fmkotlin.data.remote.response.RefreshTokenResponse? = null
                         try {
                             errorModel = converter.convert(responseErrorBody)
                             val status: Boolean = errorModel?.status ?: false
@@ -268,7 +265,7 @@ class RepairCheckViewModel(
 
             }
 
-            override fun onFailure(call: Call<RefreshTokenResponse>, t: Throwable) {
+            override fun onFailure(call: Call<com.daffamuhtar.fmkotlin.data.remote.response.RefreshTokenResponse>, t: Throwable) {
                 _isLoadingRefreshToken.value = false
                 Log.e(ContentValues.TAG, "onFailure: ${t.message}")
                 _messageRefreshToken.value =

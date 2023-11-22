@@ -8,15 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.daffamuhtar.fmkotlin.constants.Constants
 import com.daffamuhtar.fmkotlin.constants.ConstantsApp
 import com.daffamuhtar.fmkotlin.databinding.FragmentRepairOnNonperiodBinding
-import com.daffamuhtar.fmkotlin.data.Filter
-import com.daffamuhtar.fmkotlin.data.Repair
-import com.daffamuhtar.fmkotlin.data.response.RepairOnNonperiodResponse
+import com.daffamuhtar.fmkotlin.data.model.Filter
+import com.daffamuhtar.fmkotlin.domain.model.Repair
 import com.daffamuhtar.fmkotlin.ui.adapter.FilterAdapter
 import com.daffamuhtar.fmkotlin.ui.adapter.RepairAdapter
 import com.daffamuhtar.fmkotlin.ui.repair_detail.RepairDetailActivity
@@ -93,7 +90,7 @@ class RepairOngoingNonperiodFragment : Fragment() {
         binding.srCheck.isRefreshing = value
     }
 
-    private fun setReportResults(repairs: List<RepairOnNonperiodResponse>) {
+    private fun setReportResults(repairs: List<com.daffamuhtar.fmkotlin.data.remote.response.RepairOnNonperiodResponse>) {
         repairList.clear()
         val listReport = ArrayList<Repair>()
 
@@ -213,7 +210,7 @@ class RepairOngoingNonperiodFragment : Fragment() {
                 intent.putExtra(Constants.EXTRA_SASSIGN, data.startAssignment)
                 intent.putExtra(Constants.EXTRA_ODO, data.startRepairOdometer)
                 intent.putExtra(Constants.EXTRA_ISSTORING, data.isStoring)
-                intent.putExtra(Constants.EXTRA_NOTESA, data.noteSA)
+                intent.putExtra(Constants.EXTRA_NOTESA, data.noteFromSA)
                 startActivity(intent)
             }
         })

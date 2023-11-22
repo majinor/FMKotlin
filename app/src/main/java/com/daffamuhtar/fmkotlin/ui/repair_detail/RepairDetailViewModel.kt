@@ -42,8 +42,8 @@ class RepairDetailViewModel : ViewModel() {
     private val _messageGetAllRepairProblem = MutableLiveData<String>()
     val messageGetAllRepairProblem: LiveData<String> = _messageGetAllRepairProblem
 
-    private val _problemList = MutableLiveData<List<RepairDetailProblemResponse>>()
-    val problemList: LiveData<List<RepairDetailProblemResponse>> = _problemList
+    private val _problemList = MutableLiveData<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailProblemResponse>>()
+    val problemList: LiveData<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailProblemResponse>> = _problemList
 
     fun getRepairDetailProblemList(
         context: Context,
@@ -64,10 +64,10 @@ class RepairDetailViewModel : ViewModel() {
             ConstantsRepair.ORDER_TYPE_NPM -> client = services.getRepairProblemNonperiod(orderId)
             ConstantsRepair.ORDER_TYPE_TIRE -> client = services.getRepairProblem(orderId)
         }
-        client.enqueue(object : Callback<List<RepairDetailProblemResponse>> {
+        client.enqueue(object : Callback<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailProblemResponse>> {
             override fun onResponse(
-                call: Call<List<RepairDetailProblemResponse>>,
-                response: Response<List<RepairDetailProblemResponse>>
+                call: Call<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailProblemResponse>>,
+                response: Response<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailProblemResponse>>
             ) {
                 _isLoadingGetAllRepairProblem.value = false
 
@@ -78,7 +78,7 @@ class RepairDetailViewModel : ViewModel() {
                         GsonBuilder().setPrettyPrinting().create().toJson(response.body())
                     )
 
-                    val repair: List<RepairDetailProblemResponse>? = response.body()
+                    val repair: List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailProblemResponse>? = response.body()
                     if (responseBody != null) {
                         _problemList.value = repair!!
                     }
@@ -91,12 +91,12 @@ class RepairDetailViewModel : ViewModel() {
                             "onResponse: Not Success " + response.code() + GsonBuilder().setPrettyPrinting()
                                 .create().toJson(responseErrorBody)
                         )
-                        val converter: Converter<ResponseBody?, ErrorResponse> =
+                        val converter: Converter<ResponseBody?, com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse> =
                             retrofit.responseBodyConverter(
-                                ErrorResponse::class.java,
+                                com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse::class.java,
                                 arrayOfNulls<Annotation>(0)
                             )
-                        var errorModel: ErrorResponse? = null
+                        var errorModel: com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse? = null
                         try {
                             errorModel = converter.convert(responseErrorBody)
                             val status: Boolean = errorModel?.status ?: false
@@ -117,7 +117,7 @@ class RepairDetailViewModel : ViewModel() {
 
             }
 
-            override fun onFailure(call: Call<List<RepairDetailProblemResponse>>, t: Throwable) {
+            override fun onFailure(call: Call<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailProblemResponse>>, t: Throwable) {
                 _isLoadingGetAllRepairProblem.value = false
                 Log.e(ContentValues.TAG, "onFailure: ${t.message}")
                 _messageGetAllRepairProblem.value =
@@ -136,8 +136,8 @@ class RepairDetailViewModel : ViewModel() {
     private val _messageGetRepairActiveDriver = MutableLiveData<String>()
     val messageGetRepairActiveDriver: LiveData<String> = _messageGetRepairActiveDriver
 
-    private val _driverActive = MutableLiveData<List<RepairDetailActiveDriverResponse>?>()
-    val activeDriver: MutableLiveData<List<RepairDetailActiveDriverResponse>?> = _driverActive
+    private val _driverActive = MutableLiveData<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailActiveDriverResponse>?>()
+    val activeDriver: MutableLiveData<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailActiveDriverResponse>?> = _driverActive
 
 
     fun getRepairDetailActiveDriver(
@@ -159,10 +159,10 @@ class RepairDetailViewModel : ViewModel() {
             ConstantsRepair.ORDER_TYPE_NPM -> client = services.getRepairActiveDriverNonperiod(orderId)
             ConstantsRepair.ORDER_TYPE_TIRE -> client = services.getRepairActiveDriver(orderId)
         }
-        client.enqueue(object : Callback<List<RepairDetailActiveDriverResponse>> {
+        client.enqueue(object : Callback<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailActiveDriverResponse>> {
             override fun onResponse(
-                call: Call<List<RepairDetailActiveDriverResponse>>,
-                response: Response<List<RepairDetailActiveDriverResponse>>
+                call: Call<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailActiveDriverResponse>>,
+                response: Response<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailActiveDriverResponse>>
             ) {
                 _isLoadingGetRepairActiveDriver.value = false
 
@@ -173,7 +173,7 @@ class RepairDetailViewModel : ViewModel() {
                         GsonBuilder().setPrettyPrinting().create().toJson(response.body())
                     )
 
-                    val data: List<RepairDetailActiveDriverResponse>? = response.body()
+                    val data: List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailActiveDriverResponse>? = response.body()
                     if (responseBody != null) {
                         _driverActive.value = data
                     }
@@ -186,12 +186,12 @@ class RepairDetailViewModel : ViewModel() {
                             "onResponse: Not Success " + response.code() + GsonBuilder().setPrettyPrinting()
                                 .create().toJson(responseErrorBody)
                         )
-                        val converter: Converter<ResponseBody?, ErrorResponse> =
+                        val converter: Converter<ResponseBody?, com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse> =
                             retrofit.responseBodyConverter(
-                                ErrorResponse::class.java,
+                                com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse::class.java,
                                 arrayOfNulls<Annotation>(0)
                             )
-                        var errorModel: ErrorResponse? = null
+                        var errorModel: com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse? = null
                         try {
                             errorModel = converter.convert(responseErrorBody)
                             val status: Boolean = errorModel?.status ?: false
@@ -212,7 +212,7 @@ class RepairDetailViewModel : ViewModel() {
 
             }
 
-            override fun onFailure(call: Call<List<RepairDetailActiveDriverResponse>>, t: Throwable) {
+            override fun onFailure(call: Call<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailActiveDriverResponse>>, t: Throwable) {
                 _isLoadingGetRepairActiveDriver.value = false
                 Log.e(ContentValues.TAG, "onFailure: ${t.message}")
                 _messageGetRepairActiveDriver.value =
@@ -235,8 +235,8 @@ class RepairDetailViewModel : ViewModel() {
     private val _messageGetRepairWorkshopInfo = MutableLiveData<String>()
     val messageGetRepairWorkshopInfo: LiveData<String> = _messageGetRepairWorkshopInfo
 
-    private val _workshopInfo = MutableLiveData<List<RepairDetailWorkshopInfoResponse>?>()
-    val workshopInfo: MutableLiveData<List<RepairDetailWorkshopInfoResponse>?> = _workshopInfo
+    private val _workshopInfo = MutableLiveData<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailWorkshopInfoResponse>?>()
+    val workshopInfo: MutableLiveData<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailWorkshopInfoResponse>?> = _workshopInfo
 
 // ==================================================================
 
@@ -249,8 +249,8 @@ class RepairDetailViewModel : ViewModel() {
     private val _messageGetRepairMechanicInfo = MutableLiveData<String>()
     val messageGetRepairMechanicInfo: LiveData<String> = _messageGetRepairMechanicInfo
 
-    private val _mechanicInfo = MutableLiveData<List<RepairDetailMechanicInfoResponse>?>()
-    val mechanicInfo: MutableLiveData<List<RepairDetailMechanicInfoResponse>?> = _mechanicInfo
+    private val _mechanicInfo = MutableLiveData<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailMechanicInfoResponse>?>()
+    val mechanicInfo: MutableLiveData<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailMechanicInfoResponse>?> = _mechanicInfo
 
 
     fun getRepairDetailWorkshopInfo(
@@ -273,10 +273,10 @@ class RepairDetailViewModel : ViewModel() {
             ConstantsRepair.ORDER_TYPE_NPM -> client = services.getRepairWorkshopInfoNonperiod(orderId)
             ConstantsRepair.ORDER_TYPE_TIRE -> client = services.getRepairWorkshopInfo(orderId)
         }
-        client.enqueue(object : Callback<List<RepairDetailWorkshopInfoResponse>> {
+        client.enqueue(object : Callback<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailWorkshopInfoResponse>> {
             override fun onResponse(
-                call: Call<List<RepairDetailWorkshopInfoResponse>>,
-                response: Response<List<RepairDetailWorkshopInfoResponse>>
+                call: Call<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailWorkshopInfoResponse>>,
+                response: Response<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailWorkshopInfoResponse>>
             ) {
                 _isLoadingGetRepairWorkshopInfo.value = false
                 if (_isLoadingGetRepairMechanicInfo.value == false){
@@ -290,7 +290,7 @@ class RepairDetailViewModel : ViewModel() {
                         GsonBuilder().setPrettyPrinting().create().toJson(response.body())
                     )
 
-                    val data: List<RepairDetailWorkshopInfoResponse>? = response.body()
+                    val data: List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailWorkshopInfoResponse>? = response.body()
                     if (responseBody != null) {
                         _workshopInfo.value = data
                     }
@@ -303,12 +303,12 @@ class RepairDetailViewModel : ViewModel() {
                             "onResponse: Not Success " + response.code() + GsonBuilder().setPrettyPrinting()
                                 .create().toJson(responseErrorBody)
                         )
-                        val converter: Converter<ResponseBody?, ErrorResponse> =
+                        val converter: Converter<ResponseBody?, com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse> =
                             retrofit.responseBodyConverter(
-                                ErrorResponse::class.java,
+                                com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse::class.java,
                                 arrayOfNulls<Annotation>(0)
                             )
-                        var errorModel: ErrorResponse? = null
+                        var errorModel: com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse? = null
                         try {
                             errorModel = converter.convert(responseErrorBody)
                             val status: Boolean = errorModel?.status ?: false
@@ -329,7 +329,7 @@ class RepairDetailViewModel : ViewModel() {
 
             }
 
-            override fun onFailure(call: Call<List<RepairDetailWorkshopInfoResponse>>, t: Throwable) {
+            override fun onFailure(call: Call<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailWorkshopInfoResponse>>, t: Throwable) {
                 _isLoadingGetRepairWorkshopInfo.value = false
                 Log.e(ContentValues.TAG, "onFailure: ${t.message}")
                 _messageGetRepairWorkshopInfo.value =
@@ -358,10 +358,10 @@ class RepairDetailViewModel : ViewModel() {
             ConstantsRepair.ORDER_TYPE_NPM -> client = services.getRepairMechanicInfoNonperiod(orderId)
             ConstantsRepair.ORDER_TYPE_TIRE -> client = services.getRepairMechanicInfo(orderId)
         }
-        client.enqueue(object : Callback<List<RepairDetailMechanicInfoResponse>> {
+        client.enqueue(object : Callback<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailMechanicInfoResponse>> {
             override fun onResponse(
-                call: Call<List<RepairDetailMechanicInfoResponse>>,
-                response: Response<List<RepairDetailMechanicInfoResponse>>
+                call: Call<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailMechanicInfoResponse>>,
+                response: Response<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailMechanicInfoResponse>>
             ) {
                 _isLoadingGetRepairMechanicInfo.value = false
                 if (_isLoadingGetRepairWorkshopInfo.value == false){
@@ -375,7 +375,7 @@ class RepairDetailViewModel : ViewModel() {
                         GsonBuilder().setPrettyPrinting().create().toJson(response.body())
                     )
 
-                    val data: List<RepairDetailMechanicInfoResponse>? = response.body()
+                    val data: List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailMechanicInfoResponse>? = response.body()
                     if (responseBody != null) {
                         _mechanicInfo.value = data
                     }
@@ -388,12 +388,12 @@ class RepairDetailViewModel : ViewModel() {
                             "onResponse: Not Success " + response.code() + GsonBuilder().setPrettyPrinting()
                                 .create().toJson(responseErrorBody)
                         )
-                        val converter: Converter<ResponseBody?, ErrorResponse> =
+                        val converter: Converter<ResponseBody?, com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse> =
                             retrofit.responseBodyConverter(
-                                ErrorResponse::class.java,
+                                com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse::class.java,
                                 arrayOfNulls<Annotation>(0)
                             )
-                        var errorModel: ErrorResponse? = null
+                        var errorModel: com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse? = null
                         try {
                             errorModel = converter.convert(responseErrorBody)
                             val status: Boolean = errorModel?.status ?: false
@@ -414,7 +414,7 @@ class RepairDetailViewModel : ViewModel() {
 
             }
 
-            override fun onFailure(call: Call<List<RepairDetailMechanicInfoResponse>>, t: Throwable) {
+            override fun onFailure(call: Call<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailMechanicInfoResponse>>, t: Throwable) {
                 _isLoadingGetRepairMechanicInfo.value = false
                 Log.e(ContentValues.TAG, "onFailure: ${t.message}")
                 _messageGetRepairMechanicInfo.value =
@@ -434,8 +434,8 @@ class RepairDetailViewModel : ViewModel() {
     private val _messageGetRepairDetailPartList = MutableLiveData<String>()
     val messageGetRepairDetailPartList: LiveData<String> = _messageGetRepairDetailPartList
 
-    private val _partList = MutableLiveData<List<RepairDetailPartResponse>>()
-    val partList: MutableLiveData<List<RepairDetailPartResponse>> = _partList
+    private val _partList = MutableLiveData<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailPartResponse>>()
+    val partList: MutableLiveData<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailPartResponse>> = _partList
 
     fun getRepairDetailPartList(
         context: Context,
@@ -457,10 +457,10 @@ class RepairDetailViewModel : ViewModel() {
             ConstantsRepair.ORDER_TYPE_NPM -> client = services.getRepairDetailPartNonperiod(orderId)
             ConstantsRepair.ORDER_TYPE_TIRE -> client = services.getRepairDetailPart(orderId)
         }
-        client.enqueue(object : Callback<List<RepairDetailPartResponse>> {
+        client.enqueue(object : Callback<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailPartResponse>> {
             override fun onResponse(
-                call: Call<List<RepairDetailPartResponse>>,
-                response: Response<List<RepairDetailPartResponse>>
+                call: Call<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailPartResponse>>,
+                response: Response<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailPartResponse>>
             ) {
                 _isLoadingGetRepairDetailPartList.value = false
 
@@ -471,7 +471,7 @@ class RepairDetailViewModel : ViewModel() {
                         GsonBuilder().setPrettyPrinting().create().toJson(response.body())
                     )
 
-                    val data: List<RepairDetailPartResponse>? = response.body()
+                    val data: List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailPartResponse>? = response.body()
                     if (responseBody != null) {
                         _partList.value = data!!
                     }
@@ -484,12 +484,12 @@ class RepairDetailViewModel : ViewModel() {
                             "onResponse: Not Success " + response.code() + GsonBuilder().setPrettyPrinting()
                                 .create().toJson(responseErrorBody)
                         )
-                        val converter: Converter<ResponseBody?, ErrorResponse> =
+                        val converter: Converter<ResponseBody?, com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse> =
                             retrofit.responseBodyConverter(
-                                ErrorResponse::class.java,
+                                com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse::class.java,
                                 arrayOfNulls<Annotation>(0)
                             )
-                        var errorModel: ErrorResponse? = null
+                        var errorModel: com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse? = null
                         try {
                             errorModel = converter.convert(responseErrorBody)
                             val status: Boolean = errorModel?.status ?: false
@@ -510,7 +510,7 @@ class RepairDetailViewModel : ViewModel() {
 
             }
 
-            override fun onFailure(call: Call<List<RepairDetailPartResponse>>, t: Throwable) {
+            override fun onFailure(call: Call<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailPartResponse>>, t: Throwable) {
                 _isLoadingGetRepairDetailPartList.value = false
                 Log.e(ContentValues.TAG, "onFailure: ${t.message}")
                 _messageGetRepairDetailPartList.value =
@@ -530,8 +530,8 @@ class RepairDetailViewModel : ViewModel() {
     private val _messageGetRepairDetailNote = MutableLiveData<String>()
     val messageGetRepairDetailNote: LiveData<String> = _messageGetRepairDetailNote
 
-    private val _note = MutableLiveData<List<RepairDetailNoteResponse>>()
-    val note: MutableLiveData<List<RepairDetailNoteResponse>> = _note
+    private val _note = MutableLiveData<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailNoteResponse>>()
+    val note: MutableLiveData<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailNoteResponse>> = _note
 
     fun getRepairDetailNote(
         context: Context,
@@ -552,10 +552,10 @@ class RepairDetailViewModel : ViewModel() {
             ConstantsRepair.ORDER_TYPE_NPM -> client = services.getRepairDetailNotesNonperiod(orderId)
             ConstantsRepair.ORDER_TYPE_TIRE -> client = services.getRepairDetailNotes(orderId)
         }
-        client.enqueue(object : Callback<List<RepairDetailNoteResponse>> {
+        client.enqueue(object : Callback<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailNoteResponse>> {
             override fun onResponse(
-                call: Call<List<RepairDetailNoteResponse>>,
-                response: Response<List<RepairDetailNoteResponse>>
+                call: Call<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailNoteResponse>>,
+                response: Response<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailNoteResponse>>
             ) {
                 _isLoadingGetRepairDetailNote.value = false
 
@@ -566,7 +566,7 @@ class RepairDetailViewModel : ViewModel() {
                         GsonBuilder().setPrettyPrinting().create().toJson(response.body())
                     )
 
-                    val data: List<RepairDetailNoteResponse>? = response.body()
+                    val data: List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailNoteResponse>? = response.body()
                     if (responseBody != null) {
                         _note.value = data!!
                     }
@@ -579,12 +579,12 @@ class RepairDetailViewModel : ViewModel() {
                             "onResponse: Not Success " + response.code() + GsonBuilder().setPrettyPrinting()
                                 .create().toJson(responseErrorBody)
                         )
-                        val converter: Converter<ResponseBody?, ErrorResponse> =
+                        val converter: Converter<ResponseBody?, com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse> =
                             retrofit.responseBodyConverter(
-                                ErrorResponse::class.java,
+                                com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse::class.java,
                                 arrayOfNulls<Annotation>(0)
                             )
-                        var errorModel: ErrorResponse? = null
+                        var errorModel: com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse? = null
                         try {
                             errorModel = converter.convert(responseErrorBody)
                             val status: Boolean = errorModel?.status ?: false
@@ -605,7 +605,7 @@ class RepairDetailViewModel : ViewModel() {
 
             }
 
-            override fun onFailure(call: Call<List<RepairDetailNoteResponse>>, t: Throwable) {
+            override fun onFailure(call: Call<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailNoteResponse>>, t: Throwable) {
                 _isLoadingGetRepairDetailNote.value = false
                 Log.e(ContentValues.TAG, "onFailure: ${t.message}")
                 _messageGetRepairDetailNote.value =
@@ -625,8 +625,8 @@ class RepairDetailViewModel : ViewModel() {
     private val _messageGetRepairDetailAfterCheck = MutableLiveData<String>()
     val messageGetRepairDetailAfterCheck: LiveData<String> = _messageGetRepairDetailAfterCheck
 
-    private val _afterCheck = MutableLiveData<List<RepairDetailAfterCheckResponse>>()
-    val afterCheck: MutableLiveData<List<RepairDetailAfterCheckResponse>> = _afterCheck
+    private val _afterCheck = MutableLiveData<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailAfterCheckResponse>>()
+    val afterCheck: MutableLiveData<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailAfterCheckResponse>> = _afterCheck
 
     fun getRepairDetailAfterCheck(
         context: Context,
@@ -641,10 +641,10 @@ class RepairDetailViewModel : ViewModel() {
         val services = retrofit.create(RepairServices::class.java)
         val client = services.getRepairDetailAfterCheck(orderId)
 
-        client.enqueue(object : Callback<List<RepairDetailAfterCheckResponse>> {
+        client.enqueue(object : Callback<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailAfterCheckResponse>> {
             override fun onResponse(
-                call: Call<List<RepairDetailAfterCheckResponse>>,
-                response: Response<List<RepairDetailAfterCheckResponse>>
+                call: Call<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailAfterCheckResponse>>,
+                response: Response<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailAfterCheckResponse>>
             ) {
                 _isLoadingGetRepairDetailAfterCheck.value = false
 
@@ -655,7 +655,7 @@ class RepairDetailViewModel : ViewModel() {
                         GsonBuilder().setPrettyPrinting().create().toJson(response.body())
                     )
 
-                    val data: List<RepairDetailAfterCheckResponse>? = response.body()
+                    val data: List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailAfterCheckResponse>? = response.body()
                     if (responseBody != null) {
                         _afterCheck.value = data!!
                     }
@@ -668,12 +668,12 @@ class RepairDetailViewModel : ViewModel() {
                             "onResponse: Not Success " + response.code() + GsonBuilder().setPrettyPrinting()
                                 .create().toJson(responseErrorBody)
                         )
-                        val converter: Converter<ResponseBody?, ErrorResponse> =
+                        val converter: Converter<ResponseBody?, com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse> =
                             retrofit.responseBodyConverter(
-                                ErrorResponse::class.java,
+                                com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse::class.java,
                                 arrayOfNulls<Annotation>(0)
                             )
-                        var errorModel: ErrorResponse? = null
+                        var errorModel: com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse? = null
                         try {
                             errorModel = converter.convert(responseErrorBody)
                             val status: Boolean = errorModel?.status ?: false
@@ -694,7 +694,7 @@ class RepairDetailViewModel : ViewModel() {
 
             }
 
-            override fun onFailure(call: Call<List<RepairDetailAfterCheckResponse>>, t: Throwable) {
+            override fun onFailure(call: Call<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailAfterCheckResponse>>, t: Throwable) {
                 _isLoadingGetRepairDetailAfterCheck.value = false
                 Log.e(ContentValues.TAG, "onFailure: ${t.message}")
                 _messageGetRepairDetailAfterCheck.value =
@@ -714,8 +714,8 @@ class RepairDetailViewModel : ViewModel() {
     private val _messageGetRepairDetailAfterRepairList = MutableLiveData<String>()
     val messageGetRepairDetailAfterRepairList: LiveData<String> = _messageGetRepairDetailAfterRepairList
 
-    private val _afterRepairList = MutableLiveData<List<RepairDetailAfterRepairResponse>>()
-    val afterRepairList: MutableLiveData<List<RepairDetailAfterRepairResponse>> = _afterRepairList
+    private val _afterRepairList = MutableLiveData<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailAfterRepairResponse>>()
+    val afterRepairList: MutableLiveData<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailAfterRepairResponse>> = _afterRepairList
 
     fun getRepairDetailAfterRepairList(
         context: Context,
@@ -738,10 +738,10 @@ class RepairDetailViewModel : ViewModel() {
             ConstantsRepair.ORDER_TYPE_TIRE -> client = services.getRepairDetailAfterRepair(orderId)
         }
 
-        client.enqueue(object : Callback<List<RepairDetailAfterRepairResponse>> {
+        client.enqueue(object : Callback<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailAfterRepairResponse>> {
             override fun onResponse(
-                call: Call<List<RepairDetailAfterRepairResponse>>,
-                response: Response<List<RepairDetailAfterRepairResponse>>
+                call: Call<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailAfterRepairResponse>>,
+                response: Response<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailAfterRepairResponse>>
             ) {
                 _isLoadingGetRepairDetailAfterRepairList.value = false
 
@@ -752,7 +752,7 @@ class RepairDetailViewModel : ViewModel() {
                         GsonBuilder().setPrettyPrinting().create().toJson(response.body())
                     )
 
-                    val data: List<RepairDetailAfterRepairResponse>? = response.body()
+                    val data: List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailAfterRepairResponse>? = response.body()
                     if (responseBody != null) {
                         _afterRepairList.value = data!!
                     }
@@ -765,12 +765,12 @@ class RepairDetailViewModel : ViewModel() {
                             "onResponse: Not Success " + response.code() + GsonBuilder().setPrettyPrinting()
                                 .create().toJson(responseErrorBody)
                         )
-                        val converter: Converter<ResponseBody?, ErrorResponse> =
+                        val converter: Converter<ResponseBody?, com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse> =
                             retrofit.responseBodyConverter(
-                                ErrorResponse::class.java,
+                                com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse::class.java,
                                 arrayOfNulls<Annotation>(0)
                             )
-                        var errorModel: ErrorResponse? = null
+                        var errorModel: com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse? = null
                         try {
                             errorModel = converter.convert(responseErrorBody)
                             val status: Boolean = errorModel?.status ?: false
@@ -791,7 +791,7 @@ class RepairDetailViewModel : ViewModel() {
 
             }
 
-            override fun onFailure(call: Call<List<RepairDetailAfterRepairResponse>>, t: Throwable) {
+            override fun onFailure(call: Call<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailAfterRepairResponse>>, t: Throwable) {
                 _isLoadingGetRepairDetailAfterRepairList.value = false
                 Log.e(ContentValues.TAG, "onFailure: ${t.message}")
                 _messageGetRepairDetailAfterRepairList.value =
@@ -811,8 +811,8 @@ class RepairDetailViewModel : ViewModel() {
     private val _messageGetRepairDetailAfterRepairInspectionList = MutableLiveData<String>()
     val messageGetRepairDetailAfterRepairInspectionList: LiveData<String> = _messageGetRepairDetailAfterRepairInspectionList
 
-    private val _afterRepairInspectionList = MutableLiveData<List<RepairDetailAfterRepairInspectionResponse>>()
-    val afterRepairInspectionList: MutableLiveData<List<RepairDetailAfterRepairInspectionResponse>> = _afterRepairInspectionList
+    private val _afterRepairInspectionList = MutableLiveData<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailAfterRepairInspectionResponse>>()
+    val afterRepairInspectionList: MutableLiveData<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailAfterRepairInspectionResponse>> = _afterRepairInspectionList
 
     fun getRepairDetailAfterRepairInspectionList(
         context: Context,
@@ -835,10 +835,10 @@ class RepairDetailViewModel : ViewModel() {
             ConstantsRepair.ORDER_TYPE_TIRE -> client = services.getRepairDetailAfterRepairInspection(orderId,spkId)
         }
 
-        client.enqueue(object : Callback<List<RepairDetailAfterRepairInspectionResponse>> {
+        client.enqueue(object : Callback<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailAfterRepairInspectionResponse>> {
             override fun onResponse(
-                call: Call<List<RepairDetailAfterRepairInspectionResponse>>,
-                response: Response<List<RepairDetailAfterRepairInspectionResponse>>
+                call: Call<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailAfterRepairInspectionResponse>>,
+                response: Response<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailAfterRepairInspectionResponse>>
             ) {
                 _isLoadingGetRepairDetailAfterRepairInspectionList.value = false
 
@@ -849,7 +849,7 @@ class RepairDetailViewModel : ViewModel() {
                         GsonBuilder().setPrettyPrinting().create().toJson(response.body())
                     )
 
-                    val data: List<RepairDetailAfterRepairInspectionResponse>? = response.body()
+                    val data: List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailAfterRepairInspectionResponse>? = response.body()
                     if (responseBody != null) {
                         _afterRepairInspectionList.value = data!!
                     }
@@ -862,12 +862,12 @@ class RepairDetailViewModel : ViewModel() {
                             "onResponse: Not Success " + response.code() + GsonBuilder().setPrettyPrinting()
                                 .create().toJson(responseErrorBody)
                         )
-                        val converter: Converter<ResponseBody?, ErrorResponse> =
+                        val converter: Converter<ResponseBody?, com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse> =
                             retrofit.responseBodyConverter(
-                                ErrorResponse::class.java,
+                                com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse::class.java,
                                 arrayOfNulls<Annotation>(0)
                             )
-                        var errorModel: ErrorResponse? = null
+                        var errorModel: com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse? = null
                         try {
                             errorModel = converter.convert(responseErrorBody)
                             val status: Boolean = errorModel?.status ?: false
@@ -888,7 +888,7 @@ class RepairDetailViewModel : ViewModel() {
 
             }
 
-            override fun onFailure(call: Call<List<RepairDetailAfterRepairInspectionResponse>>, t: Throwable) {
+            override fun onFailure(call: Call<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailAfterRepairInspectionResponse>>, t: Throwable) {
                 _isLoadingGetRepairDetailAfterRepairInspectionList.value = false
                 Log.e(ContentValues.TAG, "onFailure: ${t.message}")
                 _messageGetRepairDetailAfterRepairInspectionList.value =
@@ -908,8 +908,8 @@ class RepairDetailViewModel : ViewModel() {
     private val _messageGetRepairDetailTireConditionCategoryList = MutableLiveData<String>()
     val messageGetRepairDetailTireConditionCategoryList: LiveData<String> = _messageGetRepairDetailTireConditionCategoryList
 
-    private val _tireConditionCategoryList = MutableLiveData<List<TireConditionCategoryResponse>>()
-    val tireConditionCategoryList: MutableLiveData<List<TireConditionCategoryResponse>> = _tireConditionCategoryList
+    private val _tireConditionCategoryList = MutableLiveData<List<com.daffamuhtar.fmkotlin.data.remote.response.TireConditionCategoryResponse>>()
+    val tireConditionCategoryList: MutableLiveData<List<com.daffamuhtar.fmkotlin.data.remote.response.TireConditionCategoryResponse>> = _tireConditionCategoryList
 
     fun getRepairDetailTireConditionCategoryList(
         context: Context,
@@ -922,10 +922,10 @@ class RepairDetailViewModel : ViewModel() {
         val services = retrofit.create(TireServices::class.java)
         val client = services.getTireConditionCategory(vehicleId)
 
-        client.enqueue(object : Callback<List<TireConditionCategoryResponse>> {
+        client.enqueue(object : Callback<List<com.daffamuhtar.fmkotlin.data.remote.response.TireConditionCategoryResponse>> {
             override fun onResponse(
-                call: Call<List<TireConditionCategoryResponse>>,
-                response: Response<List<TireConditionCategoryResponse>>
+                call: Call<List<com.daffamuhtar.fmkotlin.data.remote.response.TireConditionCategoryResponse>>,
+                response: Response<List<com.daffamuhtar.fmkotlin.data.remote.response.TireConditionCategoryResponse>>
             ) {
                 _isLoadingGetRepairDetailTireConditionCategoryList.value = false
 
@@ -938,7 +938,7 @@ class RepairDetailViewModel : ViewModel() {
                         GsonBuilder().setPrettyPrinting().create().toJson(response.body())
                     )
 
-                    val data: List<TireConditionCategoryResponse>? = response.body()
+                    val data: List<com.daffamuhtar.fmkotlin.data.remote.response.TireConditionCategoryResponse>? = response.body()
                     if (responseBody != null) {
                         _tireConditionCategoryList.value = data!!
                     }
@@ -951,12 +951,12 @@ class RepairDetailViewModel : ViewModel() {
                             "onResponse: Not Success " + response.code() + GsonBuilder().setPrettyPrinting()
                                 .create().toJson(responseErrorBody)
                         )
-                        val converter: Converter<ResponseBody?, ErrorResponse> =
+                        val converter: Converter<ResponseBody?, com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse> =
                             retrofit.responseBodyConverter(
-                                ErrorResponse::class.java,
+                                com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse::class.java,
                                 arrayOfNulls<Annotation>(0)
                             )
-                        var errorModel: ErrorResponse? = null
+                        var errorModel: com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse? = null
                         try {
                             errorModel = converter.convert(responseErrorBody)
                             val status: Boolean = errorModel?.status ?: false
@@ -977,7 +977,7 @@ class RepairDetailViewModel : ViewModel() {
 
             }
 
-            override fun onFailure(call: Call<List<TireConditionCategoryResponse>>, t: Throwable) {
+            override fun onFailure(call: Call<List<com.daffamuhtar.fmkotlin.data.remote.response.TireConditionCategoryResponse>>, t: Throwable) {
                 _isLoadingGetRepairDetailTireConditionCategoryList.value = false
                 Log.e(ContentValues.TAG, "onFailure: ${t.message}")
                 _messageGetRepairDetailTireConditionCategoryList.value =
@@ -998,8 +998,8 @@ class RepairDetailViewModel : ViewModel() {
     private val _messageGetRepairDetailAfterRepairTireInspectionList = MutableLiveData<String>()
     val messageGetRepairDetailAfterRepairTireInspectionList: LiveData<String> = _messageGetRepairDetailAfterRepairTireInspectionList
 
-    private val _afterRepairTireInspectionList = MutableLiveData<List<TireInspectionItemResponse>>()
-    val afterRepairTireInspectionList: MutableLiveData<List<TireInspectionItemResponse>> = _afterRepairTireInspectionList
+    private val _afterRepairTireInspectionList = MutableLiveData<List<com.daffamuhtar.fmkotlin.data.remote.response.TireInspectionItemResponse>>()
+    val afterRepairTireInspectionList: MutableLiveData<List<com.daffamuhtar.fmkotlin.data.remote.response.TireInspectionItemResponse>> = _afterRepairTireInspectionList
 
     fun getRepairDetailAfterRepairTireInspectionList(
         context: Context,
@@ -1015,10 +1015,10 @@ class RepairDetailViewModel : ViewModel() {
         val services = retrofit.create(TireServices::class.java)
         val client = services.getTireInspectionItemResultOnRepair(spkId,vehicleId)
 
-        client.enqueue(object : Callback<List<TireInspectionItemResponse>> {
+        client.enqueue(object : Callback<List<com.daffamuhtar.fmkotlin.data.remote.response.TireInspectionItemResponse>> {
             override fun onResponse(
-                call: Call<List<TireInspectionItemResponse>>,
-                response: Response<List<TireInspectionItemResponse>>
+                call: Call<List<com.daffamuhtar.fmkotlin.data.remote.response.TireInspectionItemResponse>>,
+                response: Response<List<com.daffamuhtar.fmkotlin.data.remote.response.TireInspectionItemResponse>>
             ) {
                 _isLoadingGetRepairDetailAfterRepairTireInspectionList.value = false
 
@@ -1031,7 +1031,7 @@ class RepairDetailViewModel : ViewModel() {
                         GsonBuilder().setPrettyPrinting().create().toJson(response.body())
                     )
 
-                    val data: List<TireInspectionItemResponse>? = response.body()
+                    val data: List<com.daffamuhtar.fmkotlin.data.remote.response.TireInspectionItemResponse>? = response.body()
                     if (responseBody != null) {
                         _afterRepairTireInspectionList.value = data!!
                     }
@@ -1044,12 +1044,12 @@ class RepairDetailViewModel : ViewModel() {
                             "onResponse: Not Success " + response.code() + GsonBuilder().setPrettyPrinting()
                                 .create().toJson(responseErrorBody)
                         )
-                        val converter: Converter<ResponseBody?, ErrorResponse> =
+                        val converter: Converter<ResponseBody?, com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse> =
                             retrofit.responseBodyConverter(
-                                ErrorResponse::class.java,
+                                com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse::class.java,
                                 arrayOfNulls<Annotation>(0)
                             )
-                        var errorModel: ErrorResponse? = null
+                        var errorModel: com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse? = null
                         try {
                             errorModel = converter.convert(responseErrorBody)
                             val status: Boolean = errorModel?.status ?: false
@@ -1070,7 +1070,7 @@ class RepairDetailViewModel : ViewModel() {
 
             }
 
-            override fun onFailure(call: Call<List<TireInspectionItemResponse>>, t: Throwable) {
+            override fun onFailure(call: Call<List<com.daffamuhtar.fmkotlin.data.remote.response.TireInspectionItemResponse>>, t: Throwable) {
                 _isLoadingGetRepairDetailAfterRepairTireInspectionList.value = false
                 Log.e(ContentValues.TAG, "onFailure: ${t.message}")
                 _messageGetRepairDetailAfterRepairTireInspectionList.value =
@@ -1090,8 +1090,8 @@ class RepairDetailViewModel : ViewModel() {
     private val _messageGetRepairDetailAfterRepairWaste = MutableLiveData<String>()
     val messageGetRepairDetailAfterRepairWaste: LiveData<String> = _messageGetRepairDetailAfterRepairWaste
 
-    private val _afterRepairWaste = MutableLiveData<List<RepairDetailAfterRepairWasteResponse>>()
-    val afterRepairWaste: MutableLiveData<List<RepairDetailAfterRepairWasteResponse>> = _afterRepairWaste
+    private val _afterRepairWaste = MutableLiveData<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailAfterRepairWasteResponse>>()
+    val afterRepairWaste: MutableLiveData<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailAfterRepairWasteResponse>> = _afterRepairWaste
 
     fun getRepairDetailAfterRepairWaste(
         context: Context,
@@ -1113,10 +1113,10 @@ class RepairDetailViewModel : ViewModel() {
             ConstantsRepair.ORDER_TYPE_TIRE -> client = services.getRepairDetailAfterRepairWaste(spkId)
         }
 
-        client.enqueue(object : Callback<List<RepairDetailAfterRepairWasteResponse>> {
+        client.enqueue(object : Callback<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailAfterRepairWasteResponse>> {
             override fun onResponse(
-                call: Call<List<RepairDetailAfterRepairWasteResponse>>,
-                response: Response<List<RepairDetailAfterRepairWasteResponse>>
+                call: Call<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailAfterRepairWasteResponse>>,
+                response: Response<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailAfterRepairWasteResponse>>
             ) {
                 _isLoadingGetRepairDetailAfterRepairWaste.value = false
 
@@ -1127,7 +1127,7 @@ class RepairDetailViewModel : ViewModel() {
                         GsonBuilder().setPrettyPrinting().create().toJson(response.body())
                     )
 
-                    val data: List<RepairDetailAfterRepairWasteResponse>? = response.body()
+                    val data: List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailAfterRepairWasteResponse>? = response.body()
                     if (responseBody != null) {
                         _afterRepairWaste.value = data!!
                     }
@@ -1140,12 +1140,12 @@ class RepairDetailViewModel : ViewModel() {
                             "onResponse: Not Success " + response.code() + GsonBuilder().setPrettyPrinting()
                                 .create().toJson(responseErrorBody)
                         )
-                        val converter: Converter<ResponseBody?, ErrorResponse> =
+                        val converter: Converter<ResponseBody?, com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse> =
                             retrofit.responseBodyConverter(
-                                ErrorResponse::class.java,
+                                com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse::class.java,
                                 arrayOfNulls<Annotation>(0)
                             )
-                        var errorModel: ErrorResponse? = null
+                        var errorModel: com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse? = null
                         try {
                             errorModel = converter.convert(responseErrorBody)
                             val status: Boolean = errorModel?.status ?: false
@@ -1164,7 +1164,7 @@ class RepairDetailViewModel : ViewModel() {
                 }
             }
 
-            override fun onFailure(call: Call<List<RepairDetailAfterRepairWasteResponse>>, t: Throwable) {
+            override fun onFailure(call: Call<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailAfterRepairWasteResponse>>, t: Throwable) {
                 _isLoadingGetRepairDetailAfterRepairWaste.value = false
                 Log.e(ContentValues.TAG, "onFailure: ${t.message}")
                 _messageGetRepairDetailAfterRepairWaste.value =
@@ -1184,8 +1184,8 @@ class RepairDetailViewModel : ViewModel() {
     private val _messageGetRepairDetailAfterRepairComplain = MutableLiveData<String>()
     val messageGetRepairDetailAfterRepairComplain: LiveData<String> = _messageGetRepairDetailAfterRepairComplain
 
-    private val _afterRepairComplain = MutableLiveData<List<RepairDetailAfterRepairComplainResponse>>()
-    val afterRepairComplain: MutableLiveData<List<RepairDetailAfterRepairComplainResponse>> = _afterRepairComplain
+    private val _afterRepairComplain = MutableLiveData<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailAfterRepairComplainResponse>>()
+    val afterRepairComplain: MutableLiveData<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailAfterRepairComplainResponse>> = _afterRepairComplain
 
     fun getRepairDetailAfterRepairComplain(
         context: Context,
@@ -1207,10 +1207,10 @@ class RepairDetailViewModel : ViewModel() {
             ConstantsRepair.ORDER_TYPE_TIRE -> client = services.getRepairDetailAfterRepairComplain(orderId)
         }
 
-        client.enqueue(object : Callback<List<RepairDetailAfterRepairComplainResponse>> {
+        client.enqueue(object : Callback<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailAfterRepairComplainResponse>> {
             override fun onResponse(
-                call: Call<List<RepairDetailAfterRepairComplainResponse>>,
-                response: Response<List<RepairDetailAfterRepairComplainResponse>>
+                call: Call<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailAfterRepairComplainResponse>>,
+                response: Response<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailAfterRepairComplainResponse>>
             ) {
                 _isLoadingGetRepairDetailAfterRepairComplain.value = false
 
@@ -1221,7 +1221,7 @@ class RepairDetailViewModel : ViewModel() {
                         GsonBuilder().setPrettyPrinting().create().toJson(response.body())
                     )
 
-                    val data: List<RepairDetailAfterRepairComplainResponse>? = response.body()
+                    val data: List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailAfterRepairComplainResponse>? = response.body()
                     if (responseBody != null) {
                         _afterRepairComplain.value = data!!
                     }
@@ -1234,12 +1234,12 @@ class RepairDetailViewModel : ViewModel() {
                             "onResponse: Not Success " + response.code() + GsonBuilder().setPrettyPrinting()
                                 .create().toJson(responseErrorBody)
                         )
-                        val converter: Converter<ResponseBody?, ErrorResponse> =
+                        val converter: Converter<ResponseBody?, com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse> =
                             retrofit.responseBodyConverter(
-                                ErrorResponse::class.java,
+                                com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse::class.java,
                                 arrayOfNulls<Annotation>(0)
                             )
-                        var errorModel: ErrorResponse? = null
+                        var errorModel: com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse? = null
                         try {
                             errorModel = converter.convert(responseErrorBody)
                             val status: Boolean = errorModel?.status ?: false
@@ -1258,7 +1258,7 @@ class RepairDetailViewModel : ViewModel() {
                 }
             }
 
-            override fun onFailure(call: Call<List<RepairDetailAfterRepairComplainResponse>>, t: Throwable) {
+            override fun onFailure(call: Call<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailAfterRepairComplainResponse>>, t: Throwable) {
                 _isLoadingGetRepairDetailAfterRepairComplain.value = false
                 Log.e(ContentValues.TAG, "onFailure: ${t.message}")
                 _messageGetRepairDetailAfterRepairComplain.value =

@@ -9,8 +9,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 import com.daffamuhtar.fmkotlin.app.ApiConfig
-import com.daffamuhtar.fmkotlin.data.response.ErrorResponse
-import com.daffamuhtar.fmkotlin.data.response.RepairOnAdhocResponse
+import com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse
+import com.daffamuhtar.fmkotlin.data.remote.response.RepairOnAdhocResponse
 import com.daffamuhtar.fmkotlin.services.RepairServices
 import com.google.gson.GsonBuilder
 import okhttp3.ResponseBody
@@ -31,8 +31,8 @@ class RepairOngoingViewModel : ViewModel() {
     private val _messageGetRepairOngoing = MutableLiveData<String>()
     val messageGetRepairOngoing: LiveData<String> = _messageGetRepairOngoing
 
-    private val _repairList = MutableLiveData<List<RepairOnAdhocResponse>>()
-    val repairList: LiveData<List<RepairOnAdhocResponse>> = _repairList
+    private val _repairList = MutableLiveData<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairOnAdhocResponse>>()
+    val repairList: LiveData<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairOnAdhocResponse>> = _repairList
 
 
     fun getRepairOngoing(
@@ -46,10 +46,10 @@ class RepairOngoingViewModel : ViewModel() {
         val services = retrofit?.create(RepairServices::class.java)
         val client = services?.getRepairOngoing(userId, 0)
 
-        client?.enqueue(object : Callback<List<RepairOnAdhocResponse>> {
+        client?.enqueue(object : Callback<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairOnAdhocResponse>> {
             override fun onResponse(
-                call: Call<List<RepairOnAdhocResponse>>,
-                response: Response<List<RepairOnAdhocResponse>>
+                call: Call<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairOnAdhocResponse>>,
+                response: Response<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairOnAdhocResponse>>
             ) {
                 _isLoadingGetRepairOngoing.value = false
 
@@ -60,7 +60,7 @@ class RepairOngoingViewModel : ViewModel() {
                         GsonBuilder().setPrettyPrinting().create().toJson(response.body())
                     )
 
-                    val repair: List<RepairOnAdhocResponse>? = response.body()
+                    val repair: List<com.daffamuhtar.fmkotlin.data.remote.response.RepairOnAdhocResponse>? = response.body()
                     if (responseBody != null) {
                         _repairList.value = repair!!
                     }
@@ -73,12 +73,12 @@ class RepairOngoingViewModel : ViewModel() {
                             "onResponse: Not Success " + response.code() + GsonBuilder().setPrettyPrinting()
                                 .create().toJson(responseErrorBody)
                         )
-                        val converter: Converter<ResponseBody?, ErrorResponse> =
+                        val converter: Converter<ResponseBody?, com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse> =
                             retrofit.responseBodyConverter(
-                                ErrorResponse::class.java,
+                                com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse::class.java,
                                 arrayOfNulls<Annotation>(0)
                             )
-                        var errorModel: ErrorResponse? = null
+                        var errorModel: com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse? = null
                         try {
                             errorModel = converter.convert(responseErrorBody)
                             val status: Boolean = errorModel?.status ?: false
@@ -99,7 +99,7 @@ class RepairOngoingViewModel : ViewModel() {
 
             }
 
-            override fun onFailure(call: Call<List<RepairOnAdhocResponse>>, t: Throwable) {
+            override fun onFailure(call: Call<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairOnAdhocResponse>>, t: Throwable) {
                 _isLoadingGetRepairOngoing.value = false
                 Log.e(ContentValues.TAG, "onFailure: ${t.message}")
                 _messageGetRepairOngoing.value =

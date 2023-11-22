@@ -14,25 +14,13 @@ import com.daffamuhtar.fmkotlin.R
 import com.daffamuhtar.fmkotlin.constants.Constants
 import com.daffamuhtar.fmkotlin.constants.ConstantsApp
 import com.daffamuhtar.fmkotlin.constants.ConstantsRepair
-import com.daffamuhtar.fmkotlin.data.Photo
-import com.daffamuhtar.fmkotlin.data.RepairDetailAfterRepair
-import com.daffamuhtar.fmkotlin.data.RepairDetailAfterRepairInspection
-import com.daffamuhtar.fmkotlin.data.RepairDetailAfterRepairTireInspection
-import com.daffamuhtar.fmkotlin.data.RepairDetailPart
-import com.daffamuhtar.fmkotlin.data.RepairDetailProblem
-import com.daffamuhtar.fmkotlin.data.TireConditionCategory
-import com.daffamuhtar.fmkotlin.data.response.RepairDetailActiveDriverResponse
-import com.daffamuhtar.fmkotlin.data.response.RepairDetailAfterCheckResponse
-import com.daffamuhtar.fmkotlin.data.response.RepairDetailAfterRepairComplainResponse
-import com.daffamuhtar.fmkotlin.data.response.RepairDetailAfterRepairInspectionResponse
-import com.daffamuhtar.fmkotlin.data.response.RepairDetailAfterRepairResponse
-import com.daffamuhtar.fmkotlin.data.response.RepairDetailAfterRepairWasteResponse
-import com.daffamuhtar.fmkotlin.data.response.RepairDetailMechanicInfoResponse
-import com.daffamuhtar.fmkotlin.data.response.RepairDetailNoteResponse
-import com.daffamuhtar.fmkotlin.data.response.RepairDetailPartResponse
-import com.daffamuhtar.fmkotlin.data.response.RepairDetailProblemResponse
-import com.daffamuhtar.fmkotlin.data.response.RepairDetailWorkshopInfoResponse
-import com.daffamuhtar.fmkotlin.data.response.TireConditionCategoryResponse
+import com.daffamuhtar.fmkotlin.data.model.Photo
+import com.daffamuhtar.fmkotlin.data.model.RepairDetailAfterRepair
+import com.daffamuhtar.fmkotlin.data.model.RepairDetailAfterRepairInspection
+import com.daffamuhtar.fmkotlin.data.model.RepairDetailAfterRepairTireInspection
+import com.daffamuhtar.fmkotlin.data.model.RepairDetailPart
+import com.daffamuhtar.fmkotlin.data.model.RepairDetailProblem
+import com.daffamuhtar.fmkotlin.data.model.TireConditionCategory
 import com.daffamuhtar.fmkotlin.databinding.ActivityRepairDetailBinding
 import com.daffamuhtar.fmkotlin.ui.adapter.PhotoAdapter
 import com.daffamuhtar.fmkotlin.ui.adapter.RepairDetailAfterRepairAdapter
@@ -648,7 +636,7 @@ class RepairDetailActivity : AppCompatActivity() {
     }
 
 
-    private fun setAfterRepairWaste(it: List<RepairDetailAfterRepairWasteResponse>) {
+    private fun setAfterRepairWaste(it: List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailAfterRepairWasteResponse>) {
         repairDetailAfterRepairWastePhoto.clear()
         val items = ArrayList<Photo>()
 
@@ -670,7 +658,7 @@ class RepairDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun setAfterRepairComplain(it: List<RepairDetailAfterRepairComplainResponse>) {
+    private fun setAfterRepairComplain(it: List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailAfterRepairComplainResponse>) {
         repairDetailAfterRepairComplainPhoto.clear()
         val items = ArrayList<Photo>()
 
@@ -708,7 +696,7 @@ class RepairDetailActivity : AppCompatActivity() {
 //        }
     }
 
-    private fun setAfterRepair(it: List<RepairDetailAfterRepairResponse>) {
+    private fun setAfterRepair(it: List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailAfterRepairResponse>) {
         repairDetailAfterRepairList.clear()
         val listProblem = ArrayList<RepairDetailAfterRepair>()
 
@@ -763,7 +751,7 @@ class RepairDetailActivity : AppCompatActivity() {
         setToViewAfterRepair()
     }
 
-    private fun setTireConditionCategoryList(it: List<TireConditionCategoryResponse>) {
+    private fun setTireConditionCategoryList(it: List<com.daffamuhtar.fmkotlin.data.remote.response.TireConditionCategoryResponse>) {
         tireConditionCategoryList.clear()
         val list = ArrayList<TireConditionCategory>()
 
@@ -781,7 +769,7 @@ class RepairDetailActivity : AppCompatActivity() {
         tireConditionCategoryList.addAll(list)
     }
 
-    private fun setAfterRepairInspection(it: List<RepairDetailAfterRepairInspectionResponse>) {
+    private fun setAfterRepairInspection(it: List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailAfterRepairInspectionResponse>) {
         repairDetailAfterRepairInspectionList.clear()
         val list = ArrayList<RepairDetailAfterRepairInspection>()
 
@@ -894,7 +882,7 @@ class RepairDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun setAfterCheck(it: List<RepairDetailAfterCheckResponse>) {
+    private fun setAfterCheck(it: List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailAfterCheckResponse>) {
         repairDetailAfterCheckPhoto.clear()
         val items = ArrayList<Photo>()
 
@@ -1009,7 +997,7 @@ class RepairDetailActivity : AppCompatActivity() {
 
     }
 
-    private fun setNote(it: List<RepairDetailNoteResponse>) {
+    private fun setNote(it: List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailNoteResponse>) {
 
         binding.etAfterCheckNote.text = (it[0].noteCheckFromMechanic)?.toEditable()
         binding.etAfterRepairNote.text = (it[0].noteAfterRepairFromMechanic)?.toEditable()
@@ -1019,7 +1007,7 @@ class RepairDetailActivity : AppCompatActivity() {
 
     }
 
-    private fun setPartList(it: List<RepairDetailPartResponse>) {
+    private fun setPartList(it: List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailPartResponse>) {
         repairDetailParts.clear()
         val items = ArrayList<RepairDetailPart>()
 
@@ -1061,7 +1049,7 @@ class RepairDetailActivity : AppCompatActivity() {
 
     }
 
-    private fun setWorkshopInfo(it: List<RepairDetailWorkshopInfoResponse>) {
+    private fun setWorkshopInfo(it: List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailWorkshopInfoResponse>) {
         binding.tvWorkshopName.text = it[0].workshopName
         binding.tvWorkshopAddress.text = it[0].locationAddress
 
@@ -1155,7 +1143,7 @@ class RepairDetailActivity : AppCompatActivity() {
 
     }
 
-    private fun setMechanicInfo(it: List<RepairDetailMechanicInfoResponse>) {
+    private fun setMechanicInfo(it: List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailMechanicInfoResponse>) {
         binding.tvMechanicName.text = it[0].mechanicName
         binding.tvMechanicPhone.text = it[0].mechanicPhone
         RepairHelper.setOnClickChat(
@@ -1194,7 +1182,7 @@ class RepairDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun setActiveDriver(it: List<RepairDetailActiveDriverResponse>) {
+    private fun setActiveDriver(it: List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailActiveDriverResponse>) {
         binding.tvDriverName.text = it[0].driverName
         RepairHelper.setDriverPhoto(this, it[0].driverPhoto, binding.ivDriverPhoto)
         RepairHelper.setOnClickChat(
@@ -1202,7 +1190,7 @@ class RepairDetailActivity : AppCompatActivity() {
         )
     }
 
-    private fun setProblemList(items: List<RepairDetailProblemResponse>) {
+    private fun setProblemList(items: List<com.daffamuhtar.fmkotlin.data.remote.response.RepairDetailProblemResponse>) {
         repairDetailProblemList.clear()
         val listProblem = ArrayList<RepairDetailProblem>()
 

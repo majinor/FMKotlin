@@ -14,7 +14,7 @@ import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.daffamuhtar.fmkotlin.R
 import com.daffamuhtar.fmkotlin.constants.ConstantsRepair
-import com.daffamuhtar.fmkotlin.data.response.ErrorResponse
+import com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.gson.Gson
 import java.text.SimpleDateFormat
@@ -41,7 +41,37 @@ class RepairHelper {
 
                 else -> {
                     orderType = if (isStoring == "1") {
+                        ConstantsRepair.ORDER_TYPE_ADHOC_STORING
+
+                    } else {
                         ConstantsRepair.ORDER_TYPE_ADHOC
+                    }
+                }
+            }
+
+            return orderType
+        }
+
+        fun getRepairOrderTypeWithContext(orderId: String, isStoring: String?, context: Context): String {
+            val suborder: String = orderId.substring(4, 6)
+            val orderType: String
+
+            when (suborder) {
+                "PB" -> {
+                    orderType = ConstantsRepair.ORDER_TYPE_MAINTENANCE
+                }
+
+                "PN" -> {
+                    orderType = ConstantsRepair.ORDER_TYPE_NPM
+                }
+
+                "TI" -> {
+                    orderType = ConstantsRepair.ORDER_TYPE_TIRE
+                }
+
+                else -> {
+                    orderType = if (isStoring == "1") {
+                        ConstantsRepair.ORDER_TYPE_ADHOC_STORING
 
                     } else {
                         ConstantsRepair.ORDER_TYPE_ADHOC
@@ -1019,11 +1049,11 @@ class RepairHelper {
         fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
 
 
-        fun parseErrorMessageFromJson(message : String): ErrorResponse? {
+        fun parseErrorMessageFromJson(message : String): com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse? {
 
             val gson = Gson()
-            var obj: ErrorResponse? = null
-            obj = gson.fromJson(message, ErrorResponse::class.java)
+            var obj: com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse? = null
+            obj = gson.fromJson(message, com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse::class.java)
 
             return obj
 

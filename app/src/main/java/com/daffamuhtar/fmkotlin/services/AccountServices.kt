@@ -1,6 +1,6 @@
 package com.daffamuhtar.fmkotlin.services
 
-import com.daffamuhtar.fmkotlin.data.response.RefreshTokenResponse
+import com.daffamuhtar.fmkotlin.data.remote.response.RefreshTokenResponse
 import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -14,7 +14,7 @@ interface AccountServices {
         @Field("userId") userId: String,
         @Field("currentAppVersion") currentAppVersion: String,
         @Field("appType") appType: String
-    ): Call<RefreshTokenResponse>
+    ): Call<com.daffamuhtar.fmkotlin.data.remote.response.RefreshTokenResponse>
 
 
 }

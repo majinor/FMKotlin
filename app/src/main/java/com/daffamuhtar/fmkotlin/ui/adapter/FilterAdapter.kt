@@ -6,7 +6,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.daffamuhtar.fmkotlin.R
 import com.daffamuhtar.fmkotlin.databinding.ItemFilterBinding
-import com.daffamuhtar.fmkotlin.data.Filter
+import com.daffamuhtar.fmkotlin.data.model.Filter
 
 class FilterAdapter() : RecyclerView.Adapter<FilterAdapter.LaporanViewHolder>() {
 
@@ -22,7 +22,7 @@ class FilterAdapter() : RecyclerView.Adapter<FilterAdapter.LaporanViewHolder>() 
 
 
     interface OnItemClickCallback {
-        fun onItemClicked(data: Filter,position: Int)
+        fun onItemClicked(data: Filter, position: Int)
     }
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {

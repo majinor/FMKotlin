@@ -11,9 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.daffamuhtar.fmkotlin.constants.Constants
 import com.daffamuhtar.fmkotlin.constants.ConstantsApp
 import com.daffamuhtar.fmkotlin.databinding.ActivityRepairOngoingBinding
-import com.daffamuhtar.fmkotlin.data.Filter
-import com.daffamuhtar.fmkotlin.data.Repair
-import com.daffamuhtar.fmkotlin.data.response.RepairOnAdhocResponse
+import com.daffamuhtar.fmkotlin.data.model.Filter
+import com.daffamuhtar.fmkotlin.domain.model.Repair
 import com.daffamuhtar.fmkotlin.ui.Ongoing.RepairOngoingViewModel
 import com.daffamuhtar.fmkotlin.ui.adapter.FilterAdapter
 import com.daffamuhtar.fmkotlin.ui.adapter.RepairAdapter
@@ -78,7 +77,7 @@ class RepairOngoingActivity : AppCompatActivity() {
         binding.srCheck.isRefreshing = value
     }
 
-    private fun setReportResults(repairs: List<RepairOnAdhocResponse>) {
+    private fun setReportResults(repairs: List<com.daffamuhtar.fmkotlin.data.remote.response.RepairOnAdhocResponse>) {
         repairList.clear()
         val listReport = ArrayList<Repair>()
 
@@ -200,7 +199,7 @@ class RepairOngoingActivity : AppCompatActivity() {
                 intent.putExtra(Constants.EXTRA_LOCOPTION, data.locationOption)
                 intent.putExtra(Constants.EXTRA_SASSIGN, data.startAssignment)
                 intent.putExtra(Constants.EXTRA_ISSTORING, data.isStoring)
-                intent.putExtra(Constants.EXTRA_NOTESA, data.noteSA)
+                intent.putExtra(Constants.EXTRA_NOTESA, data.noteFromSA)
                 startActivity(intent)
             }
         })

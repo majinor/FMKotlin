@@ -12,16 +12,16 @@ import org.koin.core.logger.Level
 class App : Application() {
     override fun onCreate() {
         super.onCreate()
-        startKoin {
-            androidLogger(Level.ERROR)
-            androidContext(this@App)
-            modules(
-                listOf(
-                    appModule,
-                    repositoryModule,
-                    viewModelModule
-                )
-            )
-        }
+//        startKoin {
+//            androidLogger(Level.ERROR)
+//            androidContext(this@App)
+//            modules(
+//                listOf(
+//                    appModule,
+//                    repositoryModule,
+//                    viewModelModule
+//                )
+//            )
+//        }
     }
 }

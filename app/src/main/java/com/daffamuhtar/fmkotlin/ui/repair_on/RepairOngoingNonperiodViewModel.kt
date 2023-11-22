@@ -1,23 +1,17 @@
 package com.daffamuhtar.fmkotlin.ui.repair_on
 
-import android.content.ContentValues
 import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.daffamuhtar.fmkotlin.app.Server
 import com.daffamuhtar.fmkotlin.constants.ConstantsApp
-import com.daffamuhtar.fmkotlin.data.repository.RepairCheckRepository
 
-import com.daffamuhtar.fmkotlin.data.repository.RepairOnNonperiodRepository
-import com.daffamuhtar.fmkotlin.data.response.RepairOnNonperiodResponse
-import com.daffamuhtar.fmkotlin.data.response.ErrorResponse
+import com.daffamuhtar.fmkotlin.data.repository_old.RepairOnNonperiodRepository
 import com.daffamuhtar.fmkotlin.services.RepairServices
 import com.daffamuhtar.fmkotlin.util.NetworkHelper
-import com.daffamuhtar.fmkotlin.util.Resource
+import com.daffamuhtar.fmkotlin.util.OldResource
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.launch
@@ -35,8 +29,8 @@ class RepairOngoingNonperiodViewModel(
     private val retrofitInternalVendorV1: Retrofit,
 ) : ViewModel() {
 
-    private val _repairList = MutableLiveData<Resource<List<RepairOnNonperiodResponse>>>()
-    val repairList: LiveData<Resource<List<RepairOnNonperiodResponse>>> get() = _repairList
+    private val _repairList = MutableLiveData<OldResource<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairOnNonperiodResponse>>>()
+    val repairList: LiveData<OldResource<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairOnNonperiodResponse>>> get() = _repairList
 
     fun getRepairNonperiod(
         context: Context,
@@ -65,15 +59,15 @@ class RepairOngoingNonperiodViewModel(
             }
             val services = retrofitBlogV2.create(RepairServices::class.java)
 
-            _repairList.postValue(Resource.loading(null))
+            _repairList.postValue(OldResource.loading(null))
             if (networkHelper.isNetworkConnected()) {
                 repairOnNonperiodRepository.getRepairOnNonperiod(services,userId).let {
                     if (it.isSuccessful) {
-                        _repairList.postValue(Resource.success(it.body(), it.code()))
+                        _repairList.postValue(OldResource.success(it.body(), it.code()))
                     } else {
 
                         val responseErrorBody = it.errorBody()
-                        var errorModel: ErrorResponse? = null
+                        var errorModel: com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse? = null
 
                         if (responseErrorBody != null) {
                             Log.w(
@@ -81,9 +75,9 @@ class RepairOngoingNonperiodViewModel(
                                 "onResponse: Not Success HEHE" + it.code() + GsonBuilder().setPrettyPrinting()
                                     .create().toJson(responseErrorBody)
                             )
-                            val converter: Converter<ResponseBody?, ErrorResponse> =
+                            val converter: Converter<ResponseBody?, com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse> =
                                 retrofit.responseBodyConverter(
-                                    ErrorResponse::class.java,
+                                    com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse::class.java,
                                     arrayOfNulls<Annotation>(0)
                                 )
                             try {
@@ -95,13 +89,13 @@ class RepairOngoingNonperiodViewModel(
                         }
 
                         _repairList.postValue(
-                            Resource.error(
+                            OldResource.error(
                                 Gson().toJson(errorModel).toString(), null, it.code()
                             )
                         )
                     }
                 }
-            } else _repairList.postValue(Resource.error("No internet connection", null, 0))
+            } else _repairList.postValue(OldResource.error("No internet connection", null, 0))
         }
     }
 

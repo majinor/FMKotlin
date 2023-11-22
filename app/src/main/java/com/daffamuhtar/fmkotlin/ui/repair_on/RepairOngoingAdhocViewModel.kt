@@ -7,12 +7,15 @@ import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 
 import com.daffamuhtar.fmkotlin.app.ApiConfig
-import com.daffamuhtar.fmkotlin.data.response.RepairOnAdhocResponse
-import com.daffamuhtar.fmkotlin.data.response.ErrorResponse
+import com.daffamuhtar.fmkotlin.app.Resource
+import com.daffamuhtar.fmkotlin.data.remote.response.RepairOnNonperiodResponse
+import com.daffamuhtar.fmkotlin.domain.use_case.GetRepairAdhocListUseCase
 import com.daffamuhtar.fmkotlin.services.RepairServices
 import com.google.gson.GsonBuilder
+import kotlinx.coroutines.flow.onEach
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -20,7 +23,9 @@ import retrofit2.Converter
 import retrofit2.Response
 import java.io.IOException
 
-class RepairOngoingAdhocViewModel : ViewModel() {
+class RepairOngoingAdhocViewModel constructor(
+    private val getCoinsUseCase: GetRepairAdhocListUseCase
+): ViewModel() {
 
     private val _isLoadingGetRepair = MutableLiveData<Boolean>()
     val isLoadingGetRepair: LiveData<Boolean> = _isLoadingGetRepair
@@ -31,8 +36,33 @@ class RepairOngoingAdhocViewModel : ViewModel() {
     private val _messageGetRepair = MutableLiveData<String>()
     val messageGetRepair: LiveData<String> = _messageGetRepair
 
-    private val _repairList = MutableLiveData<List<RepairOnAdhocResponse>>()
-    val repairList: LiveData<List<RepairOnAdhocResponse>> = _repairList
+    private val _repairList = MutableLiveData<Resource<List<RepairOnNonperiodResponse>>>()
+    val repairList: LiveData<Resource<List<RepairOnNonperiodResponse>>> get() = _repairList
+
+    init {
+        getCoins("ss",1,"sds")
+    }
+
+    fun getAllLaporan(userId : String, stageId : Int, searchQuery :String) = getCoinsUseCase(userId, stageId, searchQuery)
+
+    private fun getCoins(userId : String, stageId : Int, searchQuery :String) {
+        getCoinsUseCase(userId, stageId, searchQuery).onEach { result ->
+            when (result) {
+                is Resource.Success -> {
+                    _state.value = CoinListState(coins = result.data ?: emptyList())
+                }
+                is Resource.Error -> {
+                    _state.value = CoinListState(
+                        error = result.message ?: "An unexpected error occured"
+                    )
+                }
+                is Resource.Loading -> {
+                    _state.value = CoinListState(isLoading = true)
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+
 
     fun getRepairAdhoc(
         context: Context,
@@ -45,10 +75,10 @@ class RepairOngoingAdhocViewModel : ViewModel() {
         val services = retrofit?.create(RepairServices::class.java)
         val client = services?.getRepairAdhoc(userId, 0)
 
-        client?.enqueue(object : Callback<List<RepairOnAdhocResponse>> {
+        client?.enqueue(object : Callback<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairOnAdhocResponse>> {
             override fun onResponse(
-                call: Call<List<RepairOnAdhocResponse>>,
-                response: Response<List<RepairOnAdhocResponse>>
+                call: Call<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairOnAdhocResponse>>,
+                response: Response<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairOnAdhocResponse>>
             ) {
                 _isLoadingGetRepair.value = false
 
@@ -59,7 +89,7 @@ class RepairOngoingAdhocViewModel : ViewModel() {
                         GsonBuilder().setPrettyPrinting().create().toJson(response.body())
                     )
 
-                    val repair: List<RepairOnAdhocResponse>? = response.body()
+                    val repair: List<com.daffamuhtar.fmkotlin.data.remote.response.RepairOnAdhocResponse>? = response.body()
                     if (responseBody != null) {
                         _repairList.value = repair!!
                     }
@@ -72,12 +102,12 @@ class RepairOngoingAdhocViewModel : ViewModel() {
                             "onResponse: Not Success " + response.code() + GsonBuilder().setPrettyPrinting()
                                 .create().toJson(responseErrorBody)
                         )
-                        val converter: Converter<ResponseBody?, ErrorResponse> =
+                        val converter: Converter<ResponseBody?, com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse> =
                             retrofit.responseBodyConverter(
-                                ErrorResponse::class.java,
+                                com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse::class.java,
                                 arrayOfNulls<Annotation>(0)
                             )
-                        var errorModel: ErrorResponse? = null
+                        var errorModel: com.daffamuhtar.fmkotlin.data.remote.response.ErrorResponse? = null
                         try {
                             errorModel = converter.convert(responseErrorBody)
                             val status: Boolean = errorModel?.status ?: false
@@ -98,7 +128,7 @@ class RepairOngoingAdhocViewModel : ViewModel() {
 
             }
 
-            override fun onFailure(call: Call<List<RepairOnAdhocResponse>>, t: Throwable) {
+            override fun onFailure(call: Call<List<com.daffamuhtar.fmkotlin.data.remote.response.RepairOnAdhocResponse>>, t: Throwable) {
                 _isLoadingGetRepair.value = false
                 Log.e(ContentValues.TAG, "onFailure: ${t.message}")
                 _messageGetRepair.value =

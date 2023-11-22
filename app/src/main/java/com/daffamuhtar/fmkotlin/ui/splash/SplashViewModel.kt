@@ -9,7 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 import com.daffamuhtar.fmkotlin.app.ApiConfig
-import com.daffamuhtar.fmkotlin.data.response.RefreshTokenResponse
+import com.daffamuhtar.fmkotlin.data.remote.response.RefreshTokenResponse
 import com.daffamuhtar.fmkotlin.services.AccountServices
 import com.google.gson.GsonBuilder
 import okhttp3.ResponseBody
@@ -47,10 +47,10 @@ class SplashViewModel : ViewModel() {
         val accountServices = retrofit?.create(AccountServices::class.java)
         val client = accountServices?.postRefreshToken(userId, currentAppVersion, appType)
 
-        client?.enqueue(object : Callback<RefreshTokenResponse> {
+        client?.enqueue(object : Callback<com.daffamuhtar.fmkotlin.data.remote.response.RefreshTokenResponse> {
             override fun onResponse(
-                call: Call<RefreshTokenResponse>,
-                response: Response<RefreshTokenResponse>
+                call: Call<com.daffamuhtar.fmkotlin.data.remote.response.RefreshTokenResponse>,
+                response: Response<com.daffamuhtar.fmkotlin.data.remote.response.RefreshTokenResponse>
             ) {
                 _isLoadingRefreshToken.value = false
 
@@ -68,12 +68,12 @@ class SplashViewModel : ViewModel() {
                             "onResponse: Not Success " + response.code() + GsonBuilder().setPrettyPrinting()
                                 .create().toJson(responseErrorBody)
                         )
-                        val converter: Converter<ResponseBody?, RefreshTokenResponse> =
+                        val converter: Converter<ResponseBody?, com.daffamuhtar.fmkotlin.data.remote.response.RefreshTokenResponse> =
                             retrofit.responseBodyConverter(
-                                RefreshTokenResponse::class.java,
+                                com.daffamuhtar.fmkotlin.data.remote.response.RefreshTokenResponse::class.java,
                                 arrayOfNulls<Annotation>(0)
                             )
-                        var errorModel: RefreshTokenResponse? = null
+                        var errorModel: com.daffamuhtar.fmkotlin.data.remote.response.RefreshTokenResponse? = null
                         try {
                             errorModel = converter.convert(responseErrorBody)
                             val status: Boolean = errorModel?.status ?: false
@@ -94,7 +94,7 @@ class SplashViewModel : ViewModel() {
 
             }
 
-            override fun onFailure(call: Call<RefreshTokenResponse>, t: Throwable) {
+            override fun onFailure(call: Call<com.daffamuhtar.fmkotlin.data.remote.response.RefreshTokenResponse>, t: Throwable) {
                 _isLoadingRefreshToken.value = false
                 Log.e(ContentValues.TAG, "onFailure: ${t.message}")
                 _messageRefreshToken.value =

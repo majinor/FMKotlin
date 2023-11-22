@@ -1,8 +1,8 @@
 package com.daffamuhtar.fmkotlin.services
 
-import com.daffamuhtar.fmkotlin.data.response.CallResponse
-import com.daffamuhtar.fmkotlin.data.response.TireConditionCategoryResponse
-import com.daffamuhtar.fmkotlin.data.response.TireInspectionItemResponse
+import com.daffamuhtar.fmkotlin.data.remote.response.CallResponse
+import com.daffamuhtar.fmkotlin.data.remote.response.TireConditionCategoryResponse
+import com.daffamuhtar.fmkotlin.data.remote.response.TireInspectionItemResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -17,20 +17,20 @@ interface TireServices {
     @GET("api/Tires/tire_condition_category")
     fun getTireConditionCategory(
         @Query("vehicleId") vehicleId: String
-    ): Call<List<TireConditionCategoryResponse>>
+    ): Call<List<com.daffamuhtar.fmkotlin.data.remote.response.TireConditionCategoryResponse>>
 
     @GET("api/tires/tires_inspection_history_by_vehicle_with_tire_position_id")
     fun getTireInspectionItemByVehicleWithTirePositionId(
         @Query("vehicleId") vehicleId: String,
         @Query("tirePositionId") tirePositionId: String,
-    ): Call<List<TireConditionCategoryResponse>>
+    ): Call<List<com.daffamuhtar.fmkotlin.data.remote.response.TireConditionCategoryResponse>>
 
 
     @GET("api/mechanics/tire_inspection_history_by_spk_inspection")
     fun getTireInspectionItemResultOnRepair(
         @Query("spkId") spkId: String?,
         @Query("vehicleId") vehicleId: String?
-    ): Call<List<TireInspectionItemResponse>>
+    ): Call<List<com.daffamuhtar.fmkotlin.data.remote.response.TireInspectionItemResponse>>
 
     @Multipart
     @POST("api/Tires/inspection_from_mechanic_v2")
@@ -51,6 +51,6 @@ interface TireServices {
         @Part("tireConditionCategory") powtireConditionCategoryId: RequestBody?,
         @Part("note") note: RequestBody?,
         @Part file: MultipartBody.Part?
-    ): Call<CallResponse>
+    ): Call<com.daffamuhtar.fmkotlin.data.remote.response.CallResponse>
 
 }
