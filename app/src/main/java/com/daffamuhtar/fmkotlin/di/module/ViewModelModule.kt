@@ -15,7 +15,8 @@ val viewModelModule = module {
             get(named(ConstantsApp.BASE_URL_V1_0)),
             get(named(ConstantsApp.BASE_URL_V2_0)),
             get(named(ConstantsApp.BASE_URL_V2_0_REP)),
-            get(named(ConstantsApp.BASE_URL2))
+            get(named(ConstantsApp.BASE_URL2)),
+            get()
         )
     }
 

@@ -11,7 +11,10 @@ import com.daffamuhtar.fmkotlin.data.api.RepairCheckApiHelper
 import com.daffamuhtar.fmkotlin.data.api.RepairCheckApiHelperImpl
 import com.daffamuhtar.fmkotlin.data.api.RepairOnNonperiodApiHelper
 import com.daffamuhtar.fmkotlin.data.api.RepairOnNonperiodApiHelperImpl
+import com.daffamuhtar.fmkotlin.util.DynamicRetrofit
 import com.daffamuhtar.fmkotlin.util.NetworkHelper
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -42,6 +45,13 @@ val appModule = module {
             get()
         )
     }
+
+    single<DynamicRetrofit>()
+    {
+        DynamicRetrofit(get())
+    }
+
+    single <Gson> { return@single Gson() }
 
     single { provideNetworkHelper(androidContext()) }
 

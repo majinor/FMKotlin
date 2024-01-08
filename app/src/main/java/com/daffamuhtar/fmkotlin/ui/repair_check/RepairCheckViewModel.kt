@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.daffamuhtar.fmkotlin.app.ApiConfig
+import com.daffamuhtar.fmkotlin.app.Server
 import com.daffamuhtar.fmkotlin.constants.ConstantsApp
 
 import com.daffamuhtar.fmkotlin.data.repository.RepairCheckRepository
@@ -17,6 +18,7 @@ import com.daffamuhtar.fmkotlin.data.response.ErrorResponse
 import com.daffamuhtar.fmkotlin.data.response.RefreshTokenResponse
 import com.daffamuhtar.fmkotlin.services.AccountServices
 import com.daffamuhtar.fmkotlin.services.RepairServices
+import com.daffamuhtar.fmkotlin.util.DynamicRetrofit
 import com.daffamuhtar.fmkotlin.util.NetworkHelper
 import com.daffamuhtar.fmkotlin.util.Resource
 import com.google.gson.Gson
@@ -37,6 +39,7 @@ class RepairCheckViewModel(
     private val retrofitBlogV2: Retrofit,
     private val retrofitBlogV2Rep: Retrofit,
     private val retrofitInternalVendorV1: Retrofit,
+    private val dynamicRetrofit: DynamicRetrofit
 ) : ViewModel() {
 
     private val _repairList = MutableLiveData<Resource<List<RepairCheckResponse>>>()
@@ -59,24 +62,27 @@ class RepairCheckViewModel(
     ) {
         viewModelScope.launch {
 
+            dynamicRetrofit.setUrl(Server.URL1)
+
             val retrofit =
-                when (apiVersion) {
-                    ConstantsApp.BASE_URL_V1_0 -> {
-                        retrofitBlogV1
-                    }
-                    ConstantsApp.BASE_URL_V2_0 -> {
-                        retrofitBlogV2
-                    }
-                    ConstantsApp.BASE_URL_V2_0_REP -> {
-                        retrofitBlogV2Rep
-                    }
-                    ConstantsApp.BASE_URL2 -> {
-                        retrofitInternalVendorV1
-                    }
-                    else -> {
-                        retrofitBlogV1
-                    }
-                }
+//                when (apiVersion) {
+//                    ConstantsApp.BASE_URL_V1_0 -> {
+//                        retrofitBlogV1
+//                    }
+//                    ConstantsApp.BASE_URL_V2_0 -> {
+//                        retrofitBlogV2
+//                    }
+//                    ConstantsApp.BASE_URL_V2_0_REP -> {
+//                        retrofitBlogV2Rep
+//                    }
+//                    ConstantsApp.BASE_URL2 -> {
+//                        retrofitInternalVendorV1
+//                    }
+//                    else -> {
+//                        retrofitBlogV1
+                        dynamicRetrofit.retrofit
+//                    }
+//                }
 
 
             val services = retrofit.create(RepairServices::class.java)
