@@ -9,7 +9,20 @@ import androidx.lifecycle.ViewModel
 
 import com.daffamuhtar.fmkotlin.app.ApiConfig
 import com.daffamuhtar.fmkotlin.constants.ConstantsRepair
-import com.daffamuhtar.fmkotlin.data.response.*
+import com.daffamuhtar.fmkotlin.data.response.ErrorResponse
+import com.daffamuhtar.fmkotlin.data.response.RepairDetailActiveDriverResponse
+import com.daffamuhtar.fmkotlin.data.response.RepairDetailAfterCheckResponse
+import com.daffamuhtar.fmkotlin.data.response.RepairDetailAfterRepairComplainResponse
+import com.daffamuhtar.fmkotlin.data.response.RepairDetailAfterRepairInspectionResponse
+import com.daffamuhtar.fmkotlin.data.response.RepairDetailAfterRepairResponse
+import com.daffamuhtar.fmkotlin.data.response.RepairDetailAfterRepairWasteResponse
+import com.daffamuhtar.fmkotlin.data.response.RepairDetailMechanicInfoResponse
+import com.daffamuhtar.fmkotlin.data.response.RepairDetailNoteResponse
+import com.daffamuhtar.fmkotlin.data.response.RepairDetailPartResponse
+import com.daffamuhtar.fmkotlin.data.response.RepairDetailProblemResponse
+import com.daffamuhtar.fmkotlin.data.response.RepairDetailWorkshopInfoResponse
+import com.daffamuhtar.fmkotlin.data.response.TireConditionCategoryResponse
+import com.daffamuhtar.fmkotlin.data.response.TireInspectionItemResponse
 import com.daffamuhtar.fmkotlin.services.RepairServices
 import com.daffamuhtar.fmkotlin.services.TireServices
 import com.google.gson.GsonBuilder

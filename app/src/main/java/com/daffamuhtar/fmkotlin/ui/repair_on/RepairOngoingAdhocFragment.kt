@@ -8,7 +8,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.daffamuhtar.fmkotlin.constants.Constants
 import com.daffamuhtar.fmkotlin.constants.ConstantsApp
@@ -17,12 +20,17 @@ import com.daffamuhtar.fmkotlin.data.Filter
 import com.daffamuhtar.fmkotlin.data.Repair
 import com.daffamuhtar.fmkotlin.data.response.RepairOnAdhocResponse
 import com.daffamuhtar.fmkotlin.ui.adapter.FilterAdapter
+import com.daffamuhtar.fmkotlin.ui.adapter.LoadMoreAdapter
 import com.daffamuhtar.fmkotlin.ui.adapter.RepairAdapter
+import com.daffamuhtar.fmkotlin.ui.adapter.RepairNewAdapter
 import com.daffamuhtar.fmkotlin.ui.repair_detail.RepairDetailActivity
+import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class RepairOngoingAdhocFragment : Fragment() {
 
-    private lateinit var repairOngoingAdhocViewModel: RepairOngoingAdhocViewModel 
+//    private lateinit var repairOngoingAdhocViewCopyModel: RepairOngoingAdhocViewModel
+    private val repairOngoingAdhocViewCopyModel: RepairOngoingAdhocViewCopyModel by viewModel()
 
     private lateinit var binding: FragmentRepairOnAdhocBinding
     private lateinit var context: Context
@@ -30,7 +38,8 @@ class RepairOngoingAdhocFragment : Fragment() {
     private val repairList = ArrayList<Repair>()
     private val filterList = ArrayList<Filter>()
 
-    private val repairAdapter: RepairAdapter = RepairAdapter()
+    private val repairNewAdapter: RepairNewAdapter = RepairNewAdapter()
+//    private val repairAdapter: RepairAdapter = RepairAdapter()
     private val filterAdapter: FilterAdapter = FilterAdapter()
 
     override fun onCreateView(
@@ -46,89 +55,128 @@ class RepairOngoingAdhocFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         declare()
-        initViewModel()
+//        initViewModel()
         prepareFilter()
-        callData()
-    }
+//        callData()
+        binding.apply {
 
-    private fun callData() {
-        repairOngoingAdhocViewModel.getRepairAdhoc(context, ConstantsApp.BASE_URL_V2_0, "MEC-MBA-99")
-
-    }
-
-    private fun initViewModel() {
-        repairOngoingAdhocViewModel.repairList.observe(requireActivity()) {
-            if (it.isNotEmpty()) {
-                setReportResults(it)
-            } else {
-                binding.lyNotFound.visibility = View.VISIBLE
+            lifecycleScope.launch {
+                repairOngoingAdhocViewCopyModel.repairPaging.collect {
+                    repairNewAdapter.submitData(it)
+                }
             }
-        }
 
-        repairOngoingAdhocViewModel.isLoadingGetRepair.observe(requireActivity()) {
-            loading(it)
-        }
+//            repairAdapter.setOnItemClickListener {
+//                val direction =
+//                    MoviesFragmentDirections.actionMoviesFragmentToMovieDetailsFragment(it.id)
+//                findNavController().navigate(direction)
+//            }
 
-        binding.srCheck.setOnRefreshListener {
-            repairOngoingAdhocViewModel.getRepairAdhoc(context, ConstantsApp.BASE_URL_V2_0, "MEC-MBA-99")
+            lifecycleScope.launch {
+                repairNewAdapter.loadStateFlow.collect {
+                    val state = it.refresh
+                    srCheck.isRefreshing = state is LoadState.Loading
+                }
+            }
 
+
+            rvCheck.apply {
+                layoutManager = LinearLayoutManager(requireContext())
+                adapter = repairNewAdapter
+            }
+
+            rvCheck.adapter = repairNewAdapter.withLoadStateFooter(
+                LoadMoreAdapter {
+                    repairNewAdapter.retry()
+                }
+            )
+
+//            lifecycleScope.launch {
+//                repairOngoingAdhocViewCopyModel.repairPaging.collect {
+//                    repairAdapter.setAllLaporan(it)
+//                }
+//            }
         }
     }
 
+//    private fun callData() {
+//        this.repairOngoingAdhocViewCopyModel.getRepairAdhoc(context, ConstantsApp.BASE_URL_V2_0, "MEC-MBA-99")
+//
+//    }
+//
+//    private fun initViewModel() {
+//        this.repairOngoingAdhocViewCopyModel.repairList.observe(requireActivity()) {
+//            if (it.isNotEmpty()) {
+//                setReportResults(it)
+//            } else {
+//                binding.lyNotFound.visibility = View.VISIBLE
+//            }
+//        }
+//
+//        this.repairOngoingAdhocViewCopyModel.isLoadingGetRepair.observe(requireActivity()) {
+//            loading(it)
+//        }
+//
+//        binding.srCheck.setOnRefreshListener {
+//            this.repairOngoingAdhocViewCopyModel.getRepairAdhoc(context, ConstantsApp.BASE_URL_V2_0, "MEC-MBA-99")
+//
+//        }
+//    }
+//
     private fun declare() {
         context = requireActivity()
-        repairOngoingAdhocViewModel = ViewModelProvider(this)[RepairOngoingAdhocViewModel::class.java]
+//        this.repairOngoingAdhocViewCopyModel = ViewModelProvider(this)[RepairOngoingAdhocViewModel::class.java]
     }
 
     private fun loading(value: Boolean) {
         binding.srCheck.isRefreshing = value
     }
 
-    private fun setReportResults(repairs: List<RepairOnAdhocResponse>) {
-        repairList.clear()
-        val listReport = ArrayList<Repair>()
-
-        for (repair in repairs) {
-            repair.apply {
-                val getResult = Repair(
-                    orderId,
-                    spkId,
-                    pbId = null,
-                    stageId,
-                    stageName = null,
-                    vehicleId,
-                    vehicleBrand,
-                    vehicleType,
-                    vehicleVarian,
-                    vehicleYear,
-                    vehicleLicenseNumber,
-                    vehicleLambungId,
-                    vehicleDistrict,
-                    noteFromSA,
-                    workshopName = null,
-                    workshopLocation = null,
-                    startAssignment,
-                    additionalPartNote,
-                    startRepairOdometer,
-                    locationOption,
-                    isStoring,
-                    orderType = null,
-                    colorCode = null
-
-                )
-                listReport.add(getResult)
-            }
-        }
-        repairList.addAll(listReport)
-
-        if (repairList.isEmpty()) {
-            binding.lyNotFound.visibility = View.VISIBLE
-        } else {
-            binding.lyNotFound.visibility = View.GONE
-        }
-
-        setRecycler()
-    }
+//    private fun setReportResults(repairs: List<RepairOnAdhocResponse>) {
+//        repairList.clear()
+//        val listReport = ArrayList<Repair>()
+//
+//        for (repair in repairs) {
+//            repair.apply {
+//                val getResult = Repair(
+//                    orderId,
+//                    spkId,
+//                    pbId = null,
+//                    stageId,
+//                    stageName = null,
+//                    vehicleId,
+//                    vehicleBrand,
+//                    vehicleType,
+//                    vehicleVarian,
+//                    vehicleYear,
+//                    vehicleLicenseNumber,
+//                    vehicleLambungId,
+//                    vehicleDistrict,
+//                    noteFromSA,
+//                    workshopName = null,
+//                    workshopLocation = null,
+//                    startAssignment,
+//                    additionalPartNote,
+//                    startRepairOdometer,
+//                    locationOption,
+//                    isStoring,
+//                    orderType = null,
+//                    colorCode = null
+//
+//                )
+//                listReport.add(getResult)
+//            }
+//        }
+//        repairList.addAll(listReport)
+//
+//        if (repairList.isEmpty()) {
+//            binding.lyNotFound.visibility = View.VISIBLE
+//        } else {
+//            binding.lyNotFound.visibility = View.GONE
+//        }
+//
+//        setRecycler()
+//    }
 
     private fun prepareFilter() {
         filterList.add(
@@ -177,36 +225,36 @@ class RepairOngoingAdhocFragment : Fragment() {
         })
     }
 
-    private fun setRecycler() {
-        repairAdapter.setAllLaporan(repairList)
-
-        binding.rvCheck.layoutManager = LinearLayoutManager(context)
-        binding.rvCheck.adapter = repairAdapter
-
-        repairAdapter.setOnItemClickCallback(object : RepairAdapter.OnItemClickCallback {
-            override fun onItemClicked(data: Repair, position: Int) {
-                Toast.makeText(context, data.orderId, Toast.LENGTH_SHORT).show()
-                val intent = Intent(context, RepairDetailActivity::class.java)
-                intent.putExtra(Constants.EXTRA_SPKID, data.spkId)
-                intent.putExtra(Constants.EXTRA_ORDERID, data.orderId)
-                intent.putExtra(Constants.EXTRA_SPKID, data.spkId)
-                intent.putExtra(Constants.EXTRA_VID, data.vehicleId)
-                intent.putExtra(Constants.EXTRA_VBRAND, data.vehicleBrand)
-                intent.putExtra(Constants.EXTRA_VTYPE, data.vehicleType)
-                intent.putExtra(Constants.EXTRA_VVAR, data.vehicleVarian)
-                intent.putExtra(Constants.EXTRA_VYEAR, data.vehicleYear)
-                intent.putExtra(Constants.EXTRA_VLICEN, data.vehicleLicenseNumber)
-                intent.putExtra(Constants.EXTRA_VDIS, data.vehicleDistrict)
-                intent.putExtra(Constants.EXTRA_VLID, data.vehicleLambungId)
-                intent.putExtra(Constants.EXTRA_STAGEID, data.stageId.toInt())
-                intent.putExtra(Constants.EXTRA_STAGENAME, data.stageName)
-                intent.putExtra(Constants.EXTRA_LOCOPTION, data.locationOption)
-                intent.putExtra(Constants.EXTRA_SASSIGN, data.startAssignment)
-                intent.putExtra(Constants.EXTRA_ODO, data.startRepairOdometer)
-                intent.putExtra(Constants.EXTRA_ISSTORING, data.isStoring)
-                intent.putExtra(Constants.EXTRA_NOTESA, data.noteSA)
-                startActivity(intent)
-            }
-        })
-    }
+//    private fun setRecycler() {
+//        repairAdapter.setAllLaporan(repairList)
+//
+//        binding.rvCheck.layoutManager = LinearLayoutManager(context)
+//        binding.rvCheck.adapter = repairAdapter
+//
+//        repairAdapter.setOnItemClickCallback(object : RepairAdapter.OnItemClickCallback {
+//            override fun onItemClicked(data: Repair, position: Int) {
+//                Toast.makeText(context, data.orderId, Toast.LENGTH_SHORT).show()
+//                val intent = Intent(context, RepairDetailActivity::class.java)
+//                intent.putExtra(Constants.EXTRA_SPKID, data.spkId)
+//                intent.putExtra(Constants.EXTRA_ORDERID, data.orderId)
+//                intent.putExtra(Constants.EXTRA_SPKID, data.spkId)
+//                intent.putExtra(Constants.EXTRA_VID, data.vehicleId)
+//                intent.putExtra(Constants.EXTRA_VBRAND, data.vehicleBrand)
+//                intent.putExtra(Constants.EXTRA_VTYPE, data.vehicleType)
+//                intent.putExtra(Constants.EXTRA_VVAR, data.vehicleVarian)
+//                intent.putExtra(Constants.EXTRA_VYEAR, data.vehicleYear)
+//                intent.putExtra(Constants.EXTRA_VLICEN, data.vehicleLicenseNumber)
+//                intent.putExtra(Constants.EXTRA_VDIS, data.vehicleDistrict)
+//                intent.putExtra(Constants.EXTRA_VLID, data.vehicleLambungId)
+//                intent.putExtra(Constants.EXTRA_STAGEID, data.stageId.toInt())
+//                intent.putExtra(Constants.EXTRA_STAGENAME, data.stageName)
+//                intent.putExtra(Constants.EXTRA_LOCOPTION, data.locationOption)
+//                intent.putExtra(Constants.EXTRA_SASSIGN, data.startAssignment)
+//                intent.putExtra(Constants.EXTRA_ODO, data.startRepairOdometer)
+//                intent.putExtra(Constants.EXTRA_ISSTORING, data.isStoring)
+//                intent.putExtra(Constants.EXTRA_NOTESA, data.noteSA)
+//                startActivity(intent)
+//            }
+//        })
+//    }
 }

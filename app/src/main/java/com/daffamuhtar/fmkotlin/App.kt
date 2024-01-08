@@ -3,6 +3,7 @@ package com.daffamuhtar.fmkotlin
 import android.app.Application
 import com.daffamuhtar.fmkotlin.di.module.appModule
 import com.daffamuhtar.fmkotlin.di.module.repositoryModule
+import com.daffamuhtar.fmkotlin.di.module.storageModule
 import com.daffamuhtar.fmkotlin.di.module.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -19,6 +20,7 @@ class App : Application() {
                 listOf(
                     appModule,
                     repositoryModule,
+                    storageModule,
                     viewModelModule
                 )
             )

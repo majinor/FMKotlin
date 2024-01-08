@@ -2,6 +2,7 @@ package com.daffamuhtar.fmkotlin.constants
 
 object Constants {
     const val TAG = "TAG FM KOTLIN"
+    const val DB_NAME = "DB_MECHANIC_APP"
 
     //Ordertype
     const val ORDER_TYPE_ADHOC = "adhoc"

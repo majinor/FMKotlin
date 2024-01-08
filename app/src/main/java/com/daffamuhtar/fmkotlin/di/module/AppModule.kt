@@ -3,8 +3,12 @@ package com.daffamuhtar.fmkotlin.di.module
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import com.daffamuhtar.fmkotlin.BuildConfig
 import com.daffamuhtar.fmkotlin.app.Server
+import com.daffamuhtar.fmkotlin.appv2.data.local.MechanicDatabase
 import com.daffamuhtar.fmkotlin.constants.Constants
 import com.daffamuhtar.fmkotlin.constants.ConstantsApp
 import com.daffamuhtar.fmkotlin.data.api.RepairCheckApiHelper
@@ -12,6 +16,8 @@ import com.daffamuhtar.fmkotlin.data.api.RepairCheckApiHelperImpl
 import com.daffamuhtar.fmkotlin.data.api.RepairOnNonperiodApiHelper
 import com.daffamuhtar.fmkotlin.data.api.RepairOnNonperiodApiHelperImpl
 import com.daffamuhtar.fmkotlin.util.NetworkHelper
+import com.daffamuhtar.fmkotlin.appv2.data.remote.RepairApiServices
+import com.daffamuhtar.fmkotlin.appv2.data.remote.RepairRemoteMediator
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -21,9 +27,11 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 
 //=======
 
+@OptIn(ExperimentalPagingApi::class)
 val appModule = module {
 
     single { provideOkHttpClient() }
@@ -60,6 +68,42 @@ val appModule = module {
     single<SharedPreferences.Editor> {
         getSharedPrefs(androidApplication()).edit()
     }
+
+    single<RepairApiServices> {
+//        val client = OkHttpClient.Builder()
+//            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+//            .connectTimeout(120, TimeUnit.SECONDS)
+//            .readTimeout(120, TimeUnit.SECONDS)
+//            .build()
+
+        return@single Retrofit.Builder()
+            .baseUrl(Server.URL1)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(get())
+            .build()
+            .create()
+    }
+
+
+    // Provide the Pager instance
+    single {
+        Pager(
+            config = PagingConfig(pageSize = 10),
+            remoteMediator = get<RepairRemoteMediator>(),
+            pagingSourceFactory = { get<MechanicDatabase>().dao.pagingSource() }
+        )
+    }
+
+    // Provide the BeerRemoteMediator instance
+    single {
+        RepairRemoteMediator(
+            repairDb = get(),
+            repairApiServices = get()
+        )
+    }
+
+    // Other dependencies if needed
+
 }
 
 
