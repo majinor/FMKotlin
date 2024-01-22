@@ -35,10 +35,6 @@ import java.io.IOException
 class RepairCheckViewModel(
     private val repairCheckRepository: RepairCheckRepository,
     private val networkHelper: NetworkHelper,
-    private val retrofitBlogV1: Retrofit,
-    private val retrofitBlogV2: Retrofit,
-    private val retrofitBlogV2Rep: Retrofit,
-    private val retrofitInternalVendorV1: Retrofit,
     private val dynamicRetrofit: DynamicRetrofit
 ) : ViewModel() {
 
@@ -105,7 +101,7 @@ class RepairCheckViewModel(
                                     .create().toJson(responseErrorBody)
                             )
                             val converter: Converter<ResponseBody?, ErrorResponse> =
-                                this@RepairCheckViewModel.retrofitBlogV1.responseBodyConverter(
+                                this@RepairCheckViewModel.dynamicRetrofit.retrofit.responseBodyConverter(
                                     ErrorResponse::class.java,
                                     arrayOfNulls<Annotation>(0)
                                 )
