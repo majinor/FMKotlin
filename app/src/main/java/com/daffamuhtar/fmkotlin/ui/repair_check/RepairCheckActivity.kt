@@ -7,15 +7,14 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.PackageManagerCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.daffamuhtar.fmkotlin.app.ApiConfig
 import com.daffamuhtar.fmkotlin.constants.Constants
 import com.daffamuhtar.fmkotlin.constants.ConstantsApp
 import com.daffamuhtar.fmkotlin.databinding.ActivityRepairCheckBinding
-import com.daffamuhtar.fmkotlin.data.Filter
-import com.daffamuhtar.fmkotlin.data.Repair
+import com.daffamuhtar.fmkotlin.data.model.Filter
+import com.daffamuhtar.fmkotlin.data.model.Repair
 import com.daffamuhtar.fmkotlin.data.response.RepairCheckResponse
 import com.daffamuhtar.fmkotlin.ui.adapter.FilterAdapter
 import com.daffamuhtar.fmkotlin.ui.adapter.RepairAdapter

@@ -1,4 +1,4 @@
-package com.daffamuhtar.fmkotlin.data
+package com.daffamuhtar.fmkotlin.data.model
 
 data class AuthTokenEntity(
     val accessToken: String,

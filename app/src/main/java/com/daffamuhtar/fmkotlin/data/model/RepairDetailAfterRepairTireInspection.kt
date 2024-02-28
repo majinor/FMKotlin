@@ -1,7 +1,4 @@
-package com.daffamuhtar.fmkotlin.data
-
-import com.daffamuhtar.fmkotlin.data.TireConditionCategory
-import com.google.gson.annotations.SerializedName
+package com.daffamuhtar.fmkotlin.data.model
 
 data class RepairDetailAfterRepairTireInspection(
 

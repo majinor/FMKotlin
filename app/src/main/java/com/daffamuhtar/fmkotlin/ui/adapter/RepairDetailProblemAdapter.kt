@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.daffamuhtar.fmkotlin.databinding.ItemRepairDetailProblemBinding
-import com.daffamuhtar.fmkotlin.data.RepairDetailProblem
+import com.daffamuhtar.fmkotlin.data.model.RepairDetailProblem
 
 class RepairDetailProblemAdapter() : RecyclerView.Adapter<RepairDetailProblemAdapter.ItemViewHolder>() {
 

@@ -21,6 +21,24 @@ interface RepairServices {
         @Query("stageId") stageId: Int
     ): Call<List<RepairOnAdhocResponse>>
 
+    @GET("api/mechanics/ongoing_order_v2")
+    fun getRepairOngoingNew(
+        @Query("loggedMechanicId") loggedMechanicId: String,
+        @Query("orderType") orderType: String?,
+        @Query("stageGroup") stageGroup: String,
+        @Query("page") page: Int,
+        @Query("perpage") perpage: Int,
+    ): Call<RepairOngoingMetaDataResponse>
+
+    @GET("api/mechanics/ongoing_order_v2")
+    fun getRepairOngoingNew2(
+        @Query("loggedMechanicId") loggedMechanicId: String,
+        @Query("orderType") orderType: String?,
+        @Query("stageGroup") stageGroup: String,
+        @Query("page") page: Int,
+        @Query("perpage") perpage: Int,
+    ): Response<RepairOngoingMetaDataResponse>
+
     @GET("api/mechanics/open_repair")
     fun getRepairAdhoc(
         @Query("loggedMechanicId") loggedMechanicId: String,

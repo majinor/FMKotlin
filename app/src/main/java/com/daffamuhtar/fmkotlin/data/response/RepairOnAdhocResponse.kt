@@ -1,7 +1,10 @@
 package com.daffamuhtar.fmkotlin.data.response
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class RepairOnAdhocResponse(
 
     @SerializedName("orderId")
@@ -40,7 +43,7 @@ data class RepairOnAdhocResponse(
     @SerializedName("noteFromSA")
     val noteFromSA: String,
 
-    @SerializedName("startAssignment")
+    @SerializedName("scheduledDate")
     val startAssignment: String,
 
     @SerializedName("additionalPartNote")
@@ -54,5 +57,5 @@ data class RepairOnAdhocResponse(
 
     @SerializedName("isStoring")
     val isStoring: String
-)
+) : Parcelable
 

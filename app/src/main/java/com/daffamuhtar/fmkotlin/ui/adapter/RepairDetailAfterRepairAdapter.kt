@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.daffamuhtar.fmkotlin.constants.ConstantsRepair
 import com.daffamuhtar.fmkotlin.databinding.ItemRepairDetailAfterRepairBinding
-import com.daffamuhtar.fmkotlin.data.RepairDetailAfterRepair
+import com.daffamuhtar.fmkotlin.data.model.RepairDetailAfterRepair
 import com.daffamuhtar.fmkotlin.util.RepairHelper
 
 class RepairDetailAfterRepairAdapter() :

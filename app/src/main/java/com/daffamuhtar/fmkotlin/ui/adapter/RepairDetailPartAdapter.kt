@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.daffamuhtar.fmkotlin.databinding.ItemRepairDetailPartBinding
-import com.daffamuhtar.fmkotlin.data.RepairDetailPart
+import com.daffamuhtar.fmkotlin.data.model.RepairDetailPart
 
 class RepairDetailPartAdapter() : RecyclerView.Adapter<RepairDetailPartAdapter.ItemViewHolder>() {
 
@@ -20,7 +20,7 @@ class RepairDetailPartAdapter() : RecyclerView.Adapter<RepairDetailPartAdapter.I
 
 
     interface OnItemClickCallback {
-        fun onItemClicked(data: RepairDetailPart,position: Int)
+        fun onItemClicked(data: RepairDetailPart, position: Int)
     }
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {

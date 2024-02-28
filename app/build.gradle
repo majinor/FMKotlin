@@ -1,6 +1,9 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-android'
+    id 'kotlin-parcelize'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -99,10 +102,23 @@ dependencies {
     //koin
     implementation "io.insert-koin:koin-android:3.3.3"
 
+    //APP Update
+    implementation 'com.google.android.play:app-update:2.1.0'
+    implementation 'com.google.android.play:app-update-ktx:2.1.0'
+
     //
     implementation 'androidx.activity:activity-ktx:1.7.2'
 
-// Coroutine
+    // Coroutine
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4"
+
+    implementation "androidx.paging:paging-runtime-ktx:3.2.1"
+    //optional to handle Serializable
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
+    // Room
+    implementation "androidx.room:room-ktx:2.5.1"
+    kapt "androidx.room:room-compiler:2.5.1"
+    implementation "androidx.room:room-paging:2.5.1"
 }

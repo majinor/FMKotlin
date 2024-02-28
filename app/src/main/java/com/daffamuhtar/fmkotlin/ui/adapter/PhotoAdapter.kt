@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.daffamuhtar.fmkotlin.databinding.ItemPhotoBinding
-import com.daffamuhtar.fmkotlin.data.Photo
+import com.daffamuhtar.fmkotlin.data.model.Photo
 import com.daffamuhtar.fmkotlin.util.PhotoHelper
 
 class PhotoAdapter() : RecyclerView.Adapter<PhotoAdapter.LaporanViewHolder>() {

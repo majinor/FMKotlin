@@ -1,4 +1,4 @@
-package com.daffamuhtar.fmkotlin.ui.repair_check
+package com.daffamuhtar.fmkotlin.ui.repair_ongoing
 
 import android.content.Context
 import android.content.Intent
@@ -11,11 +11,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.daffamuhtar.fmkotlin.constants.Constants
 import com.daffamuhtar.fmkotlin.constants.ConstantsApp
 import com.daffamuhtar.fmkotlin.databinding.ActivityRepairOngoingBinding
-import com.daffamuhtar.fmkotlin.data.Filter
-import com.daffamuhtar.fmkotlin.data.Repair
+import com.daffamuhtar.fmkotlin.data.model.Filter
+import com.daffamuhtar.fmkotlin.data.model.HorizontalCalendar
+import com.daffamuhtar.fmkotlin.data.model.Repair
 import com.daffamuhtar.fmkotlin.data.response.RepairOnAdhocResponse
-import com.daffamuhtar.fmkotlin.ui.Ongoing.RepairOngoingViewModel
 import com.daffamuhtar.fmkotlin.ui.adapter.FilterAdapter
+import com.daffamuhtar.fmkotlin.ui.adapter.HorizontalCalendarAdapter
 import com.daffamuhtar.fmkotlin.ui.adapter.RepairAdapter
 import com.daffamuhtar.fmkotlin.ui.repair_detail.RepairDetailActivity
 
@@ -29,9 +30,11 @@ class RepairOngoingActivity : AppCompatActivity() {
 
     private val repairList = ArrayList<Repair>()
     private val filterList = ArrayList<Filter>()
+    private val calendarList = ArrayList<HorizontalCalendar>()
 
     private val repairAdapter: RepairAdapter = RepairAdapter()
     private val filterAdapter: FilterAdapter = FilterAdapter()
+    private lateinit var horizontalCalendarAdapter: HorizontalCalendarAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,13 +44,32 @@ class RepairOngoingActivity : AppCompatActivity() {
 
         declare()
         initViewModel()
+        prepareCalendarView()
         prepareFilter()
         callData()
     }
 
+    private fun prepareCalendarView() {
+
+        calendarList.add(HorizontalCalendar("2024-2-1",5,true))
+        calendarList.add(HorizontalCalendar("2024-2-2",0,false))
+        calendarList.add(HorizontalCalendar("2024-2-3",0,false))
+        calendarList.add(HorizontalCalendar("2024-2-4",1,false))
+        calendarList.add(HorizontalCalendar("2024-2-5",0,false))
+        calendarList.add(HorizontalCalendar("2024-2-6",0,false))
+        calendarList.add(HorizontalCalendar("2024-2-7",1,false))
+        calendarList.add(HorizontalCalendar("2024-2-8",1,false))
+
+        horizontalCalendarAdapter.setItems(calendarList)
+
+        binding.rvCoCalendar.layoutManager = LinearLayoutManager(this@RepairOngoingActivity,LinearLayoutManager.HORIZONTAL,false)
+        binding.rvCoCalendar.adapter = horizontalCalendarAdapter
+
+    }
+
     private fun callData() {
 //        checkViewModel.getRepairOngoing(this, ConstantaApp.BASE_URL_V2_0, "MEC-MBA-99")
-        repairOngoingViewModel.getRepairOngoing(this, ConstantsApp.BASE_URL_V2_0, "MEC-MBA-99")
+        repairOngoingViewModel.getRepairOngoingMetaData(this, ConstantsApp.BASE_URL_V2_0, "MEC-MBA-99")
 
     }
 
@@ -65,12 +87,13 @@ class RepairOngoingActivity : AppCompatActivity() {
         }
 
         binding.srCheck.setOnRefreshListener {
-            repairOngoingViewModel.getRepairOngoing(this, ConstantsApp.BASE_URL_V2_0, "MEC-MBA-99")
+            repairOngoingViewModel.getRepairOngoingMetaData(this, ConstantsApp.BASE_URL_V2_0, "MEC-MBA-99")
 
         }
     }
 
     private fun declare() {
+        horizontalCalendarAdapter = HorizontalCalendarAdapter(context)
         repairOngoingViewModel = ViewModelProvider(this)[RepairOngoingViewModel::class.java]
     }
 
@@ -101,7 +124,7 @@ class RepairOngoingActivity : AppCompatActivity() {
                     noteFromSA,
                     workshopName = null,
                     workshopLocation = null,
-                    "2021-08-31 10:00:00",
+                    startAssignment,
                     additionalPartNote = null,
                     startRepairOdometer = null,
                     locationOption,

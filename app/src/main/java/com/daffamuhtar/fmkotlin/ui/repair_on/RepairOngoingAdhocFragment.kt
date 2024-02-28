@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.daffamuhtar.fmkotlin.constants.Constants
 import com.daffamuhtar.fmkotlin.constants.ConstantsApp
 import com.daffamuhtar.fmkotlin.databinding.FragmentRepairOnAdhocBinding
-import com.daffamuhtar.fmkotlin.data.Filter
-import com.daffamuhtar.fmkotlin.data.Repair
+import com.daffamuhtar.fmkotlin.data.model.Filter
+import com.daffamuhtar.fmkotlin.data.model.Repair
 import com.daffamuhtar.fmkotlin.data.response.RepairOnAdhocResponse
 import com.daffamuhtar.fmkotlin.ui.adapter.FilterAdapter
 import com.daffamuhtar.fmkotlin.ui.adapter.RepairAdapter

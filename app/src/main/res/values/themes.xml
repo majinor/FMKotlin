@@ -17,6 +17,11 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="text_17_extra_bold">
+        <item name="android:fontFamily">@font/messinasans_black</item>
+        <item name="android:textSize">17sp</item>
+    </style>
+
     <style name="shapeSquareRoundedCorners" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">10dp</item>

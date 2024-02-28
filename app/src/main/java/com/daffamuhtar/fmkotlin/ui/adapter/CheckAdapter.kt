@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.daffamuhtar.fmkotlin.R
-import com.daffamuhtar.fmkotlin.data.Repair
+import com.daffamuhtar.fmkotlin.data.model.Repair
 
 class CheckAdapter(
     private val mContext: Context,

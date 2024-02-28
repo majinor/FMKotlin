@@ -1,6 +1,6 @@
 package com.daffamuhtar.fmkotlin.data.response
 
-import com.daffamuhtar.fmkotlin.data.TireConditionCategory
+import com.daffamuhtar.fmkotlin.data.model.TireConditionCategory
 import com.google.gson.annotations.SerializedName
 
 data class TireInspectionItemResponse(
