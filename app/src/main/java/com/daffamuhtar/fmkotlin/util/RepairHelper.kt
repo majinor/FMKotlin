@@ -105,7 +105,7 @@ class RepairHelper {
 //
 //                } else {
                 val parser = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", locale)
-                val formatter = SimpleDateFormat("EEEE, d MMM\nHH:mm", locale)
+                val formatter = SimpleDateFormat("EEEE, d MMM yyyy\nHH:mm", locale)
                 repairDate = parser.parse(date)?.let { formatter.format(it) }.toString()
 
             } else {

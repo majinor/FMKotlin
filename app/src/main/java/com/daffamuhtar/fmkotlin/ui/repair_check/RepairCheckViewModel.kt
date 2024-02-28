@@ -58,27 +58,30 @@ class RepairCheckViewModel(
     ) {
         viewModelScope.launch {
 
-            dynamicRetrofit.setUrl(Server.URL1)
 
-            val retrofit =
-//                when (apiVersion) {
-//                    ConstantsApp.BASE_URL_V1_0 -> {
-//                        retrofitBlogV1
-//                    }
-//                    ConstantsApp.BASE_URL_V2_0 -> {
-//                        retrofitBlogV2
-//                    }
-//                    ConstantsApp.BASE_URL_V2_0_REP -> {
-//                        retrofitBlogV2Rep
-//                    }
-//                    ConstantsApp.BASE_URL2 -> {
-//                        retrofitInternalVendorV1
-//                    }
-//                    else -> {
-//                        retrofitBlogV1
-                        dynamicRetrofit.retrofit
-//                    }
-//                }
+            when (apiVersion) {
+                ConstantsApp.BASE_URL_V1_0 -> {
+                    dynamicRetrofit.setUrl(Server.URL1)
+                }
+
+                ConstantsApp.BASE_URL_V2_0 -> {
+                    dynamicRetrofit.setUrl(Server.URL1)
+                }
+
+                ConstantsApp.BASE_URL_V2_0_REP -> {
+                    dynamicRetrofit.setUrl(Server.URL1_V20_REP)
+                }
+
+                ConstantsApp.BASE_URL2 -> {
+                    dynamicRetrofit.setUrl(Server.URL2)
+                }
+
+                else -> {
+                    dynamicRetrofit.setUrl(Server.URL1)
+                }
+            }
+
+            val retrofit = dynamicRetrofit.retrofit
 
 
             val services = retrofit.create(RepairServices::class.java)
@@ -86,7 +89,7 @@ class RepairCheckViewModel(
             _repairList.postValue(Resource.loading(null))
             if (networkHelper.isNetworkConnected()) {
 
-                repairCheckRepository.getCheckRepair(services,userId).let {
+                repairCheckRepository.getCheckRepair(services, userId).let {
                     if (it.isSuccessful) {
                         _repairList.postValue(Resource.success(it.body(), it.code()))
                     } else {

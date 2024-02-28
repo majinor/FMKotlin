@@ -1,5 +1,6 @@
 package com.daffamuhtar.fmkotlin.services
 
+import com.daffamuhtar.fmkotlin.appv2.data.remote.RepairMetaDataResponse
 import com.daffamuhtar.fmkotlin.data.response.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -8,6 +9,15 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface RepairServices {
+
+    @GET("api/mechanics/ongoing_order_v2")
+    suspend fun getRepairOngoingNew3(
+        @Query("loggedMechanicId") loggedMechanicId: String,
+        @Query("orderType") orderType: String?,
+        @Query("stageGroup") stageGroup: String?,
+        @Query("page") page: Int,
+        @Query("perpage") perpage: Int,
+    ): RepairMetaDataResponse
 
     @GET("api/mechanics/open_wo")
     suspend fun getCheckRepair(

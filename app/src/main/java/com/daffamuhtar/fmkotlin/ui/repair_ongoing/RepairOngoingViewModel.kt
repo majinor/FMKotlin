@@ -7,13 +7,20 @@ import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.cachedIn
+import androidx.paging.map
 
 import com.daffamuhtar.fmkotlin.app.ApiConfig
+import com.daffamuhtar.fmkotlin.appv2.data.local.RepairEntity
+import com.daffamuhtar.fmkotlin.appv2.data.mapper.toRepair
 import com.daffamuhtar.fmkotlin.data.response.ErrorResponse
 import com.daffamuhtar.fmkotlin.data.response.RepairOnAdhocResponse
 import com.daffamuhtar.fmkotlin.data.response.RepairOngoingMetaDataResponse
 import com.daffamuhtar.fmkotlin.services.RepairServices
 import com.google.gson.GsonBuilder
+import kotlinx.coroutines.flow.map
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -21,7 +28,16 @@ import retrofit2.Converter
 import retrofit2.Response
 import java.io.IOException
 
-class RepairOngoingViewModel : ViewModel() {
+class RepairOngoingViewModel(
+    pager: Pager<Int, RepairEntity>
+) : ViewModel() {
+
+    val beerPagingFlow = pager
+        .flow
+        .map { pagingData ->
+            pagingData.map { it.toRepair() }
+        }
+        .cachedIn(viewModelScope)
 
     private val _isLoadingGetRepairOngoing = MutableLiveData<Boolean>()
     val isLoadingGetRepairOngoing: LiveData<Boolean> = _isLoadingGetRepairOngoing
@@ -119,7 +135,7 @@ class RepairOngoingViewModel : ViewModel() {
 
         val retrofit = ApiConfig.getRetrofit(context, apiVersion)
         val services = retrofit?.create(RepairServices::class.java)
-        val client = services?.getRepairOngoingNew(userId, null, intArrayOf(12,13,18,19,20).contentToString(),1,5)
+        val client = services?.getRepairOngoingNew(userId, null, intArrayOf(12,13,18,19,20).contentToString(),1,10)
 
         client?.enqueue(object : Callback<RepairOngoingMetaDataResponse> {
             override fun onResponse(

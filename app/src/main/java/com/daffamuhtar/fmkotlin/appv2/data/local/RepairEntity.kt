@@ -1,10 +1,16 @@
-package com.daffamuhtar.fmkotlin.data.model
+package com.daffamuhtar.fmkotlin.appv2.data.local
 
-data class Repair(
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity
+data class RepairEntity(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int,
     val orderId: String,
     val spkId: String?,
     val pbId: String?,
-    val stageId: String,
+    val stageId: Int,
     val stageName: String?,
     val vehicleId: String,
     val vehicleBrand: String,
@@ -14,15 +20,14 @@ data class Repair(
     val vehicleLicenseNumber: String,
     val vehicleLambungId: String?,
     val vehicleDistrict: String,
-    val noteSA: String?,
+    val noteFromSA: String?,
     val workshopName: String?,
     val workshopLocation: String?,
-    val startAssignment: String,
+    val scheduledDate: String,
     val additionalPartNote: String?,
     val startRepairOdometer: Int?,
     val locationOption: String?,
     val isStoring: String?,
     val orderType: String?,
-    val colorCode: String?,
-
-    )
+    val colorCode: String?
+)
