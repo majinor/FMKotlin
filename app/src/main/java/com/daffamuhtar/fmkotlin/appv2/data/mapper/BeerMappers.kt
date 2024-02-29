@@ -1,6 +1,6 @@
 package com.daffamuhtar.fmkotlin.appv2.data.mapper
 
-import com.daffamuhtar.fmkotlin.appv2.data.local.RepairEntity
+import com.daffamuhtar.fmkotlin.appv4.model.RepairEntity
 import com.daffamuhtar.fmkotlin.appv2.data.remote.RepairResponse
 import com.daffamuhtar.fmkotlin.data.model.Repair
 
@@ -55,7 +55,7 @@ fun RepairEntity.toRepair(): Repair {
         workshopLocation = workshopLocation,
         startAssignment = scheduledDate,
         additionalPartNote = additionalPartNote,
-        startRepairOdometer = startRepairOdometer,
+        startRepairOdometer = startRepairOdometer.toString(),
         locationOption = locationOption,
         isStoring = isStoring,
         orderType = orderType,

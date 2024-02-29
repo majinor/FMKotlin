@@ -35,7 +35,7 @@ interface RepairServices {
     fun getRepairOngoingNew(
         @Query("loggedMechanicId") loggedMechanicId: String,
         @Query("orderType") orderType: String?,
-        @Query("stageGroup") stageGroup: String,
+        @Query("stageGroupId") stageGroup: String,
         @Query("page") page: Int,
         @Query("perpage") perpage: Int,
     ): Call<RepairOngoingMetaDataResponse>

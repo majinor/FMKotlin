@@ -19,7 +19,7 @@ data class Repair(
     val workshopLocation: String?,
     val startAssignment: String,
     val additionalPartNote: String?,
-    val startRepairOdometer: Int?,
+    val startRepairOdometer: String?,
     val locationOption: String?,
     val isStoring: String?,
     val orderType: String?,

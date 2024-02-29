@@ -1,4 +1,4 @@
-package com.daffamuhtar.fmkotlin.appv2.data.local
+package com.daffamuhtar.fmkotlin.appv4.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

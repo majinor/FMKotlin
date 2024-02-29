@@ -13,7 +13,7 @@ import androidx.paging.cachedIn
 import androidx.paging.map
 
 import com.daffamuhtar.fmkotlin.app.ApiConfig
-import com.daffamuhtar.fmkotlin.appv2.data.local.RepairEntity
+import com.daffamuhtar.fmkotlin.appv4.model.RepairEntity
 import com.daffamuhtar.fmkotlin.appv2.data.mapper.toRepair
 import com.daffamuhtar.fmkotlin.data.response.ErrorResponse
 import com.daffamuhtar.fmkotlin.data.response.RepairOnAdhocResponse
@@ -29,15 +29,7 @@ import retrofit2.Response
 import java.io.IOException
 
 class RepairOngoingViewModel(
-    pager: Pager<Int, RepairEntity>
 ) : ViewModel() {
-
-    val beerPagingFlow = pager
-        .flow
-        .map { pagingData ->
-            pagingData.map { it.toRepair() }
-        }
-        .cachedIn(viewModelScope)
 
     private val _isLoadingGetRepairOngoing = MutableLiveData<Boolean>()
     val isLoadingGetRepairOngoing: LiveData<Boolean> = _isLoadingGetRepairOngoing
@@ -135,7 +127,7 @@ class RepairOngoingViewModel(
 
         val retrofit = ApiConfig.getRetrofit(context, apiVersion)
         val services = retrofit?.create(RepairServices::class.java)
-        val client = services?.getRepairOngoingNew(userId, null, intArrayOf(12,13,18,19,20).contentToString(),1,10)
+        val client = services?.getRepairOngoingNew(userId, null, "on_repair",1,20)
 
         client?.enqueue(object : Callback<RepairOngoingMetaDataResponse> {
             override fun onResponse(

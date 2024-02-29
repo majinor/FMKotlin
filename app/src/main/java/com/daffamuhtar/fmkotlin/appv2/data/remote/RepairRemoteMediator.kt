@@ -5,8 +5,8 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
-import com.daffamuhtar.fmkotlin.appv2.data.local.FleetifyMechanicDatabase
-import com.daffamuhtar.fmkotlin.appv2.data.local.RepairEntity
+import com.daffamuhtar.fmkotlin.appv4.repository.local.FleetifyMechanicDatabase
+import com.daffamuhtar.fmkotlin.appv4.model.RepairEntity
 import com.daffamuhtar.fmkotlin.appv2.data.mapper.toRepairEntity
 import com.daffamuhtar.fmkotlin.services.RepairServices
 import retrofit2.HttpException
