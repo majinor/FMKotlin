@@ -5,15 +5,16 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
-import com.daffamuhtar.fmkotlin.appv4.repository.local.FleetifyMechanicDatabase
-import com.daffamuhtar.fmkotlin.appv4.model.RepairEntity
+import com.daffamuhtar.fmkotlin.appv2.data.local.FleetifyMechanicDatabase
+import com.daffamuhtar.fmkotlin.appv2.data.local.RepairEntity
 import com.daffamuhtar.fmkotlin.appv2.data.mapper.toRepairEntity
 import com.daffamuhtar.fmkotlin.services.RepairServices
 import retrofit2.HttpException
 import java.io.IOException
+var page : Int = 1
 
 @OptIn(ExperimentalPagingApi::class)
-class BeerRemoteMediator(
+class RepairRemoteMediator(
     private val fleetifyMechanicDatabase: FleetifyMechanicDatabase,
     private val repairServices: RepairServices
 ): RemoteMediator<Int, RepairEntity>() {
@@ -33,7 +34,7 @@ class BeerRemoteMediator(
                     if(lastItem == null) {
                         1
                     } else {
-                        (lastItem.id / state.config.pageSize) + 1
+                        nextPage()
                     }
                 }
             }
@@ -41,9 +42,9 @@ class BeerRemoteMediator(
             val repairs = repairServices.getRepairOngoingNew3(
                 loggedMechanicId = "MEC-MBA-99",
                 orderType = null,
-                stageGroup = null,
+                stageGroupId = null,
                 page = loadKey,
-                perpage = 10
+                perpage = 5
             )
 
             fleetifyMechanicDatabase.withTransaction {
@@ -62,5 +63,11 @@ class BeerRemoteMediator(
         } catch(e: HttpException) {
             MediatorResult.Error(e)
         }
+    }
+
+    private fun nextPage(): Int {
+        page = page +1
+        return page
+
     }
 }

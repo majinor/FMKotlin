@@ -1,10 +1,9 @@
-package com.daffamuhtar.fmkotlin.appv4.repository.local
+package com.daffamuhtar.fmkotlin.appv2.data.local
 
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Upsert
-import com.daffamuhtar.fmkotlin.appv4.model.RepairEntity
 
 @Dao
 interface RepairDao {

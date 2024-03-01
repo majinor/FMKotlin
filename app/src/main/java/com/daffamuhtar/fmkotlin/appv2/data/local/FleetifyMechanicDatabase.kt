@@ -1,8 +1,7 @@
-package com.daffamuhtar.fmkotlin.appv4.repository.local
+package com.daffamuhtar.fmkotlin.appv2.data.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.daffamuhtar.fmkotlin.appv4.model.RepairEntity
 
 
 @Database(

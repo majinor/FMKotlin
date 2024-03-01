@@ -1,6 +1,6 @@
 package com.daffamuhtar.fmkotlin.appv2.data.mapper
 
-import com.daffamuhtar.fmkotlin.appv4.model.RepairEntity
+import com.daffamuhtar.fmkotlin.appv2.data.local.RepairEntity
 import com.daffamuhtar.fmkotlin.appv2.data.remote.RepairResponse
 import com.daffamuhtar.fmkotlin.data.model.Repair
 

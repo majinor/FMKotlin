@@ -1,6 +1,8 @@
 package com.daffamuhtar.fmkotlin.services
 
 import com.daffamuhtar.fmkotlin.appv2.data.remote.RepairMetaDataResponse
+import com.daffamuhtar.fmkotlin.appv3.MetaDataResponse
+import com.daffamuhtar.fmkotlin.appv3.RepairResponse3
 import com.daffamuhtar.fmkotlin.data.response.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -14,10 +16,19 @@ interface RepairServices {
     suspend fun getRepairOngoingNew3(
         @Query("loggedMechanicId") loggedMechanicId: String,
         @Query("orderType") orderType: String?,
-        @Query("stageGroup") stageGroup: String?,
+        @Query("stageGroupId") stageGroupId: String?,
         @Query("page") page: Int,
         @Query("perpage") perpage: Int,
     ): RepairMetaDataResponse
+
+    @GET("api/mechanics/ongoing_order_v2")
+    suspend fun getRepairOngoingNew4(
+        @Query("loggedMechanicId") loggedMechanicId: String,
+        @Query("orderType") orderType: String?,
+        @Query("stageGroup") stageGroup: String?,
+        @Query("page") page: Int,
+        @Query("perpage") perpage: Int,
+    ): MetaDataResponse<RepairResponse3>
 
     @GET("api/mechanics/open_wo")
     suspend fun getCheckRepair(
@@ -35,7 +46,7 @@ interface RepairServices {
     fun getRepairOngoingNew(
         @Query("loggedMechanicId") loggedMechanicId: String,
         @Query("orderType") orderType: String?,
-        @Query("stageGroupId") stageGroup: String,
+        @Query("stageGroup") stageGroup: String,
         @Query("page") page: Int,
         @Query("perpage") perpage: Int,
     ): Call<RepairOngoingMetaDataResponse>

@@ -3,6 +3,7 @@ package com.daffamuhtar.fmkotlin.di.module
 import com.daffamuhtar.fmkotlin.constants.ConstantsApp
 import com.daffamuhtar.fmkotlin.ui.repair_check.RepairCheckViewModel
 import com.daffamuhtar.fmkotlin.ui.repair_on.RepairOngoingNonperiodViewModel
+import com.daffamuhtar.fmkotlin.ui.repair_ongoing.RepairOngoingViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -13,6 +14,12 @@ val viewModelModule = module {
             get(),
             get(),
             get()
+        )
+    }
+
+    viewModel {
+        RepairOngoingViewModel(
+            get(),
         )
     }
 

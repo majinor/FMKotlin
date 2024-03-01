@@ -39,10 +39,9 @@ class Server {
         //    ==========================STAGING=================
         //    public static final String URL = "https://api-staging-v10.fleetify.id/";
         //    ---------------------------------------------
-//        var URL1 = "https://api-staging-v10.fleetify.id/"
+        var URL1 = "https://api-staging-v10.fleetify.id/"
         var URL2 = "https://api-app-staging-v10.fleetify.id/"
-
-        //        var URL1_V20 = "https://api-staging-v20-dot-fair-catcher-256606.el.r.appspot.com/"
+        var URL1_V20 = "https://api-staging-v20-dot-fair-catcher-256606.el.r.appspot.com/"
         var URL1_V20_REP = "https://api-staging-v20-dot-fair-catcher-256606.el.r.appspot.com/"
 
 
@@ -90,10 +89,10 @@ class Server {
         //    public static String URL2 = "http://192.168.0.48/fleetify_api_internal_vendor/";
         //    public static String URL1_V20 = "http://192.168.0.48:3000/";
 
-        var URL1 = "http://192.168.0.118/fleetify_api/";
+//        var URL1 = "http://192.168.0.118/fleetify_api/";
 
         //            public static String URL2 = "http://192.168.0.48/fleetify_api_internal_vendor/";
-        var URL1_V20 = "http://192.168.0.118:3000/";
+//        var URL1_V20 = "http://192.168.0.118:3000/";
 
         //    public static String URL1 = "http://192.168.43.180/fleetify_api/";
         //    public static String URL2 = "http://192.168.43.180/fleetify_api_internal_vendor/";

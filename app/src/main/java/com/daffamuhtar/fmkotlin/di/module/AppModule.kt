@@ -3,14 +3,21 @@ package com.daffamuhtar.fmkotlin.di.module
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.room.Room
 import com.daffamuhtar.fmkotlin.BuildConfig
 import com.daffamuhtar.fmkotlin.app.Server
+import com.daffamuhtar.fmkotlin.appv2.data.local.FleetifyMechanicDatabase
+import com.daffamuhtar.fmkotlin.appv2.data.remote.RepairRemoteMediator
 import com.daffamuhtar.fmkotlin.constants.Constants
 import com.daffamuhtar.fmkotlin.constants.ConstantsApp
 import com.daffamuhtar.fmkotlin.data.api.RepairCheckApiHelper
 import com.daffamuhtar.fmkotlin.data.api.RepairCheckApiHelperImpl
 import com.daffamuhtar.fmkotlin.data.api.RepairOnNonperiodApiHelper
 import com.daffamuhtar.fmkotlin.data.api.RepairOnNonperiodApiHelperImpl
+import com.daffamuhtar.fmkotlin.services.RepairServices
 import com.daffamuhtar.fmkotlin.util.DynamicRetrofit
 import com.daffamuhtar.fmkotlin.util.NetworkHelper
 import com.google.gson.Gson
@@ -24,9 +31,11 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 //=======
 
+@OptIn(ExperimentalPagingApi::class)
 val appModule = module {
 
     single { provideOkHttpClient() }
@@ -51,6 +60,21 @@ val appModule = module {
         DynamicRetrofit(get())
     }
 
+    single (named("paging_api_services")){
+        val client = OkHttpClient.Builder()
+            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+            .connectTimeout(120, TimeUnit.SECONDS)
+            .readTimeout(120, TimeUnit.SECONDS)
+            .build()
+
+        Retrofit.Builder()
+            .baseUrl(Server.URL1_V20)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(get())
+            .build()
+            .create(RepairServices::class.java)
+    }
+
     single <Gson> { return@single Gson() }
 
     single { provideNetworkHelper(androidContext()) }
@@ -69,6 +93,31 @@ val appModule = module {
 
     single<SharedPreferences.Editor> {
         getSharedPrefs(androidApplication()).edit()
+    }
+
+    single {
+        Room.databaseBuilder(
+            androidContext(),
+            FleetifyMechanicDatabase::class.java,
+            "fleetifymechanic.db"
+        ).build()
+    }
+
+
+    single {
+        val fleetifyMechanicDatabase: FleetifyMechanicDatabase = get()
+        val repairServices: RepairServices = get(named("paging_api_services"))
+
+        Pager(
+            config = PagingConfig(pageSize = 3),
+            remoteMediator = RepairRemoteMediator(
+                fleetifyMechanicDatabase = fleetifyMechanicDatabase,
+                repairServices = repairServices
+            ),
+            pagingSourceFactory = {
+                fleetifyMechanicDatabase.dao.pagingSource()
+            }
+        )
     }
 }
 

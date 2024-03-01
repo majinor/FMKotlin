@@ -6,10 +6,11 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.daffamuhtar.fmkotlin.constants.Constants
-import com.daffamuhtar.fmkotlin.constants.ConstantsApp
 import com.daffamuhtar.fmkotlin.databinding.ActivityRepairOngoingBinding
 import com.daffamuhtar.fmkotlin.data.model.Filter
 import com.daffamuhtar.fmkotlin.data.model.HorizontalCalendar
@@ -17,12 +18,16 @@ import com.daffamuhtar.fmkotlin.data.model.Repair
 import com.daffamuhtar.fmkotlin.data.response.RepairOnAdhocResponse
 import com.daffamuhtar.fmkotlin.ui.adapter.FilterAdapter
 import com.daffamuhtar.fmkotlin.ui.adapter.HorizontalCalendarAdapter
+import com.daffamuhtar.fmkotlin.ui.adapter.PagingListAdapter
 import com.daffamuhtar.fmkotlin.ui.adapter.RepairAdapter
 import com.daffamuhtar.fmkotlin.ui.repair_detail.RepairDetailActivity
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class RepairOngoingActivity : AppCompatActivity() {
 
-    private lateinit var repairOngoingViewModel: RepairOngoingViewModel
+    private val repairOngoingViewModel: RepairOngoingViewModel by viewModel()
 
     private lateinit var binding: ActivityRepairOngoingBinding
 
@@ -33,6 +38,7 @@ class RepairOngoingActivity : AppCompatActivity() {
     private val calendarList = ArrayList<HorizontalCalendar>()
 
     private val repairAdapter: RepairAdapter = RepairAdapter()
+    private var pagingListAdapter : PagingListAdapter?=  PagingListAdapter()
     private val filterAdapter: FilterAdapter = FilterAdapter()
     private lateinit var horizontalCalendarAdapter: HorizontalCalendarAdapter
 
@@ -69,32 +75,42 @@ class RepairOngoingActivity : AppCompatActivity() {
 
     private fun callData() {
 //        checkViewModel.getRepairOngoing(this, ConstantaApp.BASE_URL_V2_0, "MEC-MBA-99")
-        repairOngoingViewModel.getRepairOngoingMetaData(this, ConstantsApp.BASE_URL_V2_0, "MEC-MBA-99")
+//        repairOngoingViewModel.getRepairOngoingMetaData(this, ConstantsApp.BASE_URL_V2_0, "MEC-MBA-99")
+        lifecycleScope.launch {
+            repairOngoingViewModel.beerPagingFlow.collectLatest { repairs -> pagingListAdapter?.submitData(repairs)}
+
+        }
 
     }
 
     private fun initViewModel() {
-        repairOngoingViewModel.repairList.observe(this) {
-            if (it.isNotEmpty()) {
-                setReportResults(it)
-            } else {
-                binding.lyNotFound.visibility = View.VISIBLE
-            }
-        }
+//        repairOngoingViewModel.repairList.observe(this) {
+//            if (it.isNotEmpty()) {
+//                setReportResults(it)
+//            } else {
+//                binding.lyNotFound.visibility = View.VISIBLE
+//            }
+//        }
 
-        repairOngoingViewModel.isLoadingGetRepairOngoing.observe(this) {
-            loading(it)
-        }
-
+//        repairOngoingViewModel.isLoadingGetRepairOngoing.observe(this) {
+//            loading(it)
+//        }
+//
         binding.srCheck.setOnRefreshListener {
-            repairOngoingViewModel.getRepairOngoingMetaData(this, ConstantsApp.BASE_URL_V2_0, "MEC-MBA-99")
+//            repairOngoingViewModel.getRepairOngoingMetaData(this, ConstantsApp.BASE_URL_V2_0, "MEC-MBA-99")
+            lifecycleScope.launch {
+                repairOngoingViewModel.beerPagingFlow.collectLatest { repairs -> pagingListAdapter?.submitData(repairs)}
 
+            }
         }
     }
 
     private fun declare() {
         horizontalCalendarAdapter = HorizontalCalendarAdapter(context)
-        repairOngoingViewModel = ViewModelProvider(this)[RepairOngoingViewModel::class.java]
+
+        binding.rvCheck.layoutManager = LinearLayoutManager(this@RepairOngoingActivity)
+        binding.rvCheck.adapter = pagingListAdapter
+//        repairOngoingViewModel = ViewModelProvider(this)[RepairOngoingViewModel::class.java]
     }
 
     private fun loading(value: Boolean) {
@@ -228,4 +244,9 @@ class RepairOngoingActivity : AppCompatActivity() {
             }
         })
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+    }
+
 }
