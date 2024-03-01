@@ -5,4 +5,7 @@
     <string name="title_activity_check">Pemeriksaan</string>
     <string name="title_activity_repair_ongoing">Perbaikan Berjalan</string>
     <string name="title_activity_repair_on">Perbaikan</string>
+    <string name="retry">Muat Ulang</string>
+    <string name="something_went_wrong">Terjadi Kesalahan</string>
+    <string name="user_list">Daftar Perbaikan\n</string>
 </resources>

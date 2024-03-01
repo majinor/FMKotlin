@@ -77,7 +77,7 @@ class RepairOngoingActivity : AppCompatActivity() {
 //        checkViewModel.getRepairOngoing(this, ConstantaApp.BASE_URL_V2_0, "MEC-MBA-99")
 //        repairOngoingViewModel.getRepairOngoingMetaData(this, ConstantsApp.BASE_URL_V2_0, "MEC-MBA-99")
         lifecycleScope.launch {
-            repairOngoingViewModel.beerPagingFlow.collectLatest { repairs -> pagingListAdapter?.submitData(repairs)}
+//            repairOngoingViewModel.beerPagingFlow.collectLatest { repairs -> pagingListAdapter?.submitData(repairs)}
 
         }
 
@@ -99,7 +99,7 @@ class RepairOngoingActivity : AppCompatActivity() {
         binding.srCheck.setOnRefreshListener {
 //            repairOngoingViewModel.getRepairOngoingMetaData(this, ConstantsApp.BASE_URL_V2_0, "MEC-MBA-99")
             lifecycleScope.launch {
-                repairOngoingViewModel.beerPagingFlow.collectLatest { repairs -> pagingListAdapter?.submitData(repairs)}
+//                repairOngoingViewModel.beerPagingFlow.collectLatest { repairs -> pagingListAdapter?.submitData(repairs)}
 
             }
         }

@@ -6,9 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.daffamuhtar.fmkotlin.appv4.ui.RepairV4Activity
 import com.daffamuhtar.fmkotlin.databinding.FragmentHomeBinding
 import com.daffamuhtar.fmkotlin.ui.repair_check.RepairCheckActivity
-import com.daffamuhtar.fmkotlin.ui.repair_ongoing.RepairOngoingActivity
 import com.daffamuhtar.fmkotlin.ui.repair_on.RepairOnActivity
 import com.daffamuhtar.fmkotlin.ui.scanner.ScannerActivity
 
@@ -35,7 +35,7 @@ class HomeFragment : Fragment() {
         }
 
         binding.btnRepairOngoing.setOnClickListener {
-            val intent = Intent(requireContext(), RepairOngoingActivity::class.java)
+            val intent = Intent(requireContext(), RepairV4Activity::class.java)
             startActivity(intent)
         }
 

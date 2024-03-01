@@ -119,8 +119,14 @@ val appModule = module {
             }
         )
     }
+
+    single { provideUserService(get(named("paging_api_services"))) }
+
 }
 
+fun provideUserService(retrofit: Retrofit): RepairServices {
+    return retrofit.create(RepairServices::class.java)
+}
 
 fun getSharedPrefs(androidApplication: Application): SharedPreferences {
     return androidApplication.getSharedPreferences(

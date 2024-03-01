@@ -53,6 +53,34 @@ class ApiConfig : KoinComponent {
                 .build()
         }
 
+        fun getRetrofit2(context: Context, apiVersion: String?): Retrofit? {
+            Server.urlSample(context, apiVersion)
+            checkId(context)
+            val interceptor = HttpLoggingInterceptor()
+            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+
+            val client: OkHttpClient = OkHttpClient.Builder()
+                .addInterceptor(Interceptor { chain ->
+                    val newRequest = chain.request().newBuilder()
+                        .addHeader(
+                            "Authorization",
+                            "Bearer " + Server.token
+                        )
+                        .build()
+                    chain.proceed(newRequest)
+                })
+                .addInterceptor(interceptor)
+                .connectTimeout(1000, TimeUnit.SECONDS)
+                .writeTimeout(1000, TimeUnit.SECONDS)
+                .readTimeout(1000, TimeUnit.SECONDS)
+                .build()
+
+            return Retrofit.Builder()
+                .client(client)
+                .baseUrl(Server.URL1_V20)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+        }
         fun checkId(context: Context) {
             userId = ApiConfig().sharedPreferences.getString(Constants.EXTRA_USERID, null)
             token = ApiConfig().sharedPreferences.getString(Constants.EXTRA_TOKEN, null)

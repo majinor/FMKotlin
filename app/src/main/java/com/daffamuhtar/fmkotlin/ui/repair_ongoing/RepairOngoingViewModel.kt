@@ -16,6 +16,8 @@ import androidx.paging.map
 import com.daffamuhtar.fmkotlin.app.ApiConfig
 import com.daffamuhtar.fmkotlin.appv2.data.local.RepairEntity
 import com.daffamuhtar.fmkotlin.appv2.data.mapper.toRepair
+import com.daffamuhtar.fmkotlin.appv4.RepairRepository4
+import com.daffamuhtar.fmkotlin.appv4.ui.UserItemUiState
 import com.daffamuhtar.fmkotlin.data.response.ErrorResponse
 import com.daffamuhtar.fmkotlin.data.response.RepairOnAdhocResponse
 import com.daffamuhtar.fmkotlin.data.response.RepairOngoingMetaDataResponse
@@ -32,9 +34,14 @@ import retrofit2.Response
 import java.io.IOException
 
 class RepairOngoingViewModel(
-    pager: Pager<Int, RepairEntity>
+    pager: Pager<Int, RepairEntity>?,
+    repairRepository4: RepairRepository4
 ) : ViewModel() {
 
+    val userItemsUiStates = repairRepository4.getUsers()
+        .map { pagingData ->
+            pagingData.map { userModel -> UserItemUiState(userModel) }
+        }.cachedIn(viewModelScope)
 
     private val _isLoadingGetRepairOngoing = MutableLiveData<Boolean>()
     val isLoadingGetRepairOngoing: LiveData<Boolean> = _isLoadingGetRepairOngoing
@@ -202,13 +209,13 @@ class RepairOngoingViewModel(
         })
     }
 
-    val beerPagingFlow =
-        pager
-            .flow
-            .map { pagingData ->
-                pagingData.map { it.toRepair() }
-            }
-            .cachedIn(viewModelScope)
+//    val beerPagingFlow =
+//        pager!!
+//            .flow
+//            .map { pagingData ->
+//                pagingData.map { it.toRepair() }
+//            }
+//            .cachedIn(viewModelScope)
 
 
 //    fun getRepairOngoingMetaData2(): Flow<PagingData<RepairEntity>> {

@@ -20,6 +20,7 @@ val viewModelModule = module {
     viewModel {
         RepairOngoingViewModel(
             get(),
+            get()
         )
     }
 
