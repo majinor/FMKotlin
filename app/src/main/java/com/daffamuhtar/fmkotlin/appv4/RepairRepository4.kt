@@ -8,5 +8,5 @@ import kotlinx.coroutines.flow.Flow
  */
 
 interface RepairRepository4 {
-    fun getUsers(): Flow<PagingData<RepairResponse4>>
+    fun getRepairList(): Flow<PagingData<RepairResponse4>>
 }

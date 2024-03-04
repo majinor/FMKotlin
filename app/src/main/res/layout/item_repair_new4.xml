@@ -7,8 +7,8 @@
     <data>
 
         <variable
-            name="userItemUiState"
-            type="com.daffamuhtar.fmkotlin.appv4.ui.UserItemUiState" />
+            name="repairItemUiState"
+            type="com.daffamuhtar.fmkotlin.appv4.ui.data_binding.RepairItemUiState" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -49,7 +49,8 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_marginRight="10dp"
-                        android:background="@drawable/bg_circle_repair_adhoc"
+                        android:background="@drawable/bg_circle_repair_pb"
+                        android:backgroundResource="@{repairItemUiState.repairIcon}"
                         android:padding="7dp"
                         android:src="@drawable/ic_repair_white" />
 
@@ -68,7 +69,7 @@
                                 android:id="@+id/tv_repair_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Perbaikan"
+                                android:text="@{repairItemUiState.repairTitle ,default= Perbaikan}"
                                 android:textSize="15dp"
                                 android:textStyle="bold" />
 
@@ -86,7 +87,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
                                 android:layout_weight="1"
-                                android:text="ID/1029123/102391/MCA-JKT-1/VHC-BLOG"
+                                android:text="@{repairItemUiState.repairId}"
                                 android:textColor="@color/grey3"
                                 android:textSize="9sp" />
 
@@ -107,7 +108,7 @@
                             android:gravity="right"
                             android:paddingLeft="5dp"
                             android:paddingRight="5dp"
-                            android:text="10 Jan 2019\nSenin"
+                            android:text="@{repairItemUiState.repairDate}"
                             android:textColor="@color/blue"
                             android:textStyle="bold"
                             android:visibility="visible" />
@@ -167,7 +168,7 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_weight="1"
-                                            android:text="Mitsubishi Fuso FE-71 2019 \nB 1234 AA"
+                                            android:text="@{repairItemUiState.vehicleName}"
                                             android:textStyle="bold" />
 
 
@@ -188,7 +189,7 @@
                                             android:gravity="center"
                                             android:paddingLeft="5dp"
                                             android:paddingRight="5dp"
-                                            android:text="F 10"
+                                            android:text="@{repairItemUiState.vehicleLambungId,default=@string/vehicle_lambung_id}"
                                             android:textColor="@color/white"
                                             android:textStyle="bold" />
 
@@ -199,7 +200,7 @@
                                             android:gravity="center"
                                             android:paddingLeft="10dp"
                                             android:paddingRight="10dp"
-                                            android:text="Sukabumi"
+                                            android:text="@{repairItemUiState.vehicleDistrict}"
                                             android:textColor="@color/grey"
                                             android:textStyle="bold" />
 
@@ -241,7 +242,7 @@
                                     android:id="@+id/tv_workshop_name"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Bengkel Hino Sukabumi"
+                                    android:text="@{repairItemUiState.workshopName}"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -264,7 +265,7 @@
                                 android:layout_height="wrap_content"
                                 android:ellipsize="end"
                                 android:maxLines="1"
-                                android:text="Jl. blablablabla" />
+                                android:text="@{repairItemUiState.workshopLocation}" />
 
                         </LinearLayout>
 
@@ -319,7 +320,7 @@
                                 android:layout_height="wrap_content"
                                 android:ellipsize="end"
                                 android:maxLines="1"
-                                android:text="Catatan Perbaikan" />
+                                android:text="@{repairItemUiState.assignmentNote}" />
 
                         </LinearLayout>
 
@@ -331,22 +332,25 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/lightgrey"/>
+                    android:background="@color/lightgrey"
+                    android:backgroundResource="@{repairItemUiState.repairStage.stageBackgroundColor}" />
 
 
                 <LinearLayout
                     android:id="@+id/ly_repair_stage"
                     android:layout_width="match_parent"
-                    android:padding="15dp"
                     android:layout_height="wrap_content"
                     android:background="@color/bluesoft"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:padding="15dp">
+
                     <ImageView
                         android:id="@+id/iv_repair_stage_icon"
                         android:layout_width="20sp"
                         android:layout_height="20sp"
-                        android:src="@drawable/ic_baseline_waiting_blue_24"
-                        android:layout_marginRight="10dp"/>
+                        android:layout_marginRight="10dp"
+                        android:imageResource="@{repairItemUiState.repairStage.stageIcon}"
+                        android:src="@drawable/ic_baseline_waiting_blue_24" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -362,12 +366,11 @@
                                 android:id="@+id/tv_repair_stage"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textStyle="bold"
-                                android:textColor="@color/blue"
-                                android:text="Menunggu Approval"/>
+                                android:text="@{repairItemUiState.repairStage.stageName}"
+                                android:textColor="@{context.getColor(repairItemUiState.repairStage.stageTextColor)}"
+                                android:textStyle="bold" />
 
                             <TextView
-                                android:visibility="gone"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
@@ -375,7 +378,8 @@
                                 android:paddingRight="5dp"
                                 android:text="Datang ke Lokasi"
                                 android:textColor="@color/blue"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                android:visibility="gone" />
 
                         </LinearLayout>
 

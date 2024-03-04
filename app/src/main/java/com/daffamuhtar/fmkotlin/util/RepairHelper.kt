@@ -562,10 +562,157 @@ class RepairHelper {
             tvStage.text = stageName
             tvStage.setTextColor(ContextCompat.getColor(context, stageTextColor))
 
+            RepairStageUiModel(stageIcon,stageBackgroundColor,stageName,stageTextColor)
 //            tvStage.setTextColor(stageTextColor)
 
         }
+        @SuppressLint("ResourceAsColor")
+        fun getRepairStageModel(
+            context: Context,
+            stageId: Int,
+            stageNameRaw: String?,
+        ) : RepairStageUiModel{
 
+
+            val stageIcon: Int
+            val stageBackgroundColor: Int
+            val stageTextColor: Int
+            val stageId: Int = stageId.toInt()
+            var stageName = stageNameRaw
+
+            if (stageName == null) {
+                when (stageId) {
+                    12 -> {
+                        stageName = "Menunggu diperiksa"
+                    }
+
+                    13 -> {
+                        stageName = "Sedang diperiksa"
+                    }
+
+                    14 -> {
+                        stageName = "Menunggu verifikasi hasil pemeriksaan"
+                    }
+
+                    15 -> {
+                        stageName = "Menunggu konfirmasi penawaran"
+                    }
+
+                    16 -> {
+                        stageName = "Menunggu Surat Penawaran diperbarui"
+                    }
+
+                    17 -> {
+                        stageName = "Penawaran disetujui"
+                    }
+
+                    18 -> {
+                        stageName = "Lakukan perbaikan"
+                    }
+
+                    19 -> {
+                        stageName = "Sedang diperbaiki"
+                    }
+
+                    20 -> {
+                        stageName = "Menunggu approval hasil perbaikan"
+                    }
+
+                    21 -> {
+                        stageName = "Menunggu verifikasi hasil perbaikan"
+                    }
+
+                    22 -> {
+                        stageName = "Perbaikan selesai"
+                    }
+
+                    23 -> {
+                        stageName = "Perbaikan dikomplain"
+                    }
+
+                    24 -> {
+                        stageName = "Perbaikan selesai"
+                    }
+
+                    25 -> {
+                        stageName = "Perbaikan selesai"
+                    }
+
+                    26, 27, 28 -> {
+                        stageName = "Menunggu konfirmasi penawaran"
+                    }
+
+                    29 -> {
+                        stageName = "Order pending"
+                    }
+
+                    31 -> {
+                        stageName = "Penambahan part segera diproses"
+                    }
+
+                    32 -> {
+                        stageName = "Surat penawaran sedang diperbarui"
+                    }
+
+                    33 -> {
+                        stageName = "Revisi Surat Penawaran (penambahan part) Ditolak"
+                    }
+
+                    else -> {
+
+                    }
+                }
+
+            }
+
+            when (stageId) {
+                12, 13 -> {
+                    stageIcon = R.drawable.ic_stage_repair_check
+                    stageBackgroundColor = R.color.orangesoft
+                    stageTextColor = R.color.orange
+                }
+
+                14, 15, 16, 17, 20, 21 -> {
+                    stageIcon = R.drawable.ic_stage_repair_ongoing
+                    stageBackgroundColor = R.color.bluesoft
+                    stageTextColor = R.color.blue
+                }
+
+                18, 19 -> {
+                    stageIcon = R.drawable.ic_stage_repair_onrepair
+                    stageBackgroundColor = R.color.orangesoft
+                    stageTextColor = R.color.orange
+                }
+
+                23 -> {
+                    stageIcon = R.drawable.ic_stage_repair_complain
+                    stageBackgroundColor = R.color.redsoft
+                    stageTextColor = R.color.red
+                }
+
+                22, 24 -> {
+                    stageIcon = R.drawable.ic_stage_repair_done
+                    stageBackgroundColor = R.color.greensoft
+                    stageTextColor = R.color.green
+                }
+
+                26, 27, 28, 29, 31, 32, 33 -> {
+                    stageIcon = R.drawable.ic_stage_repair_ongoing
+                    stageBackgroundColor = R.color.bluesoft
+                    stageTextColor = R.color.blue
+                }
+
+                else -> {
+                    stageIcon = R.drawable.ic_stage_repair_ongoing
+                    stageBackgroundColor = R.color.bluesoft
+                    stageTextColor = R.color.blue
+                }
+            }
+
+            return RepairStageUiModel(stageIcon,stageBackgroundColor,stageName,stageTextColor)
+//            tvStage.setTextColor(stageTextColor)
+
+        }
         fun setDriverPhoto(
             context: Context,
             photoUrl: String,

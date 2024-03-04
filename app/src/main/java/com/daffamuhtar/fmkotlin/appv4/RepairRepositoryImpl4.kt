@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 class RepairRepositoryImpl4 (
     private val repairServices: RepairServices
 ) : RepairRepository4 {
-    override fun getUsers(): Flow<PagingData<RepairResponse4>> {
+    override fun getRepairList(): Flow<PagingData<RepairResponse4>> {
         return Pager(
             config = PagingConfig(
                 pageSize = 5

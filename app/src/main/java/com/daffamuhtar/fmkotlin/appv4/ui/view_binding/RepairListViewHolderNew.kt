@@ -1,38 +1,40 @@
-package com.daffamuhtar.fmkotlin.appv4.ui
+package com.daffamuhtar.fmkotlin.appv4.ui.view_binding
 
+import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.daffamuhtar.fmkotlin.data.model.Repair
 import com.daffamuhtar.fmkotlin.databinding.ItemRepairBinding
-import com.daffamuhtar.fmkotlin.databinding.ItemRepairNew4Binding
+import com.daffamuhtar.fmkotlin.util.RepairHelper
+import com.daffamuhtar.fmkotlin.util.VehicleHelper
 import java.util.Locale
 
 
-class RepairListViewHolder(
+class RepairListViewHolderNew(
     val view: ItemRepairBinding
 ) : RecyclerView.ViewHolder(view.root) {
 
     fun bind(repair: Repair, position: Int) {
         with(view) {
 
-            lyWorkshop.visibility = android.view.View.GONE
-            lyAssignmentNote.visibility = android.view.View.GONE
+            lyWorkshop.visibility = View.GONE
+            lyAssignmentNote.visibility = View.GONE
             val locale = Locale("id")
 
-            tvRepairTitle.text = com.daffamuhtar.fmkotlin.util.RepairHelper.getRepairTitle(
+            tvRepairTitle.text = RepairHelper.getRepairTitle(
                 repair.orderId,
                 repair.isStoring
             )
             ivRepairIcon.setBackgroundResource(
-                com.daffamuhtar.fmkotlin.util.RepairHelper.getRepairIcon(
+                RepairHelper.getRepairIcon(
                     repair.orderId,
                     repair.isStoring
                 )
             )
             tvRepairId.text =
-                com.daffamuhtar.fmkotlin.util.RepairHelper.getRepairId(repair.orderId, repair.spkId)
+                RepairHelper.getRepairId(repair.orderId, repair.spkId)
             tvRepairDate.text =
-                com.daffamuhtar.fmkotlin.util.RepairHelper.getRepairDate(repair.startAssignment)
-            com.daffamuhtar.fmkotlin.util.RepairHelper.setRepairStage(
+                RepairHelper.getRepairDate(repair.startAssignment)
+            RepairHelper.setRepairStage(
                 view.root.context,
                 repair.stageId.toInt(),
                 repair.stageName,
@@ -41,7 +43,7 @@ class RepairListViewHolder(
                 lyRepairStage
             )
 
-            tvVehicleName.text = com.daffamuhtar.fmkotlin.util.VehicleHelper.getVehicleName(
+            tvVehicleName.text = VehicleHelper.getVehicleName(
                 repair.vehicleId,
                 repair.vehicleBrand,
                 repair.vehicleType,
@@ -51,13 +53,13 @@ class RepairListViewHolder(
             )
 
             repair.workshopName?.let {
-                lyWorkshop.visibility = android.view.View.VISIBLE
+                lyWorkshop.visibility = View.VISIBLE
                 tvWorkshopName.text = repair.workshopName
                 tvWowkshopAddress.text = repair.workshopLocation
             }
 
             repair.noteSA?.let {
-                lyAssignmentNote.visibility = android.view.View.VISIBLE
+                lyAssignmentNote.visibility = View.VISIBLE
                 tvAssignmentNote.text = repair.noteSA
             }
 

@@ -9,23 +9,19 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
-import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.map
 
 import com.daffamuhtar.fmkotlin.app.ApiConfig
 import com.daffamuhtar.fmkotlin.appv2.data.local.RepairEntity
-import com.daffamuhtar.fmkotlin.appv2.data.mapper.toRepair
 import com.daffamuhtar.fmkotlin.appv4.RepairRepository4
-import com.daffamuhtar.fmkotlin.appv4.ui.UserItemUiState
+import com.daffamuhtar.fmkotlin.appv4.ui.data_binding.RepairItemUiState
 import com.daffamuhtar.fmkotlin.data.response.ErrorResponse
 import com.daffamuhtar.fmkotlin.data.response.RepairOnAdhocResponse
 import com.daffamuhtar.fmkotlin.data.response.RepairOngoingMetaDataResponse
 import com.daffamuhtar.fmkotlin.services.RepairServices
 import com.daffamuhtar.fmkotlin.util.RepairHelper
 import com.google.gson.GsonBuilder
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -39,12 +35,14 @@ class RepairOngoingViewModel(
     repairRepository4: RepairRepository4
 ) : ViewModel() {
 
-    val userItemsUiStates = repairRepository4.getUsers()
-        .map { pagingData ->
-            pagingData.map { userModel -> UserItemUiState(userModel) }
-        }.cachedIn(viewModelScope)
+//    //data binding (ui state)
+//    val userItemsUiStates = repairRepository4.getRepairList()
+//        .map { pagingData ->
+//            pagingData.map { userModel -> RepairItemUiState(userModel) }
+//        }.cachedIn(viewModelScope)
 
-    val repairPagingData = repairRepository4.getUsers()
+    //data binding (ui state)
+    val repairPagingData = repairRepository4.getRepairList()
         .map { pagingData ->
             pagingData.map { userModel -> RepairHelper.mapRepairItem(userModel)}
         }.cachedIn(viewModelScope)

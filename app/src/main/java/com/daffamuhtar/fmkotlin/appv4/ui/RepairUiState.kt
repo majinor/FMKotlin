@@ -8,8 +8,9 @@ import com.daffamuhtar.fmkotlin.appv4.common.BaseUiState
 /**
  * Created by Oguz Sahin on 11/11/2021.
  */
-data class UsersUiState(
-    private val loadState: LoadState
+data class RepairUiState(
+    private val loadState: LoadState,
+    private val page: String
 ) : BaseUiState() {
 
     fun getProgressBarVisibility() = getViewVisibility(isVisible = loadState is LoadState.Loading)
@@ -19,6 +20,8 @@ data class UsersUiState(
     fun getErrorVisibility() = getViewVisibility(isVisible = loadState is LoadState.Error)
 
     fun isRefreshing() = loadState is LoadState.Loading
+
+    fun getPage() = page
 
     fun getErrorMessage(context: Context) = if (loadState is LoadState.Error) {
         loadState.error.localizedMessage ?: context.getString(R.string.something_went_wrong)

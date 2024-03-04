@@ -8,4 +8,8 @@
     <string name="retry">Muat Ulang</string>
     <string name="something_went_wrong">Terjadi Kesalahan</string>
     <string name="user_list">Daftar Perbaikan\n</string>
+
+
+    <string name="vehicle_lambung_id">F-10</string>
+
 </resources>

@@ -6,15 +6,15 @@
     <data>
 
         <variable
-            name="usersUiState"
-            type="com.daffamuhtar.fmkotlin.appv4.ui.UsersUiState" />
+            name="repairUiState"
+            type="com.daffamuhtar.fmkotlin.appv4.ui.RepairUiState" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.UserActivity">
+        tools:context=".appv4.ui.RepairV4Activity">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/topAppbar"
@@ -24,13 +24,13 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:title="@string/user_list" />
+            app:title="@{repairUiState.page}" />
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/sr_check"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:refreshing="@{usersUiState.isRefreshing()}"
+            app:refreshing="@{repairUiState.isRefreshing()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -40,7 +40,7 @@
                 android:id="@+id/rvUsers"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:visibility="@{usersUiState.listVisibility}"
+                android:visibility="@{repairUiState.listVisibility}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_repair_new4" />
 
@@ -50,7 +50,7 @@
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="@{usersUiState.progressBarVisibility}"
+            android:visibility="@{repairUiState.progressBarVisibility}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -62,7 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/retry"
-            android:visibility="@{usersUiState.errorVisibility}"
+            android:visibility="@{repairUiState.errorVisibility}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -73,8 +73,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@{usersUiState.getErrorMessage(context)}"
-            android:visibility="@{usersUiState.errorVisibility}"
+            android:text="@{repairUiState.getErrorMessage(context)}"
+            android:visibility="@{repairUiState.errorVisibility}"
             app:layout_constraintEnd_toEndOf="@+id/btnRetry"
             app:layout_constraintStart_toStartOf="@+id/btnRetry"
             app:layout_constraintTop_toBottomOf="@+id/btnRetry"
