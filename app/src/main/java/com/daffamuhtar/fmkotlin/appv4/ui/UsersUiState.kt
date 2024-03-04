@@ -18,6 +18,8 @@ data class UsersUiState(
 
     fun getErrorVisibility() = getViewVisibility(isVisible = loadState is LoadState.Error)
 
+    fun isRefreshing() = loadState is LoadState.Loading
+
     fun getErrorMessage(context: Context) = if (loadState is LoadState.Error) {
         loadState.error.localizedMessage ?: context.getString(R.string.something_went_wrong)
     } else ""
