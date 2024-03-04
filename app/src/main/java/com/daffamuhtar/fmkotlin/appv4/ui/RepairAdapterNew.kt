@@ -9,7 +9,6 @@ import com.daffamuhtar.fmkotlin.R
 import com.daffamuhtar.fmkotlin.appv4.RepairResponse4
 import com.daffamuhtar.fmkotlin.data.model.Repair
 import com.daffamuhtar.fmkotlin.databinding.ItemRepairBinding
-import com.daffamuhtar.fmkotlin.databinding.ItemRepairNew4Binding
 import com.daffamuhtar.fmkotlin.ui.adapter.MoviePosterViewHolder
 
 /**
@@ -19,6 +18,7 @@ class RepairAdapterNew constructor() :
     PagingDataAdapter<Repair, RepairListViewHolder>(MovieDiffCallBack()) {
 
     override fun onBindViewHolder(holder: RepairListViewHolder, position: Int) {
+//        getItem(position)?.let { userItemUiState -> holder.bind(userItemUiState,position) }
         holder.bind(getItem(position)!!,position)
     }
 
@@ -29,7 +29,7 @@ class RepairAdapterNew constructor() :
             )
         )
     }
-
+    
     object Comparator : DiffUtil.ItemCallback<UserItemUiState>() {
         override fun areItemsTheSame(oldItem: UserItemUiState, newItem: UserItemUiState): Boolean {
             return oldItem.getPhone() == newItem.getPhone()
@@ -42,8 +42,8 @@ class RepairAdapterNew constructor() :
             return oldItem == newItem
         }
     }
-
 }
+
 
 class MovieDiffCallBack : DiffUtil.ItemCallback<Repair>() {
     override fun areItemsTheSame(oldItem: Repair, newItem: Repair): Boolean {

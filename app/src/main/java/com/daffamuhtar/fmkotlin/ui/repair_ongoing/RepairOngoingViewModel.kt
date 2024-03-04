@@ -22,6 +22,7 @@ import com.daffamuhtar.fmkotlin.data.response.ErrorResponse
 import com.daffamuhtar.fmkotlin.data.response.RepairOnAdhocResponse
 import com.daffamuhtar.fmkotlin.data.response.RepairOngoingMetaDataResponse
 import com.daffamuhtar.fmkotlin.services.RepairServices
+import com.daffamuhtar.fmkotlin.util.RepairHelper
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
@@ -41,6 +42,11 @@ class RepairOngoingViewModel(
     val userItemsUiStates = repairRepository4.getUsers()
         .map { pagingData ->
             pagingData.map { userModel -> UserItemUiState(userModel) }
+        }.cachedIn(viewModelScope)
+
+    val repairPagingData = repairRepository4.getUsers()
+        .map { pagingData ->
+            pagingData.map { userModel -> RepairHelper.mapRepairItem(userModel)}
         }.cachedIn(viewModelScope)
 
     private val _isLoadingGetRepairOngoing = MutableLiveData<Boolean>()

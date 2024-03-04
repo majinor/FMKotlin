@@ -3,6 +3,7 @@ package com.daffamuhtar.fmkotlin.appv4.ui
 import androidx.recyclerview.widget.RecyclerView
 import com.daffamuhtar.fmkotlin.data.model.Repair
 import com.daffamuhtar.fmkotlin.databinding.ItemRepairBinding
+import com.daffamuhtar.fmkotlin.databinding.ItemRepairNew4Binding
 import java.util.Locale
 
 

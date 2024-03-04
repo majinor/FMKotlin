@@ -13,7 +13,9 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.daffamuhtar.fmkotlin.R
+import com.daffamuhtar.fmkotlin.appv4.RepairResponse4
 import com.daffamuhtar.fmkotlin.constants.ConstantsRepair
+import com.daffamuhtar.fmkotlin.data.model.Repair
 import com.daffamuhtar.fmkotlin.data.response.ErrorResponse
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.gson.Gson
@@ -22,6 +24,39 @@ import java.util.*
 
 class RepairHelper {
     companion object {
+
+        fun mapRepairItem(repairResponse4: RepairResponse4): Repair {
+
+            return Repair(
+                repairResponse4.orderId,
+                repairResponse4.spkId,
+                repairResponse4.pbId ,
+                repairResponse4.stageId.toString(),
+                repairResponse4.stageName ,
+                repairResponse4.vehicleId,
+                repairResponse4.vehicleBrand,
+                repairResponse4.vehicleType,
+                repairResponse4.vehicleVarian,
+                repairResponse4.vehicleYear,
+                repairResponse4.vehicleLicenseNumber,
+                repairResponse4.vehicleLambungId,
+                repairResponse4.vehicleDistrict,
+                repairResponse4.noteFromSA,
+                repairResponse4.workshopName ,
+                repairResponse4.workshopLocation ,
+                repairResponse4.scheduledDate,
+                repairResponse4.additionalPartNote ,
+                repairResponse4.startRepairOdometer.toString(),
+                repairResponse4.locationOption,
+                repairResponse4.isStoring,
+                repairResponse4.orderType ,
+                repairResponse4.colorCode
+
+            )
+
+
+        }
+
         fun getRepairOrderType(orderId: String, isStoring: String?): String {
             val suborder: String = orderId.substring(4, 6)
             val orderType: String
@@ -1019,7 +1054,7 @@ class RepairHelper {
         fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
 
 
-        fun parseErrorMessageFromJson(message : String): ErrorResponse? {
+        fun parseErrorMessageFromJson(message: String): ErrorResponse? {
 
             val gson = Gson()
             var obj: ErrorResponse? = null

@@ -10,6 +10,7 @@ import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.paging.LoadState
 import androidx.paging.PagingData
+import androidx.paging.map
 import com.daffamuhtar.fmkotlin.app.ApiConfig
 import com.daffamuhtar.fmkotlin.appv4.RepairRepositoryImpl4
 import com.daffamuhtar.fmkotlin.appv4.common.FooterAdapter
@@ -17,6 +18,7 @@ import com.daffamuhtar.fmkotlin.appv4.util.collect
 import com.daffamuhtar.fmkotlin.appv4.util.collectLast
 import com.daffamuhtar.fmkotlin.appv4.util.executeWithAction
 import com.daffamuhtar.fmkotlin.constants.ConstantsApp
+import com.daffamuhtar.fmkotlin.data.model.Repair
 import com.daffamuhtar.fmkotlin.services.RepairServices
 import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.map
@@ -25,7 +27,8 @@ class RepairV4Activity : AppCompatActivity() {
     private lateinit var binding: ActivityRepairV4Binding
     lateinit var viewModel: RepairOngoingViewModel
 
-    var userAdapter: RepairAdapter = RepairAdapter()
+//    var userAdapter: RepairAdapter = RepairAdapter()
+    var userAdapter: RepairAdapterNew = RepairAdapterNew()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +46,7 @@ class RepairV4Activity : AppCompatActivity() {
         setListener()
         setAdapter()
 
-        collectLast(viewModel.userItemsUiStates, ::setUsers)
+        collectLast(viewModel.repairPagingData, ::setRepairList)
     }
 
     private fun setBinding() {
@@ -74,9 +77,13 @@ class RepairV4Activity : AppCompatActivity() {
         }
     }
 
-    private suspend fun setUsers(userItemsPagingData: PagingData<UserItemUiState>) {
-        userAdapter.submitData(userItemsPagingData)
-    }
+//    private suspend fun setRepairList(repairItemsPagingData: PagingData<UserItemUiState>) {
+//        userAdapter.submitData(repairItemsPagingData)
+//    }
 
+
+    private suspend fun setRepairList(repairItemsPagingData: PagingData<Repair>) {
+        userAdapter.submitData(repairItemsPagingData)
+    }
 
 }
