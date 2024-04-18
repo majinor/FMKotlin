@@ -9,7 +9,7 @@ import com.daffamuhtar.fmkotlin.constants.ConstantsApp
 class Server {
 
     companion object {
-
+var token2 = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDk3OTk3NjgsImlhdCI6MTcwOTcxMzM2OCwiaWQiOiIxMDEiLCJ1c2VybmFtZSI6Im1lY2hhbmljLXRlc3RpbmctOTkifQ.WG27qL7YLKwnKvHgG9aUr_cFn9GdnWkZhpTh5Hmmmcw"
         private val contexta: Context? = null
         var userId: String? = null
         var token: String? = null
@@ -90,8 +90,6 @@ class Server {
         //    public static String URL1_V20 = "http://192.168.0.48:3000/";
 
 //        var URL1 = "http://192.168.0.118/fleetify_api/";
-
-        //            public static String URL2 = "http://192.168.0.48/fleetify_api_internal_vendor/";
 //        var URL1_V20 = "http://192.168.0.118:3000/";
 
         //    public static String URL1 = "http://192.168.43.180/fleetify_api/";

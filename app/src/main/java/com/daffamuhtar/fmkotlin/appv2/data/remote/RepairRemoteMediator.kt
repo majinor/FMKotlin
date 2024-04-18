@@ -39,13 +39,13 @@ class RepairRemoteMediator(
                 }
             }
 
-            val repairs = repairServices.getRepairOngoingNew3(
-                loggedMechanicId = "MEC-MBA-99",
+            val repairs = repairServices.getRepairOngoingNew2(
+                loggedUserId = "MEC-MBA-99",
+                userPosition = "Mechanic",
                 orderType = null,
                 stageGroupId = null,
                 page = loadKey,
                 perpage = 5
-
 
             )
 

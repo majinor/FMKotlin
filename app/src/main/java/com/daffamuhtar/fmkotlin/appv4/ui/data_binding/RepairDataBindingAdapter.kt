@@ -3,18 +3,14 @@ package com.daffamuhtar.fmkotlin.appv4.ui.data_binding
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil.inflate
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import com.daffamuhtar.fmkotlin.R
-import com.daffamuhtar.fmkotlin.appv4.ui.view_binding.RepairListViewHolderNew
-import com.daffamuhtar.fmkotlin.databinding.ItemRepairBinding
 import com.daffamuhtar.fmkotlin.databinding.ItemRepairNew4Binding
 
 /**
  * Created by Oguz Sahin on 11/10/2021.
  */
-class RepairAdapter constructor() :
+class RepairDataBindingAdapter constructor() :
     PagingDataAdapter<RepairItemUiState, RepairListViewHolder>(Comparator) {
 
     override fun onBindViewHolder(holder: RepairListViewHolder, position: Int) {

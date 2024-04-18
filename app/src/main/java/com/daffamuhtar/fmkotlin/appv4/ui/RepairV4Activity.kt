@@ -6,15 +6,12 @@ import com.daffamuhtar.fmkotlin.R
 import com.daffamuhtar.fmkotlin.databinding.ActivityRepairV4Binding
 
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import com.daffamuhtar.fmkotlin.app.ApiConfig
 import com.daffamuhtar.fmkotlin.appv4.RepairRepositoryImpl4
 import com.daffamuhtar.fmkotlin.appv4.common.FooterAdapter
-import com.daffamuhtar.fmkotlin.appv4.ui.data_binding.RepairAdapter
+import com.daffamuhtar.fmkotlin.appv4.ui.data_binding.RepairDataBindingAdapter
 import com.daffamuhtar.fmkotlin.appv4.ui.data_binding.RepairItemUiState
 import com.daffamuhtar.fmkotlin.appv4.ui.view_binding.RepairAdapterNew
 import com.daffamuhtar.fmkotlin.appv4.util.collect
@@ -23,18 +20,15 @@ import com.daffamuhtar.fmkotlin.appv4.util.executeWithAction
 import com.daffamuhtar.fmkotlin.constants.ConstantsApp
 import com.daffamuhtar.fmkotlin.data.model.Repair
 import com.daffamuhtar.fmkotlin.services.RepairServices
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.distinctUntilChangedBy
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
 
 class RepairV4Activity : AppCompatActivity() {
     private lateinit var binding: ActivityRepairV4Binding
     lateinit var viewModel: RepairV4ViewModel
 
     //data binding (ui state)
-//    var userAdapter: RepairAdapter = RepairAdapter()
+//    var userAdapter: RepairDataBindingAdapter = RepairDataBindingAdapter()
 
     //view binding
     var userAdapter: RepairAdapterNew = RepairAdapterNew()
@@ -85,14 +79,14 @@ class RepairV4Activity : AppCompatActivity() {
             repairUiState = RepairUiState(loadState,refreshCount.toString())
         }
 
-        lifecycleScope.launch {
-            userAdapter.loadStateFlow
-                // Only emit when REFRESH LoadState for RemoteMediator changes.
-                .distinctUntilChangedBy { it.refresh }
-                // Only react to cases where Remote REFRESH completes i.e., NotLoading.
-                .filter { it.source.refresh is LoadState.NotLoading }
-                .collect() { binding.rvUsers.scrollToPosition(0) }
-        }
+//        lifecycleScope.launch {
+//            userAdapter.loadStateFlow
+//                // Only emit when REFRESH LoadState for RemoteMediator changes.
+//                .distinctUntilChangedBy { it.refresh }
+//                // Only react to cases where Remote REFRESH completes i.e., NotLoading.
+//                .filter { it.source.refresh is LoadState.NotLoading }
+//                .collect() { binding.rvUsers.scrollToPosition(0) }
+//        }
     }
 
     private fun setRepairUiStateListener(loadState: LoadState) {
@@ -101,7 +95,7 @@ class RepairV4Activity : AppCompatActivity() {
         repairUiState.isRefreshing()
     }
 
-    //data binding (ui state)
+//    data binding (ui state)
 //    private suspend fun setRepairList(repairItemsPagingData: PagingData<RepairItemUiState>) {
 //        userAdapter.submitData(repairItemsPagingData)
 //    }

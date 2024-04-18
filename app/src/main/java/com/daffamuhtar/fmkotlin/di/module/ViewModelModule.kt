@@ -1,5 +1,7 @@
 package com.daffamuhtar.fmkotlin.di.module
 
+import com.daffamuhtar.fmkotlin.appv2.ui.RepairV2Activity
+import com.daffamuhtar.fmkotlin.appv2.ui.RepairV2ViewModel
 import com.daffamuhtar.fmkotlin.constants.ConstantsApp
 import com.daffamuhtar.fmkotlin.ui.repair_check.RepairCheckViewModel
 import com.daffamuhtar.fmkotlin.ui.repair_on.RepairOngoingNonperiodViewModel
@@ -20,6 +22,12 @@ val viewModelModule = module {
     viewModel {
         RepairOngoingViewModel(
             get(),
+            get()
+        )
+    }
+
+    viewModel {
+        RepairV2ViewModel(
             get()
         )
     }
