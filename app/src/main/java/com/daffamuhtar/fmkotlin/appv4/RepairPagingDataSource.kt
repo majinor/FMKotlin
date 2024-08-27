@@ -4,7 +4,11 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.daffamuhtar.fmkotlin.services.RepairServices
 
-class RepairPagingDataSource(private val repairServices: RepairServices) :
+class RepairPagingDataSource(
+    private val repairServices: RepairServices,
+    private val orderType: String?,
+    private val stageGroupId: String?,
+) :
     PagingSource<Int, RepairResponse4>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, RepairResponse4> {
@@ -12,9 +16,9 @@ class RepairPagingDataSource(private val repairServices: RepairServices) :
         return try {
             val response = repairServices.getRepairOngoingNew4(
                 loggedUserId = "MEC-MBA-99",
-                userPosition = "Mechanic",
-                orderType = null,
-                stageGroupId = null,
+                userPosition = null,
+                orderType = orderType,
+                stageGroupId = stageGroupId,
                 page = page,
                 perpage = 5,
             )

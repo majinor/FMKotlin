@@ -22,7 +22,7 @@ import com.daffamuhtar.fmkotlin.ui.repair_detail.RepairDetailActivity
 
 class RepairOngoingAdhocFragment : Fragment() {
 
-    private lateinit var repairOngoingAdhocViewModel: RepairOngoingAdhocViewModel 
+    private lateinit var viewModel: RepairOngoingAdhocViewModel
 
     private lateinit var binding: FragmentRepairOnAdhocBinding
     private lateinit var context: Context
@@ -52,12 +52,11 @@ class RepairOngoingAdhocFragment : Fragment() {
     }
 
     private fun callData() {
-        repairOngoingAdhocViewModel.getRepairAdhoc(context, ConstantsApp.BASE_URL_V2_0, "MEC-MBA-99")
-
+        viewModel.getRepairAdhoc(context, ConstantsApp.BASE_URL_V2_0, "MEC-MBA-99")
     }
 
     private fun initViewModel() {
-        repairOngoingAdhocViewModel.repairList.observe(requireActivity()) {
+        viewModel.repairList.observe(requireActivity()) {
             if (it.isNotEmpty()) {
                 setReportResults(it)
             } else {
@@ -65,19 +64,19 @@ class RepairOngoingAdhocFragment : Fragment() {
             }
         }
 
-        repairOngoingAdhocViewModel.isLoadingGetRepair.observe(requireActivity()) {
+        viewModel.isLoadingGetRepair.observe(requireActivity()) {
             loading(it)
         }
 
         binding.srCheck.setOnRefreshListener {
-            repairOngoingAdhocViewModel.getRepairAdhoc(context, ConstantsApp.BASE_URL_V2_0, "MEC-MBA-99")
+            viewModel.getRepairAdhoc(context, ConstantsApp.BASE_URL_V2_0, "MEC-MBA-99")
 
         }
     }
 
     private fun declare() {
         context = requireActivity()
-        repairOngoingAdhocViewModel = ViewModelProvider(this)[RepairOngoingAdhocViewModel::class.java]
+        viewModel = ViewModelProvider(this)[RepairOngoingAdhocViewModel::class.java]
     }
 
     private fun loading(value: Boolean) {

@@ -1,4 +1,4 @@
-package com.daffamuhtar.fmkotlin.ui.repair_check
+package com.daffamuhtar.fmkotlin.ui.repair_tab
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
@@ -6,25 +6,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import androidx.paging.map
+
 import com.daffamuhtar.fmkotlin.appv4.RepairRepository4
 import com.daffamuhtar.fmkotlin.data.model.Repair
 import com.daffamuhtar.fmkotlin.util.RepairHelper
 import kotlinx.coroutines.flow.map
 
-class RepairCheckViewModel (
+class RepairTaskNonperiodFragmentViewModel (
     repairRepository4: RepairRepository4,
     context: Context
-) : ViewModel(){
+): ViewModel() {
 
-    //data binding (ui state)
-
-//    val repairPagingData = repairRepository4.getRepairList()
-//        .map { pagingData ->
-//            pagingData.map { userModel -> RepairItemUiState(RepairHelper.mapRepairItem(userModel), context) }
-//        }.cachedIn(viewModelScope)
-
-    //view binding
-    val repairPagingData = repairRepository4.getRepairList()
+    val repairPagingData = repairRepository4.getRepairListNonperiod()
         .map { pagingData ->
             pagingData.map { userModel -> RepairHelper.mapRepairItem(userModel)}
         }.cachedIn(viewModelScope)
@@ -32,6 +25,7 @@ class RepairCheckViewModel (
 
     val dogBreeds: MutableLiveData<List<Repair>> = MutableLiveData()
     val hehe: MutableLiveData<String> = MutableLiveData()
+
 
     fun fetchDogBreeds(count : Int) {
         // Fetch the data from an API or a local database

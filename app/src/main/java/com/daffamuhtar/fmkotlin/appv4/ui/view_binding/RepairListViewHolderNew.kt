@@ -10,7 +10,8 @@ import java.util.Locale
 
 
 class RepairListViewHolderNew(
-    val view: ItemRepairBinding
+    val view: ItemRepairBinding,
+    val onItemClickCallback: RepairAdapterNew.OnItemClickCallback?
 ) : RecyclerView.ViewHolder(view.root) {
 
     fun bind(repair: Repair, position: Int) {
@@ -64,7 +65,7 @@ class RepairListViewHolderNew(
             }
 
             view.root.setOnClickListener {
-//                onItemClickCallback.onItemClicked(repair, position)
+                onItemClickCallback?.onItemClicked(repair, position)
             }
         }
     }
