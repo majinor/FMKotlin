@@ -1,8 +1,9 @@
-package com.daffamuhtar.fmkotlin.ui.repair_on
+package com.daffamuhtar.fmkotlin.ui.repair_tab
 
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -16,21 +17,16 @@ import com.daffamuhtar.fmkotlin.appv4.ui.RepairUiState
 import com.daffamuhtar.fmkotlin.appv4.ui.view_binding.RepairAdapterNew
 import com.daffamuhtar.fmkotlin.appv4.util.collect
 import com.daffamuhtar.fmkotlin.data.model.Repair
-import com.daffamuhtar.fmkotlin.databinding.ActivityRepairOnBinding
+import com.daffamuhtar.fmkotlin.databinding.ActivityRepairTaskBinding
 import com.daffamuhtar.fmkotlin.databinding.ItemTabRepairBinding
-import com.daffamuhtar.fmkotlin.ui.repair_on.RepairOnAdhocFragment
-import com.daffamuhtar.fmkotlin.ui.repair_on.RepairOnNonperiodFragment
-import com.daffamuhtar.fmkotlin.ui.repair_on.RepairOnPeriodFragment
-import com.daffamuhtar.fmkotlin.ui.repair_on.RepairOnTireFragment
-import com.daffamuhtar.fmkotlin.ui.repair_on.RepairOnViewModel
 import com.google.android.material.tabs.TabLayout
 import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.map
 import org.jetbrains.annotations.Nullable
 
-class RepairOnActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityRepairOnBinding
-    lateinit var viewModel: RepairOnViewModel
+class RepairTaskActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityRepairTaskBinding
+    lateinit var viewModel: RepairTaskViewModel
 
 //    data binding (ui state)
 //    var userAdapter: RepairDataBindingAdapter = RepairDataBindingAdapter()
@@ -40,7 +36,7 @@ class RepairOnActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityRepairOnBinding.inflate(layoutInflater)
+        binding = ActivityRepairTaskBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.hide()
 
@@ -117,10 +113,10 @@ class RepairOnActivity : AppCompatActivity() {
 
         // LoginFragment is the name of Fragment and the Login
         // is a title of tab
-        adapter.addFragment(RepairOnAdhocFragment(), "Adhoc")
-        adapter.addFragment(RepairOnPeriodFragment(), "Period")
-        adapter.addFragment(RepairOnNonperiodFragment(), "Nonperiod")
-        adapter.addFragment(RepairOnTireFragment(), "Tire")
+        adapter.addFragment(RepairTaskAdhocFragment(), "Adhoc")
+        adapter.addFragment(RepairTaskPeriodFragment(), "Period")
+        adapter.addFragment(RepairTaskNonperiodFragment(), "Nonperiod")
+        adapter.addFragment(RepairTaskTireFragment(), "Tire")
 
         // setting adapter to view pager.
         viewpager.setAdapter(adapter)
@@ -310,17 +306,17 @@ class RepairOnActivity : AppCompatActivity() {
 //            }
             if (Server.companyType == "1") {
                 when (position) {
-                    0 -> fragment = RepairOnAdhocFragment()
-                    1 -> fragment = RepairOnPeriodFragment()
-                    2 -> fragment = RepairOnPeriodFragment()
-                    3 -> fragment = RepairOnPeriodFragment()
+                    0 -> fragment = RepairTaskAdhocFragment()
+                    1 -> fragment = RepairTaskPeriodFragment()
+                    2 -> fragment = RepairTaskPeriodFragment()
+                    3 -> fragment = RepairTaskPeriodFragment()
                 }
             } else {
                 when (position) {
-                    0 -> fragment = RepairOnAdhocFragment()
-                    1 -> fragment = RepairOnPeriodFragment()
-                    2 -> fragment = RepairOnPeriodFragment()
-                    3 -> fragment = RepairOnPeriodFragment()
+                    0 -> fragment = RepairTaskAdhocFragment()
+                    1 -> fragment = RepairTaskPeriodFragment()
+                    2 -> fragment = RepairTaskPeriodFragment()
+                    3 -> fragment = RepairTaskPeriodFragment()
                 }
             }
             val bundle = Bundle()

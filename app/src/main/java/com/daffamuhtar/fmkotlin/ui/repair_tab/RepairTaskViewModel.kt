@@ -1,4 +1,4 @@
-package com.daffamuhtar.fmkotlin.ui.repair_check
+package com.daffamuhtar.fmkotlin.ui.repair_tab
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
@@ -11,7 +11,7 @@ import com.daffamuhtar.fmkotlin.data.model.Repair
 import com.daffamuhtar.fmkotlin.util.RepairHelper
 import kotlinx.coroutines.flow.map
 
-class RepairCheckViewModel (
+class RepairTaskViewModel (
     repairRepository4: RepairRepository4,
     context: Context
 ) : ViewModel(){

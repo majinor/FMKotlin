@@ -33,10 +33,11 @@ interface RepairServices {
 
     @GET("api/mechanics/ongoing_order_v2")
     suspend fun getRepairOngoingNew4(
-        @Query("loggedMechanicId") loggedUserId: String,
-        @Query("userPosition") userPosition: String,
+        @Query("loggedUserId") loggedUserId: String,
+        @Query("userPosition") userPosition: String?,
         @Query("orderType") orderType: String?,
         @Query("stageGroupId") stageGroupId: String?,
+        @Query("stageId") stageId: Int?,
         @Query("page") page: Int,
         @Query("perpage") perpage: Int,
     ): MetaDataResponse<RepairResponse4>

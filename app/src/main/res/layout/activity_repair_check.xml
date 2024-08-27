@@ -1,144 +1,320 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".ui.repair_check.RepairCheckActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_rounded_big_half_bottom"
-        android:orientation="vertical"
-        android:elevation="3dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="15dp"
-            android:background="@color/white"
-            android:minHeight="?attr/actionBarSize">
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center">
-
-                <ImageButton
-                    android:id="@+id/btn_back"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_centerHorizontal="true"
-                    android:src="@drawable/baseline_arrow_back_24"
-                    android:background="@drawable/bg_circle_lightgrey"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/title_activity_check"
-                    android:layout_marginHorizontal="15dp"
-                    style="@style/TextActivityTitle"/>
+                android:layout_height="wrap_content"
+                android:minHeight="?attr/actionBarSize"
+                android:background="@color/white"
+                android:padding="15dp">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:orientation="horizontal">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center">
 
                     <ImageButton
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:id="@+id/btn_back"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
                         android:layout_centerHorizontal="true"
-                        android:src="@drawable/baseline_search_24"
-                        android:background="@drawable/bg_circle_lightgrey"/>
+                        android:background="@drawable/bg_circle_lightgrey"
+                        android:src="@drawable/baseline_arrow_back_24" />
 
                     <TextView
-                        android:id="@+id/tv_uh_titlename"
+                        style="@style/TextActivityTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:visibility="gone" />
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_weight="1"
+                        android:text="@string/title_activity_check" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:orientation="horizontal">
+
+                        <ImageButton
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@drawable/bg_circle_lightgrey"
+                            android:src="@drawable/baseline_search_24" />
+
+                        <TextView
+                            android:id="@+id/tv_uh_titlename"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/ly_drt_tab"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:background="@drawable/bg_rounded_half_bottom_big">
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tabs"
+                    style="@style/roundedTabStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/bg_rounded_white"
+                    android:backgroundTint="@color/grey1"/>
+
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_filter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="15dp"
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                android:paddingStart="5dp"
+                android:paddingEnd="15dp"
+                android:visibility="gone"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_filter" />
+
         </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_co_filter"
+        <Button
+            android:id="@+id/btn_r4_awal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            android:orientation="horizontal"
-            android:paddingStart="5dp"
-            android:layout_marginVertical="15dp"
-            android:paddingEnd="15dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_filter"
-            android:visibility="visible" />
+            android:text="Awal"
+            android:visibility="gone"/>
 
-    </LinearLayout>
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/view_pager_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        </androidx.viewpager.widget.ViewPager>
 
-        <ProgressBar
-            android:id="@+id/pb_c_loading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:visibility="gone" />
-
-        <LinearLayout
-            android:id="@+id/ly_not_found"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:orientation="vertical"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:visibility="gone">
 
-            <ImageView
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:background="@drawable/icon_not_found" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="Tidak ada perbaikan"
-                android:textColor="@color/grey"
-                android:textSize="15sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/sr_check"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <FrameLayout
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/sr_check"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_check"
-                    android:layout_width="match_parent"
+                    android:id="@+id/rvUsers"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_repair_new4" />
+
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/btnRetry"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:clipToPadding="false"
-                    android:orientation="vertical"
-                    android:paddingBottom="15dp"
-                    tools:listitem="@layout/item_repair">
+                    android:text="@string/retry"/>
 
-                </androidx.recyclerview.widget.RecyclerView>
-            </FrameLayout>
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+                <TextView
+                    android:id="@+id/tvError"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    app:layout_constraintEnd_toEndOf="@+id/btnRetry"
+                    app:layout_constraintStart_toStartOf="@+id/btnRetry"
+                    app:layout_constraintTop_toBottomOf="@+id/btnRetry"
+                    tools:text="Internet Connection Failed" />
+            </LinearLayout>
+        </RelativeLayout>
 
-    </RelativeLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 
-</LinearLayout>
+
+
+
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:orientation="vertical"-->
+<!--    tools:context=".ui.repair_check.RepairCheckActivity">-->
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@drawable/bg_rounded_big_half_bottom"-->
+<!--        android:orientation="vertical"-->
+<!--        android:elevation="3dp">-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:padding="15dp"-->
+<!--            android:background="@color/white"-->
+<!--            android:minHeight="?attr/actionBarSize">-->
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:gravity="center">-->
+
+<!--                <ImageButton-->
+<!--                    android:id="@+id/btn_back"-->
+<!--                    android:layout_width="40dp"-->
+<!--                    android:layout_height="40dp"-->
+<!--                    android:layout_centerHorizontal="true"-->
+<!--                    android:src="@drawable/baseline_arrow_back_24"-->
+<!--                    android:background="@drawable/bg_circle_lightgrey"/>-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:text="@string/title_activity_check"-->
+<!--                    android:layout_marginHorizontal="15dp"-->
+<!--                    style="@style/TextActivityTitle"/>-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:gravity="right"-->
+<!--                    android:orientation="horizontal">-->
+
+<!--                    <ImageButton-->
+<!--                        android:layout_width="40dp"-->
+<!--                        android:layout_height="40dp"-->
+<!--                        android:layout_centerHorizontal="true"-->
+<!--                        android:src="@drawable/baseline_search_24"-->
+<!--                        android:background="@drawable/bg_circle_lightgrey"/>-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/tv_uh_titlename"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:visibility="gone" />-->
+
+<!--                </LinearLayout>-->
+
+<!--            </LinearLayout>-->
+
+<!--        </LinearLayout>-->
+
+<!--        <androidx.recyclerview.widget.RecyclerView-->
+<!--            android:id="@+id/rv_co_filter"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:clipToPadding="false"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:paddingStart="5dp"-->
+<!--            android:layout_marginVertical="15dp"-->
+<!--            android:paddingEnd="15dp"-->
+<!--            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
+<!--            tools:listitem="@layout/item_filter"-->
+<!--            android:visibility="visible" />-->
+
+<!--    </LinearLayout>-->
+
+<!--    <RelativeLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content">-->
+
+<!--        <ProgressBar-->
+<!--            android:id="@+id/pb_c_loading"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_centerInParent="true"-->
+<!--            android:visibility="gone" />-->
+
+<!--        <LinearLayout-->
+<!--            android:id="@+id/ly_not_found"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_centerInParent="true"-->
+<!--            android:gravity="center"-->
+<!--            android:orientation="vertical"-->
+<!--            android:visibility="gone">-->
+
+<!--            <ImageView-->
+<!--                android:layout_width="150dp"-->
+<!--                android:layout_height="150dp"-->
+<!--                android:background="@drawable/icon_not_found" />-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="15dp"-->
+<!--                android:text="Tidak ada perbaikan"-->
+<!--                android:textColor="@color/grey"-->
+<!--                android:textSize="15sp"-->
+<!--                android:textStyle="bold" />-->
+<!--        </LinearLayout>-->
+
+<!--        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
+<!--            android:id="@+id/sr_check"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content">-->
+
+<!--            <FrameLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent">-->
+
+<!--                <androidx.recyclerview.widget.RecyclerView-->
+<!--                    android:id="@+id/rv_check"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:clipToPadding="false"-->
+<!--                    android:orientation="vertical"-->
+<!--                    android:paddingBottom="15dp"-->
+<!--                    tools:listitem="@layout/item_repair">-->
+
+<!--                </androidx.recyclerview.widget.RecyclerView>-->
+<!--            </FrameLayout>-->
+<!--        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
+
+<!--    </RelativeLayout>-->
+
+<!--</LinearLayout>-->

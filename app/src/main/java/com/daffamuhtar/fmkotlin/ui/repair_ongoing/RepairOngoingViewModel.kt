@@ -15,7 +15,6 @@ import androidx.paging.map
 import com.daffamuhtar.fmkotlin.app.ApiConfig
 import com.daffamuhtar.fmkotlin.appv2.data.local.RepairEntity
 import com.daffamuhtar.fmkotlin.appv4.RepairRepository4
-import com.daffamuhtar.fmkotlin.appv4.ui.data_binding.RepairItemUiState
 import com.daffamuhtar.fmkotlin.data.response.ErrorResponse
 import com.daffamuhtar.fmkotlin.data.response.RepairOnAdhocResponse
 import com.daffamuhtar.fmkotlin.data.response.RepairOngoingMetaDataResponse
@@ -42,7 +41,7 @@ class RepairOngoingViewModel(
 //        }.cachedIn(viewModelScope)
 
     //data binding (ui state)
-    val repairPagingData = repairRepository4.getRepairList()
+    val repairPagingData = repairRepository4.getRepairListAdhoc()
         .map { pagingData ->
             pagingData.map { userModel -> RepairHelper.mapRepairItem(userModel)}
         }.cachedIn(viewModelScope)

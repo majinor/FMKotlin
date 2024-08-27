@@ -13,6 +13,8 @@ import com.daffamuhtar.fmkotlin.databinding.ItemRepairBinding
 class RepairAdapterNew constructor() :
     PagingDataAdapter<Repair, RepairListViewHolderNew>(Comparator) {
 
+    private lateinit var onItemClickCallback: OnItemClickCallback
+
     override fun onBindViewHolder(holder: RepairListViewHolderNew, position: Int) {
         holder.bind(getItem(position)!!,position)
     }
@@ -21,7 +23,7 @@ class RepairAdapterNew constructor() :
         return RepairListViewHolderNew(
             ItemRepairBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
-            )
+            ), onItemClickCallback
         )
     }
 
@@ -35,6 +37,15 @@ class RepairAdapterNew constructor() :
             return oldItem == newItem
         }
     }
+
+    interface OnItemClickCallback {
+        fun onItemClicked(data: Repair, position: Int)
+    }
+
+    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
+        this.onItemClickCallback = onItemClickCallback
+    }
+
 }
 
 

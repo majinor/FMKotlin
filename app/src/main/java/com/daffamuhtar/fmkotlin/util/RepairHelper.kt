@@ -713,6 +713,7 @@ class RepairHelper {
 //            tvStage.setTextColor(stageTextColor)
 
         }
+
         fun setDriverPhoto(
             context: Context,
             photoUrl: String,

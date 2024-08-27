@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.repair_on.RepairOnActivity">
+    tools:context=".ui.repair_tab.RepairTaskActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -42,7 +42,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="15dp"
                         android:layout_weight="1"
-                        android:text="@string/title_activity_repair_on" />
+                        android:text="@string/title_activity_repair_ongoing" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"

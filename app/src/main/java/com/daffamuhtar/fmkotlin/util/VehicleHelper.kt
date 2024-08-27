@@ -4,11 +4,11 @@ class VehicleHelper {
     companion object {
         fun getVehicleName(
             vehicleId: String,
-            vehicleBrand: String,
-            vehicleType: String,
-            vehicleVariant: String,
-            vehicleYear: String,
-            vehicleLicenseNumber: String
+            vehicleBrand: String?,
+            vehicleType: String?,
+            vehicleVariant: String?,
+            vehicleYear: String?,
+            vehicleLicenseNumber: String?
         ): String {
             var vehicleName: String
 

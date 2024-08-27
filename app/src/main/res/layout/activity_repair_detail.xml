@@ -1557,7 +1557,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="1dp"
                                 android:layout_marginTop="5dp"
-                                android:background="@color/lightgrey" />
+                                android:background="@color/white" />
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
@@ -1572,27 +1572,22 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="match_parent"
                                         android:layout_marginBottom="10dp"
+                                        android:background="@drawable/bg_rounded_textview_outline_lightgrey"
                                         android:orientation="vertical">
 
                                         <LinearLayout
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
-                                            android:background="@color/lightgrey">
-
-                                            <TextView
-                                                android:layout_width="1dp"
-                                                android:layout_height="match_parent"
-                                                android:layout_marginRight="10dp"
-                                                android:background="@color/lightgrey"
-                                                android:gravity="center"
-                                                android:textSize="10dp"
-                                                android:textStyle="bold" />
+                                            android:background="@drawable/bg_rounded_half_top_yellowsoft"
+                                            android:clipToPadding="true"
+                                            android:paddingVertical="5dp">
 
 
                                             <TextView
                                                 android:id="@+id/tv_irdp_item"
                                                 android:layout_width="150dp"
                                                 android:layout_height="wrap_content"
+                                                android:layout_marginHorizontal="10dp"
                                                 android:gravity="center_vertical"
                                                 android:text="Nama Part"
                                                 android:textStyle="bold" />
@@ -1600,7 +1595,6 @@
                                             <TextView
                                                 android:layout_width="1dp"
                                                 android:layout_height="match_parent"
-                                                android:layout_marginHorizontal="10dp"
                                                 android:background="@color/lightgrey"
                                                 android:gravity="center"
                                                 android:textSize="10dp"
@@ -1610,6 +1604,7 @@
                                                 android:id="@+id/tv_irdp_brand"
                                                 android:layout_width="80dp"
                                                 android:layout_height="wrap_content"
+                                                android:layout_marginHorizontal="10dp"
                                                 android:gravity="center_vertical"
                                                 android:text="Brand"
                                                 android:textStyle="bold" />
@@ -1617,7 +1612,6 @@
                                             <TextView
                                                 android:layout_width="1dp"
                                                 android:layout_height="match_parent"
-                                                android:layout_marginHorizontal="10dp"
                                                 android:background="@color/lightgrey"
                                                 android:gravity="center"
                                                 android:textSize="10dp"
@@ -1627,6 +1621,7 @@
                                                 android:id="@+id/tv_irdp_quantity"
                                                 android:layout_width="50dp"
                                                 android:layout_height="wrap_content"
+                                                android:layout_marginHorizontal="10dp"
                                                 android:gravity="center"
                                                 android:text="Jumlah"
                                                 android:textStyle="bold" />
@@ -1634,7 +1629,6 @@
                                             <TextView
                                                 android:layout_width="1dp"
                                                 android:layout_height="match_parent"
-                                                android:layout_marginHorizontal="10dp"
                                                 android:background="@color/lightgrey"
                                                 android:gravity="center"
                                                 android:textSize="10dp"
@@ -1644,6 +1638,7 @@
                                                 android:id="@+id/tv_irdp_noun"
                                                 android:layout_width="50dp"
                                                 android:layout_height="wrap_content"
+                                                android:layout_marginHorizontal="10dp"
                                                 android:gravity="center"
                                                 android:text="Satuan"
                                                 android:textStyle="bold" />
@@ -1651,7 +1646,6 @@
                                             <TextView
                                                 android:layout_width="1dp"
                                                 android:layout_height="match_parent"
-                                                android:layout_marginHorizontal="10dp"
                                                 android:background="@color/lightgrey"
                                                 android:gravity="center"
                                                 android:textSize="10dp"
@@ -1661,6 +1655,7 @@
                                                 android:id="@+id/tv_irdp_sku"
                                                 android:layout_width="100dp"
                                                 android:layout_height="wrap_content"
+                                                android:layout_marginHorizontal="10dp"
                                                 android:layout_marginBottom="5dp"
                                                 android:text="SKU Part"
                                                 android:textStyle="bold" />
@@ -1668,7 +1663,6 @@
                                             <TextView
                                                 android:layout_width="1dp"
                                                 android:layout_height="match_parent"
-                                                android:layout_marginHorizontal="10dp"
                                                 android:background="@color/lightgrey"
                                                 android:gravity="center"
                                                 android:textSize="10dp"
@@ -1678,17 +1672,9 @@
                                                 android:id="@+id/tv_irdp_part_id"
                                                 android:layout_width="100dp"
                                                 android:layout_height="wrap_content"
+                                                android:layout_marginHorizontal="10dp"
                                                 android:layout_marginBottom="5dp"
                                                 android:text="ID Part"
-                                                android:textStyle="bold" />
-
-                                            <TextView
-                                                android:layout_width="1dp"
-                                                android:layout_height="match_parent"
-                                                android:layout_marginLeft="10dp"
-                                                android:background="@color/lightgrey"
-                                                android:gravity="center"
-                                                android:textSize="10dp"
                                                 android:textStyle="bold" />
 
                                         </LinearLayout>

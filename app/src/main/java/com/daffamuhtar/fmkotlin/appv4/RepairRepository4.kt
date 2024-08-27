@@ -8,5 +8,21 @@ import kotlinx.coroutines.flow.Flow
  */
 
 interface RepairRepository4 {
-    fun getRepairList(): Flow<PagingData<RepairResponse4>>
+
+    //Repair Check
+    fun getRepairCheckAdhocList(): Flow<PagingData<RepairResponse4>>
+
+    //Repair Task
+    fun getRepairListAdhoc(): Flow<PagingData<RepairResponse4>>
+    fun getRepairListPeriod(): Flow<PagingData<RepairResponse4>>
+    fun getRepairListNonperiod(): Flow<PagingData<RepairResponse4>>
+    fun getRepairListTire(): Flow<PagingData<RepairResponse4>>
+
+    //Repair On
+    fun getRepairOnAdhoc(): Flow<PagingData<RepairResponse4>>
+    fun getRepairOnPeriod(): Flow<PagingData<RepairResponse4>>
+    fun getRepairOnNonperiod(): Flow<PagingData<RepairResponse4>>
+    fun getRepairOnTire(): Flow<PagingData<RepairResponse4>>
+
+
 }

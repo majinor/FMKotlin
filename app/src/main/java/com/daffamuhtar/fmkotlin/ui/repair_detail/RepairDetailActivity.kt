@@ -1,7 +1,9 @@
 package com.daffamuhtar.fmkotlin.ui.repair_detail
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.text.Html
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
@@ -40,6 +42,7 @@ import com.daffamuhtar.fmkotlin.ui.adapter.RepairDetailAfterRepairInspectionAdap
 import com.daffamuhtar.fmkotlin.ui.adapter.RepairDetailPartAdapter
 import com.daffamuhtar.fmkotlin.ui.adapter.RepairDetailProblemAdapter
 import com.daffamuhtar.fmkotlin.ui.bottomsheet.AdditionalPartRequestBottomSheet
+import com.daffamuhtar.fmkotlin.ui.scanner.ScannerActivity
 import com.daffamuhtar.fmkotlin.util.RepairHelper
 import com.daffamuhtar.fmkotlin.util.RepairHelper.Companion.toEditable
 import com.daffamuhtar.fmkotlin.util.VehicleHelper
@@ -162,6 +165,8 @@ class RepairDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityRepairDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar!!.title = Html.fromHtml("<b>Detail Perbaikan</b>")
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         declare()
         getData()
@@ -1033,13 +1038,9 @@ class RepairDetailActivity : AppCompatActivity() {
                     item.partQuantity,
                     item.partUnit,
 
-                    item.partUnit,
-                    item.partUnit,
-                    item.partUnit,
-
-//                    item.newPartId,
-//                    item.itemPrice,
-//                    item.totalPrice
+                    item.newPartId,
+                    item.itemPrice,
+                    item.totalPrice,
                 )
 
                 items.add(getResult)
@@ -1269,6 +1270,34 @@ class RepairDetailActivity : AppCompatActivity() {
 
     private fun setClickListener() {
         binding.btnAdditionalPartRequest.setOnClickListener { openBottomSheetAdditionalPartRequest() }
+        binding.btnRepairStart.setOnClickListener { openScanner("start_repair") }
+    }
+
+    private fun openScanner(scannerType: String) {
+        val intent = Intent(context, ScannerActivity::class.java)
+        intent.putExtra(Constants.EXTRA_REQCODE, scannerType)
+        intent.putExtra(Constants.EXTRA_SPKID, spkId)
+        intent.putExtra(Constants.EXTRA_ORDERID, orderId)
+        intent.putExtra(Constants.EXTRA_VID, vehicleId)
+        intent.putExtra(Constants.EXTRA_VPHOTO, vehiclePhoto)
+        intent.putExtra(
+            Constants.EXTRA_VNAME,
+            VehicleHelper.getVehicleName(
+                vehicleId,
+                vehicleBrand,
+                vehicleType,
+                vehicleVarian,
+                vehicleYear,
+                null
+            )
+        )
+        intent.putExtra(Constants.EXTRA_VLICEN, vehicleLicenseNumber)
+        intent.putExtra(Constants.EXTRA_VDIS, vehicleDistrict)
+        intent.putExtra(Constants.EXTRA_VLID, vehicleLambungId)
+        intent.putExtra(Constants.EXTRA_STAGEID, stageId)
+        intent.putExtra(Constants.EXTRA_STAGENAME, stageName)
+        intent.putExtra(Constants.EXTRA_LOCOPTION, locationOption)
+        startActivity(intent)
     }
 
     private fun openBottomSheetAdditionalPartRequest() {

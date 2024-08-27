@@ -112,9 +112,7 @@ class RepairDetailViewModel : ViewModel() {
                             Log.d("TAG", "onResponse: $e")
                         }
                     }
-
                 }
-
             }
 
             override fun onFailure(call: Call<List<RepairDetailProblemResponse>>, t: Throwable) {

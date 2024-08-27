@@ -19,7 +19,7 @@ class RepairV2AdapterNew constructor() :
         return RepairListViewHolderNew(
             ItemRepairBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
-            )
+            ), null
         )
     }
 

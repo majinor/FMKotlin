@@ -92,7 +92,7 @@ class ScannerActivity : AppCompatActivity() {
     }
 
     private fun getData() {
-        reqcode = "umCheckIn"
+        reqcode = intent.getStringExtra(Constants.EXTRA_REQCODE)
         sourceid = intent.getStringExtra(Constants.EXTRA_SOURCEID)
         correctVehicleId = intent.getStringExtra(Constants.EXTRA_VID)
         vehiclePhoto = intent.getStringExtra(Constants.EXTRA_VPHOTO)
@@ -121,7 +121,7 @@ class ScannerActivity : AppCompatActivity() {
                 binding.btnScannerBottomsheetReportStickerIssue.setVisibility(View.GONE)
             }
 
-            "drvreport", "tire_report_driver", "umtirelostreportsolving_scanvehicle", "drvinspectend" -> {
+            "start_repair","drvreport", "tire_report_driver", "umtirelostreportsolving_scanvehicle", "drvinspectend" -> {
                 binding.btnScannerManualinput.setVisibility(View.GONE)
                 binding.lyScannerBottomsheetBaseVehicleInfo.setVisibility(View.VISIBLE)
                 binding.lyScannerBottomsheetVehicleInfo.setVisibility(View.VISIBLE)
