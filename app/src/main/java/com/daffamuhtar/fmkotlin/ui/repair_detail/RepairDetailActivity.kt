@@ -55,6 +55,7 @@ class RepairDetailActivity : AppCompatActivity() {
 
     private val context: Context = this
 
+
     private var reqType: String? = null
     private var actionType: String? = null
     private var orderType: String? = null
